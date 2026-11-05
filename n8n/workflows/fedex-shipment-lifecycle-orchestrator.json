@@ -1,0 +1,238 @@
+{
+  "name": "FedEx Enterprise Replica — Shipment Lifecycle & Document Orchestrator",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "fedex-logistics-events",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "webhook-trigger-node",
+      "name": "Logistics Event Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [220, 420],
+      "webhookId": "fedex-logistics-events"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": { "caseSensitive": true, "version": 2 },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.body.shipment.status }}",
+                    "rightValue": "SHIPMENT_CREATED_PRINTED",
+                    "operator": { "type": "string", "operation": "equals" }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Booked_Finalized"
+            },
+            {
+              "conditions": {
+                "options": { "caseSensitive": true, "version": 2 },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.body.shipment.status }}",
+                    "rightValue": "IN_TRANSIT",
+                    "operator": { "type": "string", "operation": "equals" }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "In_Transit"
+            },
+            {
+              "conditions": {
+                "options": { "caseSensitive": true, "version": 2 },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.body.shipment.status }}",
+                    "rightValue": "OUT_FOR_DELIVERY",
+                    "operator": { "type": "string", "operation": "equals" }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Out_For_Delivery"
+            },
+            {
+              "conditions": {
+                "options": { "caseSensitive": true, "version": 2 },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.body.shipment.status }}",
+                    "rightValue": "DELIVERED",
+                    "operator": { "type": "string", "operation": "equals" }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Delivered"
+            },
+            {
+              "conditions": {
+                "options": { "caseSensitive": true, "version": 2 },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.body.shipment.status }}",
+                    "rightValue": "DELIVERY_EXCEPTION",
+                    "operator": { "type": "string", "operation": "equals" }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Exception"
+            }
+          ]
+        }
+      },
+      "id": "status-switch-router",
+      "name": "Route by Shipment Status",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [480, 420]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.body.documents.awbPdfUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "awbPdfBinary"
+            }
+          }
+        }
+      },
+      "id": "fetch-awb-pdf",
+      "name": "Generate 3-Page AWB PDF",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [760, 180]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.body.documents.commercialInvoicePdfUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "invoicePdfBinary"
+            }
+          }
+        }
+      },
+      "id": "fetch-invoice-pdf",
+      "name": "Generate Commercial Invoice PDF",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1000, 180]
+    },
+    {
+      "parameters": {
+        "fromEmail": "logistics@company.com",
+        "toEmail": "={{ $json.body.notifications.clientEmail }}",
+        "subject": "=FedEx Shipment Finalized & 3-Page AWB: #{{ $json.body.shipment.trackingNumberFormatted }}",
+        "html": "=<h2>Shipment Booked ({{ $json.body.shipment.trackingNumberFormatted }})</h2><p>Origin Hub: {{ $json.body.shipment.originAirportCode }} &rarr; Destination Hub: {{ $json.body.shipment.destAirportCode }}</p><p>Chargeable Weight: {{ $json.body.shipment.totalChargeableWeightKg }} KG</p><p><a href=\"{{ $json.body.documents.publicTrackingUrl }}\">Track Live Status</a></p>",
+        "options": {
+          "attachments": "awbPdfBinary,invoicePdfBinary"
+        }
+      },
+      "id": "send-client-booking-email",
+      "name": "Email 1: Client Booking + AWB PDF",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [1280, 100]
+    },
+    {
+      "parameters": {
+        "fromEmail": "logistics@company.com",
+        "toEmail": "={{ $json.body.notifications.companyOperationsEmail }}",
+        "subject": "=[DISPATCH ALERT] {{ $json.body.tenant.companyName }} — TRK #{{ $json.body.shipment.trackingNumberFormatted }}",
+        "html": "=<h2>New Customer Shipment Dispatched</h2><p><strong>Client:</strong> {{ $json.body.tenant.companyName }} ({{ $json.body.tenant.companyCode }})</p><p><strong>Pickup Window:</strong> {{ $json.body.shipment.pickupWindow.pickupDate }} ({{ $json.body.shipment.pickupWindow.earliestTime }} - {{ $json.body.shipment.pickupWindow.latestTime }})</p><p><strong>Route:</strong> {{ $json.body.shipment.originAirportCode }} to {{ $json.body.shipment.destAirportCode }} ({{ $json.body.shipment.recipientCountry }})</p>",
+        "options": {
+          "attachments": "awbPdfBinary,invoicePdfBinary"
+        }
+      },
+      "id": "send-ops-dispatch-email",
+      "name": "Email 2: Company Ops Manifest + PDFs",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [1280, 240]
+    },
+    {
+      "parameters": {
+        "fromEmail": "tracking@company.com",
+        "toEmail": "={{ $json.body.notifications.clientEmail }},{{ $json.body.notifications.recipientEmail }}",
+        "subject": "=In Transit Update: Shipment #{{ $json.body.shipment.trackingNumberFormatted }} at {{ $json.body.latestScan.city }}",
+        "html": "=<h3>Status: {{ $json.body.latestScan.statusTitle }}</h3><p>Location: {{ $json.body.latestScan.city }}, {{ $json.body.latestScan.countryCode }} (Hub: {{ $json.body.latestScan.hubCode }})</p><p>Estimated Delivery: {{ $json.body.shipment.estimatedDeliveryDate }}</p>"
+      },
+      "id": "send-in-transit-alert",
+      "name": "Notify In-Transit Milestone",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [760, 360]
+    },
+    {
+      "parameters": {
+        "fromEmail": "courier@company.com",
+        "toEmail": "={{ $json.body.notifications.recipientEmail }},{{ $json.body.notifications.clientEmail }}",
+        "subject": "=Out for Delivery Today: FedEx Shipment #{{ $json.body.shipment.trackingNumberFormatted }}",
+        "html": "=<h3>Your package is on a courier vehicle for delivery!</h3><p>Signature Requirement: <strong>{{ $json.body.shipment.signatureOption }}</strong></p><p>Track live: <a href=\"{{ $json.body.documents.publicTrackingUrl }}\">{{ $json.body.shipment.trackingNumberFormatted }}</a></p>"
+      },
+      "id": "send-out-for-delivery-alert",
+      "name": "Notify Out For Delivery (SMS + Email)",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [760, 500]
+    },
+    {
+      "parameters": {
+        "fromEmail": "pod@company.com",
+        "toEmail": "={{ $json.body.notifications.clientEmail }},{{ $json.body.notifications.recipientEmail }}",
+        "subject": "=Delivered: FedEx Shipment #{{ $json.body.shipment.trackingNumberFormatted }} (Signed by {{ $json.body.latestScan.signedBy }})",
+        "html": "=<h2>Package Delivered Successfully</h2><p><strong>Signed For By:</strong> {{ $json.body.latestScan.signedBy }}</p><p><strong>Location:</strong> {{ $json.body.latestScan.city }}, {{ $json.body.latestScan.countryCode }}</p><p><strong>Delivered At:</strong> {{ $json.body.latestScan.timestamp }}</p>"
+      },
+      "id": "send-delivered-pod-alert",
+      "name": "Send Proof of Delivery (POD)",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [760, 640]
+    }
+  ],
+  "connections": {
+    "Logistics Event Webhook": {
+      "main": [[{ "node": "Route by Shipment Status", "type": "main", "index": 0 }]]
+    },
+    "Route by Shipment Status": {
+      "main": [
+        [{ "node": "Generate 3-Page AWB PDF", "type": "main", "index": 0 }],
+        [{ "node": "Notify In-Transit Milestone", "type": "main", "index": 0 }],
+        [{ "node": "Notify Out For Delivery (SMS + Email)", "type": "main", "index": 0 }],
+        [{ "node": "Send Proof of Delivery (POD)", "type": "main", "index": 0 }]
+      ]
+    },
+    "Generate 3-Page AWB PDF": {
+      "main": [[{ "node": "Generate Commercial Invoice PDF", "type": "main", "index": 0 }]]
+    },
+    "Generate Commercial Invoice PDF": {
+      "main": [
+        [
+          { "node": "Email 1: Client Booking + AWB PDF", "type": "main", "index": 0 },
+          { "node": "Email 2: Company Ops Manifest + PDFs", "type": "main", "index": 0 }
+        ]
+      ]
+    }
+  }
+}

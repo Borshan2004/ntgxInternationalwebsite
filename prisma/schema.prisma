@@ -1,0 +1,455 @@
+// prisma/schema.prisma
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL") // Required for Neon Serverless migrations
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ==========================================
+// ENUMS
+// ==========================================
+
+enum UserRole {
+  ADMIN
+  EMPLOYEE
+  CUSTOMER
+  DRIVER
+}
+
+enum UserStatus {
+  PENDING_APPROVAL
+  ACTIVE
+  SUSPENDED
+  REJECTED
+}
+
+enum AddressType {
+  BUSINESS
+  RESIDENTIAL
+}
+
+enum PackagingType {
+  YOUR_PACKAGING
+  FEDEX_ENVELOPE
+  FEDEX_PAK
+  FEDEX_BOX_SMALL
+  FEDEX_BOX_MEDIUM
+  FEDEX_BOX_LARGE
+  FEDEX_TUBE
+}
+
+enum ServiceTier {
+  INTERNATIONAL_PRIORITY
+  INTERNATIONAL_ECONOMY
+  INTERNATIONAL_FIRST
+  STANDARD_OVERNIGHT
+  PRIORITY_OVERNIGHT
+  GROUND_STANDARD
+}
+
+enum SignatureOption {
+  NO_SIGNATURE_REQUIRED
+  INDIRECT_SIGNATURE
+  DIRECT_SIGNATURE
+  ADULT_SIGNATURE
+}
+
+enum ShipmentStatus {
+  DRAFT_INCOMPLETE
+  SHIPMENT_CREATED_PRINTED
+  PICKUP_SCHEDULED
+  PICKED_UP
+  AT_ORIGIN_FACILITY
+  IN_TRANSIT
+  AT_DESTINATION_FACILITY
+  OUT_FOR_DELIVERY
+  DELIVERED
+  DELIVERY_EXCEPTION
+  RETURNED_TO_SHIPPER
+  CANCELLED
+}
+
+enum ScanEventCode {
+  OC // Order Created / Shipment info sent to FedEx
+  PU // Picked Up
+  AF // Arrived at Origin Facility
+  DP // Departed Facility
+  IT // In Transit
+  AR // Arrived at Destination Sort Facility
+  OD // Out for Delivery
+  DL // Delivered
+  DE // Delivery Exception
+  RS // Returned to Shipper
+  CA // Cancelled
+}
+
+enum BillTransportationTo {
+  MY_ACCOUNT
+  RECIPIENT
+  THIRD_PARTY
+}
+
+enum CustomsContentType {
+  DOCUMENTS_ONLY
+  COMMODITIES
+}
+
+enum WeightUnit {
+  KG
+  LB
+}
+
+enum DimensionUnit {
+  CM
+  IN
+}
+
+// ==========================================
+// CORE MULTI-TENANT & RBAC MODELS
+// ==========================================
+
+model Organization {
+  id            String             @id @default(uuid())
+  name          String
+  code          String             @unique // e.g., "ASI-BD"
+  taxId         String?            // EORI / BIN / EIN
+  vatNumber     String?
+  accountNumber String             @unique // 9-digit FedEx-style Account Number
+  phone         String
+  email         String
+  isActive      Boolean            @default(true)
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+
+  users         User[]
+  shipments     Shipment[]
+  addressBook   AddressBookEntry[]
+
+  @@index([code])
+  @@map("organizations")
+}
+
+model User {
+  id               String         @id @default(uuid())
+  organizationId   String?
+  organization     Organization?  @relation(fields: [organizationId], references: [id], onDelete: SetNull)
+  name             String
+  email            String         @unique
+  passwordHash     String
+  phone            String
+  role             UserRole       @default(CUSTOMER)
+  status           UserStatus     @default(PENDING_APPROVAL)
+  approvedById     String?
+  approvedBy       User?          @relation("StaffApprovals", fields: [approvedById], references: [id])
+  approvedUsers    User[]         @relation("StaffApprovals")
+  approvedAt       DateTime?
+  rejectionReason  String?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  createdShipments Shipment[]     @relation("ShipmentCreator")
+  assignedPickups  PickupOrder[]  @relation("DriverPickups")
+  recordedScans    TrackingEvent[] @relation("CourierScans")
+  auditLogs        AuditLog[]
+
+  @@index([organizationId])
+  @@index([role, status])
+  @@map("users")
+}
+
+model AddressBookEntry {
+  id             String       @id @default(uuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  type           AddressType  @default(BUSINESS)
+  isDefaultSender Boolean     @default(false)
+  contactName    String
+  company        String?
+  taxId          String?
+  phone          String
+  phoneExt       String?
+  email          String
+  addressLine1   String
+  addressLine2   String?
+  addressLine3   String?
+  city           String
+  stateProvince  String?
+  postalCode     String
+  countryCode    String       // ISO 3166-1 alpha-2 (e.g., "BD", "US")
+  airportHubCode String?      // e.g., "DACA", "EWR"
+  isResidential  Boolean      @default(false)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@index([organizationId, countryCode])
+  @@map("address_book_entries")
+}
+
+// ==========================================
+// ZONES & PRICING ENGINE MODELS
+// ==========================================
+
+model ShippingZone {
+  id                  String     @id @default(uuid())
+  code                String     @unique // e.g., "ZONE_1", "ZONE_2", "ZONE_5", "ZONE_7"
+  name                String     // e.g., "North America (US/CA)", "Middle East & UAE"
+  originCountryCode   String     @default("BD")
+  destCountryCodes    String[]   // Array of ISO codes: ["US", "CA"]
+  defaultDestHubCode  String     // e.g., "EWR", "DXB", "LHR"
+  estimatedTransitMin Int        @default(2)
+  estimatedTransitMax Int        @default(5)
+  isActive            Boolean    @default(true)
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+
+  rateCards           RateCard[]
+  shipments           Shipment[]
+
+  @@map("shipping_zones")
+}
+
+model RateCard {
+  id                   String       @id @default(uuid())
+  zoneId               String
+  zone                 ShippingZone @relation(fields: [zoneId], references: [id], onDelete: Cascade)
+  serviceTier          ServiceTier
+  baseWeightKg         Decimal      @default(0.50) @db.Decimal(8, 2)
+  baseRateUsd          Decimal      @db.Decimal(10, 2)
+  ratePerAdditionalKg  Decimal      @db.Decimal(10, 2)
+  serviceMultiplier    Decimal      @default(1.00) @db.Decimal(5, 2)
+  fuelSurchargePercent Decimal      @default(14.50) @db.Decimal(5, 2)
+  residentialFeeUsd    Decimal      @default(4.50) @db.Decimal(8, 2)
+  directSignatureFee   Decimal      @default(5.50) @db.Decimal(8, 2)
+  adultSignatureFee    Decimal      @default(7.00) @db.Decimal(8, 2)
+  insuranceRatePer100  Decimal      @default(1.00) @db.Decimal(8, 2)
+  effectiveFrom        DateTime     @default(now())
+  isActive             Boolean      @default(true)
+
+  @@unique([zoneId, serviceTier])
+  @@map("rate_cards")
+}
+
+// ==========================================
+// SHIPMENT, CUSTOMS & TELEMETRY MODELS
+// ==========================================
+
+model Shipment {
+  id                   String               @id @default(uuid())
+  trackingNumber       String               @unique // 12-digit Mod-11 (e.g., "879098800901")
+  formCode             String               @default("0430")
+  routingCode          String?              // e.g., "XA MTPA 58KJ1/70DF/484B"
+  barcodeSvg           String?              @db.Text
+  organizationId       String
+  organization         Organization         @relation(fields: [organizationId], references: [id])
+  createdById          String
+  createdBy            User                 @relation("ShipmentCreator", fields: [createdById], references: [id])
+  zoneId               String?
+  zone                 ShippingZone?        @relation(fields: [zoneId], references: [id])
+
+  // Workflow & Service State
+  status               ShipmentStatus       @default(DRAFT_INCOMPLETE)
+  serviceTier          ServiceTier          @default(INTERNATIONAL_PRIORITY)
+  signatureOption      SignatureOption      @default(NO_SIGNATURE_REQUIRED)
+  packagingType        PackagingType        @default(YOUR_PACKAGING)
+  customsContentType   CustomsContentType   @default(COMMODITIES)
+  shipDate             DateTime             @default(now())
+  estimatedDelivery    DateTime?
+  actualDelivery       DateTime?
+
+  // Step 1: Ship From (Immutable Snapshot)
+  senderName           String
+  senderCompany        String?
+  senderTaxId          String?
+  senderPhone          String
+  senderPhoneExt       String?
+  senderEmail          String
+  senderAddress1       String
+  senderAddress2       String?
+  senderAddress3       String?
+  senderCity           String
+  senderState          String?
+  senderPostal         String
+  senderCountry        String               @default("BD")
+  originAirportCode    String               @default("DACA")
+
+  // Step 2: Deliver To (Immutable Snapshot)
+  recipientName        String
+  recipientCompany     String?
+  recipientTaxId       String?
+  recipientPhone       String
+  recipientPhoneExt    String?
+  recipientEmail       String
+  recipientAddress1    String
+  recipientAddress2    String?
+  recipientAddress3    String?
+  recipientCity        String
+  recipientState       String?
+  recipientPostal      String
+  recipientCountry     String
+  destAirportCode      String               @default("EWR")
+  isResidential        Boolean              @default(false)
+
+  // Step 3 & 4: Aggregated Weight & Customs Financials
+  packageCount         Int                  @default(1)
+  totalActualWeightKg  Decimal              @db.Decimal(10, 2)
+  totalVolumetricWgtKg Decimal              @db.Decimal(10, 2)
+  totalChargeableWgtKg Decimal              @db.Decimal(10, 2)
+  totalCustomsValue    Decimal              @default(0.00) @db.Decimal(12, 2)
+  totalDeclaredValue   Decimal              @default(0.00) @db.Decimal(12, 2)
+  currency             String               @default("USD")
+
+  // Step 7: Billing & References
+  billTransportationTo BillTransportationTo @default(MY_ACCOUNT)
+  billingAccountNumber String?
+  dutiesBillTo         BillTransportationTo @default(RECIPIENT)
+  dutiesAccountNumber  String?
+  referenceCode        String?              // e.g., "BNI/CC/P-1780009697"
+  invoiceNumber        String?              // e.g., "ASI-25075"
+  poNumber             String?
+  cadNumber            String               @default("260504077/INET4535")
+
+  // Calculated Pricing Breakdown
+  baseChargeUsd        Decimal              @default(0.00) @db.Decimal(10, 2)
+  fuelSurchargeUsd     Decimal              @default(0.00) @db.Decimal(10, 2)
+  surchargeAmountUsd   Decimal              @default(0.00) @db.Decimal(10, 2)
+  totalShippingCostUsd Decimal              @default(0.00) @db.Decimal(10, 2)
+
+  // Relations
+  packages             ShipmentPackage[]
+  commodities          CommodityItem[]
+  pickupOrder          PickupOrder?
+  trackingEvents       TrackingEvent[]
+  notificationSettings NotificationConfig?
+
+  finalizedAt          DateTime?
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
+
+  @@index([organizationId, createdAt])
+  @@index([trackingNumber])
+  @@index([status])
+  @@index([recipientCountry])
+  @@map("shipments")
+}
+
+model ShipmentPackage {
+  id            String        @id @default(uuid())
+  shipmentId    String
+  shipment      Shipment      @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
+  packageIndex  Int           @default(1)
+  actualWeight  Decimal       @db.Decimal(8, 2)
+  weightUnit    WeightUnit    @default(KG)
+  length        Decimal       @db.Decimal(8, 2)
+  width         Decimal       @db.Decimal(8, 2)
+  height        Decimal       @db.Decimal(8, 2)
+  dimensionUnit DimensionUnit @default(CM)
+  volumetricWgt Decimal       @db.Decimal(8, 2)
+  chargeableWgt Decimal       @db.Decimal(8, 2)
+  declaredValue Decimal       @default(0.00) @db.Decimal(10, 2)
+
+  @@index([shipmentId])
+  @@map("shipment_packages")
+}
+
+model CommodityItem {
+  id            String   @id @default(uuid())
+  shipmentId    String
+  shipment      Shipment @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
+  packageCount  Int      @default(1)
+  description   String   // e.g., "Sample of Men's Shorts (97% Cotton, 3% Spandex)"
+  hsTariffCode  String   // e.g., "98110060" or "6307903010"
+  quantity      Decimal  @db.Decimal(8, 2)
+  unitOfMeasure String   @default("PKS") // PKS, PCS, KGS, DOZ
+  netWeightKg   Decimal  @db.Decimal(8, 2)
+  unitValue     Decimal  @db.Decimal(10, 2)
+  totalValue    Decimal  @db.Decimal(10, 2)
+  countryOfMfr  String   @default("BD")
+
+  @@index([shipmentId])
+  @@index([hsTariffCode])
+  @@map("commodity_items")
+}
+
+model PickupOrder {
+  id            String   @id @default(uuid())
+  pickupCode    String   @unique // e.g., "DACA-261031-01"
+  shipmentId    String   @unique
+  shipment      Shipment @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
+  driverId      String?
+  driver        User?    @relation("DriverPickups", fields: [driverId], references: [id])
+  isDropOff     Boolean  @default(false)
+  pickupDate    DateTime
+  earliestTime  String   // e.g., "08:00 AM"
+  latestTime    String   // e.g., "01:30 PM"
+  instructions  String?
+  pickupAddress String
+  isCompleted   Boolean  @default(false)
+  completedAt   DateTime?
+  createdAt     DateTime @default(now())
+
+  @@index([driverId, pickupDate])
+  @@map("pickup_orders")
+}
+
+model TrackingEvent {
+  id             String        @id @default(uuid())
+  shipmentId     String
+  shipment       Shipment      @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
+  recordedById   String?
+  recordedBy     User?         @relation("CourierScans", fields: [recordedById], references: [id])
+  eventCode      ScanEventCode // OC, PU, AF, DP, IT, AR, OD, DL, DE, RS, CA
+  statusTitle    String        // e.g., "Departed FedEx location"
+  description    String?       // e.g., "In transit via Dubai Sort Facility"
+  city           String
+  stateProvince  String?
+  postalCode     String?
+  countryCode    String
+  hubCode        String?       // e.g., "DACA", "DXB", "EWR"
+  signedBy       String?       // e.g., "D.Salman"
+  signatureImage String?       @db.Text
+  proofPhotoUrl  String?
+  timestamp      DateTime      @default(now())
+
+  @@index([shipmentId, timestamp])
+  @@map("tracking_events")
+}
+
+model NotificationConfig {
+  id              String   @id @default(uuid())
+  shipmentId      String   @unique
+  shipment        Shipment @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
+  clientEmail     String
+  recipientEmail  String?
+  companyEmail    String   @default("operations@company.com")
+  language        String   @default("en")
+  notifyCreated   Boolean  @default(true)
+  notifyScheduled Boolean  @default(true)
+  notifyPickedUp  Boolean  @default(true)
+  notifyInTransit Boolean  @default(true)
+  notifyDelivered Boolean  @default(true)
+  notifyException Boolean  @default(true)
+  customMessage   String?
+
+  @@map("notification_configs")
+}
+
+model AuditLog {
+  id           String   @id @default(uuid())
+  userId       String?
+  user         User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  tenantId     String?
+  action       String   // e.g., "USER_APPROVED", "SHIPMENT_FINALIZED", "EXCEL_EXPORTED"
+  entityType   String
+  entityId     String
+  metadataJson Json?
+  ipAddress    String?
+  timestamp    DateTime @default(now())
+
+  @@index([tenantId, timestamp])
+  @@map("audit_logs")
+}

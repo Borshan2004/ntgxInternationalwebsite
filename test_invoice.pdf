@@ -1,0 +1,13 @@
+HTTP/1.1 500 Internal Server Error
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+vary: RSC, Next-Router-State-Tree, Next-Router-Prefetch
+content-type: application/json
+Date: Sun, 01 Nov 2026 18:15:48 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+Transfer-Encoding: chunked
+
+{"error":"\nInvalid `prisma.shipment.findUnique()` invocation:\n\n\nerror: Environment variable not found: DATABASE_URL.\n  -->  schema.prisma:5\n   | \n 4 |   provider  = \"postgresql\"\n 5 |   url       = env(\"DATABASE_URL\")\n   | \n\nValidation Error Count: 1"}

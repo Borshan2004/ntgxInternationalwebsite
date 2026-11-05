@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <rect width="48" height="48" rx="10" fill="#18181B" />
+  <!-- Speed lines -->
+  <rect x="4" y="22" width="6" height="3" rx="1.5" fill="#E51919" />
+  <rect x="7" y="27" width="9" height="3" rx="1.5" fill="#E51919" />
+  <rect x="2" y="32" width="5" height="3" rx="1.5" fill="#E51919" />
+  <rect x="8" y="32" width="12" height="3" rx="1.5" fill="#E51919" />
+  <!-- 3D Box in Red -->
+  <path d="M25 10 L39 18 L25 26 L11 18 Z" fill="#FF1E1E" />
+  <path d="M11 18 L25 26 L25 40 L11 32 Z" fill="#CC0000" />
+  <path d="M25 26 L39 18 L39 32 L25 40 Z" fill="#E51919" />
+  <!-- Box inner tape / edge highlight -->
+  <path d="M25 10 L32 14 L18 22 L11 18 Z" fill="#FF4444" opacity="0.6"/>
+  <path d="M25 26 L35 20.5 L35 30 L25 35.5 Z" fill="#FFFFFF" opacity="0.25" />
+</svg>

@@ -1,0 +1,594 @@
+{
+  "shipments": [
+    {
+      "id": "2e0742bc-21c7-4780-98d0-9986ff7270d7",
+      "trackingNumber": "879745161858",
+      "recipient": "James Miller (Northstar Apparel NYC)",
+      "destinationCity": "New York",
+      "destinationCountry": "US",
+      "destAirportHub": "EWR",
+      "status": "IN_TRANSIT",
+      "serviceTier": "INTERNATIONAL_PRIORITY",
+      "weightKg": 5,
+      "createdAt": "2026-11-02",
+      "senderCity": "Dhaka",
+      "senderCountry": "BD"
+    },
+    {
+      "id": "4b24e262-a49c-4508-b78e-76b9f8c4a1b8",
+      "trackingNumber": "879098800901",
+      "recipient": "Dakota / Salman (Bernette Textile Co. Ltd.)",
+      "destinationCity": "New York",
+      "destinationCountry": "US",
+      "destAirportHub": "EWR",
+      "status": "DELIVERED",
+      "serviceTier": "INTERNATIONAL_PRIORITY",
+      "weightKg": 4,
+      "createdAt": "2026-11-02",
+      "senderCity": "Dhaka",
+      "senderCountry": "BD",
+      "signedBy": "D.Salman"
+    },
+    {
+      "id": "14ee0d9d-cdb8-4b0c-b6b5-4edb4d52a657",
+      "trackingNumber": "879098800908",
+      "recipient": "Carlos Mendez (Iberian Moda Distribución S.L.)",
+      "destinationCity": "Madrid",
+      "destinationCountry": "ES",
+      "destAirportHub": "MAD",
+      "status": "IN_TRANSIT",
+      "serviceTier": "INTERNATIONAL_PRIORITY",
+      "weightKg": 2.8,
+      "createdAt": "2026-10-27",
+      "senderCity": "Dhaka",
+      "senderCountry": "BD"
+    },
+    {
+      "id": "28ea964a-ec6f-40f7-9f0a-5c882908c8cb",
+      "trackingNumber": "879098800906",
+      "recipient": "Hiroshi Tanaka (Shibuya Textiles Corp)",
+      "destinationCity": "Tokyo",
+      "destinationCountry": "JP",
+      "destAirportHub": "HND",
+      "status": "SHIPMENT_CREATED_PRINTED",
+      "serviceTier": "INTERNATIONAL_FIRST",
+      "weightKg": 0.5,
+      "createdAt": "2026-10-26",
+      "senderCity": "Dhaka",
+      "senderCountry": "BD"
+    },
+    {
+      "id": "11496f63-dbb4-4172-892a-5724e40e57d9",
+      "trackingNumber": "879098800904",
+      "recipient": "Sven Nilsson (Nordic Fashion House AB)",
+      "destinationCity": "Stockholm",
+      "destinationCountry": "SE",
+      "destAirportHub": "ARN",
+      "status": "PICKUP_SCHEDULED",
+      "serviceTier": "INTERNATIONAL_ECONOMY",
+      "weightKg": 0.75,
+      "createdAt": "2026-10-25",
+      "senderCity": "Dhaka",
+      "senderCountry": "BD"
+    },
+    {
+      "id": "f3f04ff1-e1c3-4a98-96dc-8d801778bc9f",
+      "trackingNumber": "879098800905",
+      "recipient": "Maria Santos (Al-Futtaim Logistics LLC)",
+      "destinationCity": "Dubai",
+      "destinationCountry": "AE",
+      "destAirportHub": "DXB",
+      "status": "AT_ORIGIN_FACILITY",
+      "serviceTier": "INTERNATIONAL_PRIORITY",
+      "weightKg": 3.1,
+      "createdAt": "2026-10-24",
+      "senderCity": "Dhaka",
+      "senderCountry": "BD"
+    },
+    {
+      "id": "8b4268cc-f02c-43f2-bfe6-9271f119f9e8",
+      "trackingNumber": "879098800903",
+      "recipient": "Ayesha Khan (Maple Leaf Retailers Inc.)",
+      "destinationCity": "Toronto",
+      "destinationCountry": "CA",
+      "destAirportHub": "YYZ",
+      "status": "OUT_FOR_DELIVERY",
+      "serviceTier": "INTERNATIONAL_PRIORITY",
+      "weightKg": 4.8,
+      "createdAt": "2026-10-22",
+      "senderCity": "Dhaka",
+      "senderCountry": "BD"
+    },
+    {
+      "id": "025470a7-f3e8-4a1a-8eba-8cd044d272c9",
+      "trackingNumber": "879098800902",
+      "recipient": "James O'Brien (Apex Global Imports LLC)",
+      "destinationCity": "New York",
+      "destinationCountry": "US",
+      "destAirportHub": "EWR",
+      "status": "DELIVERED",
+      "serviceTier": "INTERNATIONAL_ECONOMY",
+      "weightKg": 1.2,
+      "createdAt": "2026-10-20",
+      "senderCity": "Dhaka",
+      "senderCountry": "BD",
+      "signedBy": "J. O'Brien"
+    },
+    {
+      "id": "06d6b71d-6121-4a28-9f66-380fc650e09e",
+      "trackingNumber": "879098800907",
+      "recipient": "Olivia Chen (Pacific Retail Sydney Ltd.)",
+      "destinationCity": "Sydney",
+      "destinationCountry": "AU",
+      "destAirportHub": "SYD",
+      "status": "DELIVERY_EXCEPTION",
+      "serviceTier": "INTERNATIONAL_ECONOMY",
+      "weightKg": 6.3,
+      "createdAt": "2026-10-18",
+      "senderCity": "Dhaka",
+      "senderCountry": "BD"
+    },
+    {
+      "id": "7e5360e4-306c-41da-abfe-c3178ef741dc",
+      "trackingNumber": "879394688046",
+      "recipient": "Borno Purification (Bernette Textile Co. Ltd.)",
+      "destinationCity": "New York",
+      "destinationCountry": "US",
+      "destAirportHub": "EWR",
+      "status": "IN_TRANSIT",
+      "serviceTier": "INTERNATIONAL_PRIORITY",
+      "weightKg": 8.5,
+      "createdAt": "2026-11-02",
+      "senderCity": "Dhaka",
+      "senderCountry": "BD",
+      "signedBy": "David Miller"
+    },
+    {
+      "id": "8d170070-1ae7-468c-8570-a1e401f15502",
+      "trackingNumber": "879638559902",
+      "recipient": "Mr.Sojjol (Bernette Textile Co. Ltd.)",
+      "destinationCity": "New York",
+      "destinationCountry": "US",
+      "destAirportHub": "EWR",
+      "status": "IN_TRANSIT",
+      "serviceTier": "INTERNATIONAL_PRIORITY",
+      "weightKg": 5.5,
+      "createdAt": "2026-11-02",
+      "senderCity": "Dhaka",
+      "senderCountry": "BD"
+    }
+  ],
+  "customEvents": {
+    "879745161858": [
+      {
+        "timestamp": "2026-11-02T14:18:08.976Z",
+        "eventType": "OC",
+        "eventDescription": "Shipment created and Air Waybill generated",
+        "scanLocation": {
+          "city": "Dhaka",
+          "stateOrProvinceCode": null,
+          "countryCode": "BD"
+        },
+        "signedBy": null
+      },
+      {
+        "timestamp": "2026-11-02T14:18:15.837Z",
+        "eventType": "IT",
+        "eventDescription": "Departed Dubai International Sort Facility on flight NTG-404",
+        "scanLocation": {
+          "city": "Dubai",
+          "stateOrProvinceCode": null,
+          "countryCode": "AE"
+        },
+        "signedBy": null
+      }
+    ],
+    "879098800901": [
+      {
+        "timestamp": "2026-10-23T10:15:00.000Z",
+        "eventType": "OC",
+        "eventDescription": "Shipment information sent to FedEx",
+        "scanLocation": {
+          "city": "Dhaka",
+          "stateOrProvinceCode": null,
+          "countryCode": "BD"
+        },
+        "signedBy": null
+      },
+      {
+        "timestamp": "2026-10-23T14:30:00.000Z",
+        "eventType": "PU",
+        "eventDescription": "Picked up by FedEx courier",
+        "scanLocation": {
+          "city": "Dhaka",
+          "stateOrProvinceCode": null,
+          "countryCode": "BD"
+        },
+        "signedBy": null
+      },
+      {
+        "timestamp": "2026-10-24T02:10:00.000Z",
+        "eventType": "DP",
+        "eventDescription": "Departed origin sort facility",
+        "scanLocation": {
+          "city": "Dhaka",
+          "stateOrProvinceCode": null,
+          "countryCode": "BD"
+        },
+        "signedBy": null
+      },
+      {
+        "timestamp": "2026-10-25T13:45:00.000Z",
+        "eventType": "AR",
+        "eventDescription": "Arrived at FedEx transit hub",
+        "scanLocation": {
+          "city": "Dubai",
+          "stateOrProvinceCode": null,
+          "countryCode": "AE"
+        },
+        "signedBy": null
+      },
+      {
+        "timestamp": "2026-10-27T08:15:00.000Z",
+        "eventType": "OD",
+        "eventDescription": "On FedEx vehicle for delivery",
+        "scanLocation": {
+          "city": "New York",
+          "stateOrProvinceCode": "NY",
+          "countryCode": "US"
+        },
+        "signedBy": null
+      },
+      {
+        "timestamp": "2026-10-27T14:45:00.000Z",
+        "eventType": "DL",
+        "eventDescription": "Delivered",
+        "scanLocation": {
+          "city": "New York",
+          "stateOrProvinceCode": "NY",
+          "countryCode": "US"
+        },
+        "signedBy": "D.Salman"
+      }
+    ],
+    "879098800908": [
+      {
+        "timestamp": "2026-10-27T10:00:00.000Z",
+        "eventType": "OC",
+        "eventDescription": "Shipment created and Air Waybill generated",
+        "scanLocation": {
+          "city": "Dhaka",
+          "stateOrProvinceCode": null,
+          "countryCode": "BD"
+        },
+        "signedBy": null
+      },
+      {
+        "timestamp": "2026-10-27T13:30:00.000Z",
+        "eventType": "PU",
+        "eventDescription": "Picked up by courier #402",
+        "scanLocation": {
+          "city": "Dhaka",
+          "stateOrProvinceCode": null,
+          "countryCode": "BD"
+        },
+        "signedBy": null
+      },
+      {
+        "timestamp": "2026-10-28T04:20:00.000Z",
+        "eventType": "DP",
+        "eventDescription": "Departed DACA hub on flight QR639",
+        "scanLocation": {
+          "city": "Dhaka",
+          "stateOrProvinceCode": null,
+          "countryCode": "BD"
+        },
+        "signedBy": null
+      },
+      {
+        "timestamp": "2026-10-29T12:15:00.000Z",
+        "eventType": "AR",
+        "eventDescription": "Arrived at European Transit Gateway (CDG)",
+        "scanLocation": {
+          "city": "Paris",
+          "stateOrProvinceCode": null,
+          "countryCode": "FR"
+        },
+        "signedBy": null
+      }
+    ],
+    "879098800906": [
+      {
+        "timestamp": "2026-10-26T07:45:00.000Z",
+        "eventType": "OC",
+        "eventDescription": "Shipment created and Air Waybill generated",
+        "scanLocation": {
+          "city": "Dhaka",
+          "stateOrProvinceCode": null,
+          "countryCode": "BD"
+        },
+        "signedBy": null
+      }
+    ],
+    "879098800904": [
+      {
+        "timestamp": "2026-10-25T14:00:00.000Z",
+        "eventType": "OC",
+        "eventDescription": "Shipment created and Air Waybill generated",
+        "scanLocation": {
+          "city": "Dhaka",
+          "stateOrProvinceCode": null,
+          "countryCode": "BD"
+        },
+        "signedBy": null
+      }
+    ],
+    "879098800905": [
+      {
+        "timestamp": "2026-10-24T11:20:00.000Z",
+        "eventType": "OC",
+        "eventDescription": "Shipment created and Air Waybill generated",
+        "scanLocation": {
+          "city": "Dhaka",
+          "stateOrProvinceCode": null,
+          "countryCode": "BD"
+        },
+        "signedBy": null
+      },
+      {
+        "timestamp": "2026-10-24T15:30:00.000Z",
+        "eventType": "PU",
+        "eventDescription": "Picked up by courier",
+        "scanLocation": {
+          "city": "Dhaka",
+          "stateOrProvinceCode": null,
+          "countryCode": "BD"
+        },
+        "signedBy": null
+      },
+      {
+        "timestamp": "2026-10-24T18:45:00.000Z",
+        "eventType": "AF",
+        "eventDescription": "Arrived at origin sort gateway DACA",
+        "scanLocation": {
+          "city": "Dhaka",
+          "stateOrProvinceCode": null,
+          "countryCode": "BD"
+        },
+        "signedBy": null
+      }
+    ],
+    "879098800903": [
+      {
+        "timestamp": "2026-10-22T09:15:00.000Z",
+        "eventType": "OC",
+        "eventDescription": "Shipment created and Air Waybill generated",
+        "scanLocation": {
+          "city": "Dhaka",
+          "stateOrProvinceCode": null,
+          "countryCode": "BD"
+        },
+        "signedBy": null
+      },
+      {
+        "timestamp": "2026-10-22T13:40:00.000Z",
+        "eventType": "PU",
+        "eventDescription": "Picked up from shipper",
+        "scanLocation": {
+          "city": "Dhaka",
+          "stateOrProvinceCode": null,
+          "countryCode": "BD"
+        },
+        "signedBy": null
+      },
+      {
+        "timestamp": "2026-10-23T01:50:00.000Z",
+        "eventType": "DP",
+        "eventDescription": "Departed origin airport DACA",
+        "scanLocation": {
+          "city": "Dhaka",
+          "stateOrProvinceCode": null,
+          "countryCode": "BD"
+        },
+        "signedBy": null
+      },
+      {
+        "timestamp": "2026-10-25T14:10:00.000Z",
+        "eventType": "AR",
+        "eventDescription": "Arrived at Toronto Sort Facility YYZ",
+        "scanLocation": {
+          "city": "Toronto",
+          "stateOrProvinceCode": null,
+          "countryCode": "CA"
+        },
+        "signedBy": null
+      },
+      {
+        "timestamp": "2026-10-26T08:30:00.000Z",
+        "eventType": "OD",
+        "eventDescription": "Out for delivery with courier route 42",
+        "scanLocation": {
+          "city": "Toronto",
+          "stateOrProvinceCode": null,
+          "countryCode": "CA"
+        },
+        "signedBy": null
+      }
+    ],
+    "879098800902": [
+      {
+        "timestamp": "2026-10-20T08:30:00.000Z",
+        "eventType": "OC",
+        "eventDescription": "Shipment created and Air Waybill generated",
+        "scanLocation": {
+          "city": "Dhaka",
+          "stateOrProvinceCode": null,
+          "countryCode": "BD"
+        },
+        "signedBy": null
+      },
+      {
+        "timestamp": "2026-10-20T11:00:00.000Z",
+        "eventType": "PU",
+        "eventDescription": "Picked up by FedEx courier",
+        "scanLocation": {
+          "city": "Dhaka",
+          "stateOrProvinceCode": null,
+          "countryCode": "BD"
+        },
+        "signedBy": null
+      },
+      {
+        "timestamp": "2026-10-21T03:15:00.000Z",
+        "eventType": "DP",
+        "eventDescription": "Departed origin sort facility",
+        "scanLocation": {
+          "city": "Dhaka",
+          "stateOrProvinceCode": null,
+          "countryCode": "BD"
+        },
+        "signedBy": null
+      },
+      {
+        "timestamp": "2026-10-23T19:20:00.000Z",
+        "eventType": "AR",
+        "eventDescription": "Arrived at destination facility (EWR Sort)",
+        "scanLocation": {
+          "city": "Newark",
+          "stateOrProvinceCode": null,
+          "countryCode": "US"
+        },
+        "signedBy": null
+      },
+      {
+        "timestamp": "2026-10-24T09:00:00.000Z",
+        "eventType": "OD",
+        "eventDescription": "Out for delivery",
+        "scanLocation": {
+          "city": "New York",
+          "stateOrProvinceCode": null,
+          "countryCode": "US"
+        },
+        "signedBy": null
+      },
+      {
+        "timestamp": "2026-10-24T16:10:00.000Z",
+        "eventType": "DL",
+        "eventDescription": "Delivered to reception desk",
+        "scanLocation": {
+          "city": "New York",
+          "stateOrProvinceCode": null,
+          "countryCode": "US"
+        },
+        "signedBy": "J. O'Brien"
+      }
+    ],
+    "879098800907": [
+      {
+        "timestamp": "2026-10-18T09:30:00.000Z",
+        "eventType": "OC",
+        "eventDescription": "Shipment created and Air Waybill generated",
+        "scanLocation": {
+          "city": "Dhaka",
+          "stateOrProvinceCode": null,
+          "countryCode": "BD"
+        },
+        "signedBy": null
+      },
+      {
+        "timestamp": "2026-10-18T14:15:00.000Z",
+        "eventType": "PU",
+        "eventDescription": "Picked up from warehouse",
+        "scanLocation": {
+          "city": "Dhaka",
+          "stateOrProvinceCode": null,
+          "countryCode": "BD"
+        },
+        "signedBy": null
+      },
+      {
+        "timestamp": "2026-10-19T02:00:00.000Z",
+        "eventType": "DP",
+        "eventDescription": "Departed Dhaka via flight SQ449",
+        "scanLocation": {
+          "city": "Dhaka",
+          "stateOrProvinceCode": null,
+          "countryCode": "BD"
+        },
+        "signedBy": null
+      },
+      {
+        "timestamp": "2026-10-22T11:30:00.000Z",
+        "eventType": "DE",
+        "eventDescription": "Customs delay: Additional regulatory documentation required",
+        "scanLocation": {
+          "city": "Sydney",
+          "stateOrProvinceCode": null,
+          "countryCode": "AU"
+        },
+        "signedBy": null
+      }
+    ]
+  },
+  "customScans": {
+    "879394688046": [
+      {
+        "timestamp": "2026-11-02T15:06:20.514Z",
+        "eventType": "IT",
+        "eventDescription": "Flight departed DXB hub to destination",
+        "scanLocation": {
+          "city": "New York",
+          "countryCode": "US"
+        }
+      },
+      {
+        "timestamp": "2026-11-02T15:06:31.590Z",
+        "eventType": "DL",
+        "eventDescription": "Delivered to recipient. Signature recorded.",
+        "scanLocation": {
+          "city": "New York",
+          "countryCode": "US"
+        },
+        "signedBy": "David Miller"
+      },
+      {
+        "timestamp": "2026-11-02T15:07:32.329Z",
+        "eventType": "AR",
+        "eventDescription": "Customs clearance completed at destination gateway terminal.",
+        "scanLocation": {
+          "city": "New York",
+          "countryCode": "US"
+        }
+      },
+      {
+        "timestamp": "2026-11-02T16:59:46.914Z",
+        "eventType": "AF",
+        "eventDescription": "Parcel sorted and security screened at NTGX Air Gateway DACA.",
+        "scanLocation": {
+          "city": "Dhaka",
+          "countryCode": "BD"
+        }
+      },
+      {
+        "timestamp": "2026-11-02T17:02:10.461Z",
+        "eventType": "IT",
+        "eventDescription": "Departed origin hub via scheduled international linehaul flight.",
+        "scanLocation": {
+          "city": "New York",
+          "countryCode": "US"
+        }
+      }
+    ],
+    "879638559902": [
+      {
+        "timestamp": "2026-11-02T17:02:01.453Z",
+        "eventType": "IT",
+        "eventDescription": "Departed origin hub via scheduled international linehaul flight.",
+        "scanLocation": {
+          "city": "New York",
+          "countryCode": "US"
+        }
+      }
+    ]
+  }
+}
