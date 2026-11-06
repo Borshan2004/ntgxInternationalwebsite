@@ -27,11 +27,11 @@ const GUIDES = [
 
 export function KnowledgeCenterSection(): React.JSX.Element {
   return (
-    <section className="py-20 bg-slate-50 border-t border-slate-200">
+    <section className="py-20 bg-slate-50 border-t border-slate-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-orange-600 block mb-2">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#E51919] block mb-2">
               Shipping Resources
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
@@ -44,7 +44,7 @@ export function KnowledgeCenterSection(): React.JSX.Element {
 
           <a
             href="#faq"
-            className="inline-flex items-center gap-1.5 text-sm font-bold text-orange-600 hover:text-orange-700 hover:underline shrink-0"
+            className="inline-flex items-center gap-1.5 text-sm font-bold text-[#E51919] hover:underline shrink-0"
           >
             <span>Browse All Guides</span>
             <ArrowRight className="w-4 h-4" />
@@ -57,16 +57,16 @@ export function KnowledgeCenterSection(): React.JSX.Element {
             return (
               <div
                 key={guide.title}
-                className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-lg hover:border-orange-300 transition-all flex flex-col justify-between group"
+                className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs hover:shadow-lg hover:border-red-300 transition-all flex flex-col justify-between group"
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-[11px] font-bold text-orange-600 bg-orange-50 px-2.5 py-1 rounded-full">
+                    <span className="text-[11px] font-bold text-[#E51919] bg-red-50 px-2.5 py-1 rounded-full">
                       {guide.category}
                     </span>
                     <Icon className="w-4 h-4 text-slate-400" />
                   </div>
-                  <h3 className="text-base font-bold text-slate-900 group-hover:text-orange-600 transition-colors mb-2">
+                  <h3 className="text-base font-bold text-slate-900 group-hover:text-[#E51919] transition-colors mb-2">
                     {guide.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
@@ -77,7 +77,7 @@ export function KnowledgeCenterSection(): React.JSX.Element {
                 <div className="pt-4 border-t border-slate-100 mt-4">
                   <a
                     href="#faq"
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-orange-600 hover:text-orange-700"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#E51919] hover:underline"
                   >
                     <span>Read Full Guide</span>
                     <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />

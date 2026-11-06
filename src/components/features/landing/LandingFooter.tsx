@@ -8,7 +8,7 @@ import { MapPin, Phone, Mail, MessageCircle, ShieldCheck } from 'lucide-react';
 
 export function LandingFooter(): React.JSX.Element {
   return (
-    <footer id="contact" className="bg-[#0a1120] text-slate-400 text-xs border-t border-slate-800">
+    <footer id="contact" className="bg-[#07111E] text-slate-400 text-xs border-t border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           {/* Column 1: Brand & Overview (2 cols wide on desktop) */}
@@ -16,7 +16,7 @@ export function LandingFooter(): React.JSX.Element {
             <Link href="/" className="inline-block mb-1">
               <BrandLogo size="md" variant="light" />
             </Link>
-            <p className="text-slate-400 text-xs sm:text-sm leading-relaxed max-w-sm">
+            <p className="text-slate-400 text-xs sm:text-sm leading-relaxed max-w-sm font-normal">
               NTGX Express &amp; Freight provides dependable international express courier, air freight forwarding,
               and garment export logistics from Bangladesh to 215+ global destinations.
             </p>
@@ -31,32 +31,32 @@ export function LandingFooter(): React.JSX.Element {
             <h4 className="text-white font-bold text-sm tracking-wide uppercase">Quick Links</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/" className="hover:text-orange-400 transition-colors">
+                <Link href="/" className="hover:text-red-400 transition-colors">
                   Home
                 </Link>
               </li>
               <li>
-                <a href="#about" className="hover:text-orange-400 transition-colors">
+                <a href="#about" className="hover:text-red-400 transition-colors">
                   About NTGX
                 </a>
               </li>
               <li>
-                <a href="#services" className="hover:text-orange-400 transition-colors">
+                <a href="#services" className="hover:text-red-400 transition-colors">
                   Courier Services
                 </a>
               </li>
               <li>
-                <a href="#industries" className="hover:text-orange-400 transition-colors">
+                <a href="#industries" className="hover:text-red-400 transition-colors">
                   RMG &amp; Garments Export
                 </a>
               </li>
               <li>
-                <a href="#tracking-section" className="hover:text-orange-400 transition-colors">
+                <a href="#tracking-section" className="hover:text-red-400 transition-colors">
                   Track Consignment
                 </a>
               </li>
               <li>
-                <a href="#rate-estimator" className="hover:text-orange-400 transition-colors">
+                <a href="#rate-estimator" className="hover:text-red-400 transition-colors">
                   Instant Rate Estimator
                 </a>
               </li>
@@ -68,22 +68,22 @@ export function LandingFooter(): React.JSX.Element {
             <h4 className="text-white font-bold text-sm tracking-wide uppercase">Shipper Portal</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/login" className="hover:text-orange-400 transition-colors">
+                <Link href="/login" className="hover:text-red-400 transition-colors">
                   Customer Sign In
                 </Link>
               </li>
               <li>
-                <Link href="/register" className="hover:text-orange-400 transition-colors">
+                <Link href="/register" className="hover:text-red-400 transition-colors">
                   Apply for Corporate Account
                 </Link>
               </li>
               <li>
-                <Link href="/shipments/new" className="hover:text-orange-400 transition-colors">
+                <Link href="/shipments/new" className="hover:text-red-400 transition-colors">
                   Create Air Waybill (AWB)
                 </Link>
               </li>
               <li>
-                <a href="#faq" className="hover:text-orange-400 transition-colors">
+                <a href="#faq" className="hover:text-red-400 transition-colors">
                   Customs FAQ
                 </a>
               </li>
@@ -95,12 +95,12 @@ export function LandingFooter(): React.JSX.Element {
             <h4 className="text-white font-bold text-sm tracking-wide uppercase">Dhaka Headquarters</h4>
             <ul className="space-y-3 text-slate-300">
               <li className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-orange-400 shrink-0 mt-0.5" />
+                <MapPin className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
                 <span>Sector 4, Uttara, Airport Road, Dhaka-1230, Bangladesh</span>
               </li>
               <li className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-orange-400 shrink-0" />
-                <a href="tel:+8801681637836" className="hover:text-orange-400">
+                <Phone className="w-4 h-4 text-red-400 shrink-0" />
+                <a href="tel:+8801681637836" className="hover:text-white">
                   +880 1681 637836
                 </a>
               </li>
@@ -112,12 +112,12 @@ export function LandingFooter(): React.JSX.Element {
                   rel="noopener noreferrer"
                   className="hover:text-emerald-400"
                 >
-                  WhatsApp Dispatch
+                  WhatsApp Dispatch Desk
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-orange-400 shrink-0" />
-                <a href="mailto:operations@ntgx.com.bd" className="hover:text-orange-400">
+                <Mail className="w-4 h-4 text-red-400 shrink-0" />
+                <a href="mailto:operations@ntgx.com.bd" className="hover:text-white">
                   operations@ntgx.com.bd
                 </a>
               </li>

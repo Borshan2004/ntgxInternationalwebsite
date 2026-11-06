@@ -36,7 +36,7 @@ export function CustomerTestimonials(): React.JSX.Element {
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-14">
-          <span className="text-xs font-bold uppercase tracking-wider text-orange-600 block mb-2">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#E51919] block mb-2">
             Customer Reviews
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
@@ -51,7 +51,7 @@ export function CustomerTestimonials(): React.JSX.Element {
           {REVIEWS.map((rev) => (
             <div
               key={rev.name}
-              className="bg-slate-50/70 border border-slate-200/90 rounded-2xl p-6 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-orange-200 transition-all"
+              className="bg-slate-50/70 border border-slate-200/90 rounded-2xl p-6 shadow-xs flex flex-col justify-between hover:shadow-md hover:border-red-200 transition-all"
             >
               <div>
                 {/* 5 Stars */}
@@ -69,7 +69,7 @@ export function CustomerTestimonials(): React.JSX.Element {
 
               {/* Reviewer Info */}
               <div className="flex items-center gap-3 pt-4 border-t border-slate-200/80">
-                <div className="w-10 h-10 rounded-full bg-blue-900 text-white font-bold flex items-center justify-center text-xs">
+                <div className="w-10 h-10 rounded-full bg-slate-900 text-white font-bold flex items-center justify-center text-xs">
                   {rev.avatar}
                 </div>
                 <div>

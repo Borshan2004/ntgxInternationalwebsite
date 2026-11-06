@@ -54,7 +54,7 @@ export function ShipmentTypesSection(): React.JSX.Element {
   return (
     <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="text-center max-w-2xl mx-auto mb-14">
-        <span className="text-xs font-bold uppercase tracking-wider text-orange-600 block mb-2">
+        <span className="text-xs font-bold uppercase tracking-wider text-[#E51919] block mb-2">
           What Are You Shipping?
         </span>
         <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
@@ -71,14 +71,14 @@ export function ShipmentTypesSection(): React.JSX.Element {
           return (
             <div
               key={type.title}
-              className="bg-white border border-slate-200/90 rounded-2xl p-5 text-center flex flex-col items-center justify-between shadow-sm hover:shadow-lg hover:border-orange-300 hover:-translate-y-1 transition-all group"
+              className="bg-white border border-slate-200/90 rounded-2xl p-5 text-center flex flex-col items-center justify-between shadow-xs hover:shadow-lg hover:border-red-300 hover:-translate-y-1 transition-all group"
             >
-              <div className="w-14 h-14 rounded-2xl bg-slate-50 border border-slate-100 group-hover:bg-orange-50 group-hover:border-orange-200 flex items-center justify-center text-blue-900 group-hover:text-orange-600 transition-colors mb-3">
+              <div className="w-14 h-14 rounded-2xl bg-slate-50 border border-slate-100 group-hover:bg-red-50 group-hover:border-red-200 flex items-center justify-center text-slate-800 group-hover:text-[#E51919] transition-colors mb-3">
                 <Icon className="w-6 h-6" />
               </div>
 
               <div>
-                <h3 className="text-sm font-bold text-slate-900 group-hover:text-orange-600 transition-colors mb-1.5">
+                <h3 className="text-sm font-bold text-slate-900 group-hover:text-[#E51919] transition-colors mb-1.5">
                   {type.title}
                 </h3>
                 <p className="text-[11px] text-slate-500 leading-relaxed font-normal">
@@ -86,7 +86,7 @@ export function ShipmentTypesSection(): React.JSX.Element {
                 </p>
               </div>
 
-              <span className="mt-3 text-[10px] font-bold text-slate-600 bg-slate-100 group-hover:bg-orange-100 group-hover:text-orange-700 px-2.5 py-0.5 rounded-full transition-colors">
+              <span className="mt-3 text-[10px] font-bold text-slate-600 bg-slate-100 group-hover:bg-red-100 group-hover:text-red-700 px-2.5 py-0.5 rounded-full transition-colors">
                 {type.badge}
               </span>
             </div>

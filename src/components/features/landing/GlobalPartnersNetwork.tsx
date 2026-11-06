@@ -17,10 +17,10 @@ const PARTNERS = [
 
 export function GlobalPartnersNetwork(): React.JSX.Element {
   return (
-    <section className="py-16 bg-slate-100/80 border-t border-slate-200">
+    <section className="py-16 bg-slate-100/70 border-t border-slate-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-10">
-          <span className="text-xs font-bold uppercase tracking-wider text-orange-600 block mb-2">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#E51919] block mb-2">
             Global Strategic Alliance
           </span>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
@@ -35,10 +35,10 @@ export function GlobalPartnersNetwork(): React.JSX.Element {
           {PARTNERS.map((partner) => (
             <div
               key={partner.name}
-              className="bg-white border border-slate-200/90 rounded-xl p-4 flex flex-col items-center justify-center text-center shadow-xs hover:shadow-md hover:border-orange-300 transition-all"
+              className="bg-white border border-slate-200/90 rounded-xl p-4 flex flex-col items-center justify-center text-center shadow-xs hover:shadow-md hover:border-red-300 transition-all"
             >
               <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-700 mb-2">
-                <Plane className="w-4 h-4 text-orange-600" />
+                <Plane className="w-4 h-4 text-[#E51919]" />
               </div>
               <span className="font-bold text-sm text-slate-900">{partner.name}</span>
               <span className="text-[11px] text-slate-500 font-medium">{partner.tag}</span>

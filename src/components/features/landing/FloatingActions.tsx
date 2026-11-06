@@ -30,7 +30,7 @@ export function FloatingActions(): React.JSX.Element {
           type="button"
           onClick={scrollToTop}
           aria-label="Scroll to top of page"
-          className="w-11 h-11 rounded-full bg-white text-slate-800 shadow-xl border border-slate-200 flex items-center justify-center hover:bg-slate-50 hover:text-orange-600 transition-all"
+          className="w-11 h-11 rounded-full bg-white text-slate-800 shadow-xl border border-slate-200 flex items-center justify-center hover:bg-slate-50 hover:text-[#E51919] transition-all"
         >
           <ArrowUp className="w-5 h-5" />
         </button>
@@ -40,7 +40,7 @@ export function FloatingActions(): React.JSX.Element {
       <a
         href="#rate-estimator"
         aria-label="Jump to rate estimate calculator"
-        className="w-11 h-11 rounded-full bg-orange-600 text-white shadow-xl flex items-center justify-center hover:bg-orange-500 transition-all hover:scale-105"
+        className="w-11 h-11 rounded-full bg-[#E51919] text-white shadow-xl flex items-center justify-center hover:bg-[#C81212] transition-all hover:scale-105"
       >
         <Calculator className="w-5 h-5" />
       </a>
@@ -60,7 +60,7 @@ export function FloatingActions(): React.JSX.Element {
       <a
         href="tel:+8801681637836"
         aria-label="Call support hotline"
-        className="w-11 h-11 rounded-full bg-blue-900 text-white shadow-xl flex items-center justify-center hover:bg-blue-800 transition-all hover:scale-105"
+        className="w-11 h-11 rounded-full bg-slate-900 text-white shadow-xl flex items-center justify-center hover:bg-slate-800 transition-all hover:scale-105"
       >
         <Phone className="w-5 h-5" />
       </a>

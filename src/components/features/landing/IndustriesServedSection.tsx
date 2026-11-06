@@ -48,7 +48,7 @@ export function IndustriesServedSection(): React.JSX.Element {
     <section id="industries" className="py-20 bg-slate-50 border-t border-slate-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-14">
-          <span className="text-xs font-bold uppercase tracking-wider text-orange-600 block mb-2">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#E51919] block mb-2">
             Industries We Serve
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
@@ -65,10 +65,10 @@ export function IndustriesServedSection(): React.JSX.Element {
             return (
               <div
                 key={ind.title}
-                className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-orange-300 transition-all group"
+                className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-xs hover:shadow-md hover:border-red-300 transition-all group"
               >
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-orange-50 text-orange-600 group-hover:bg-orange-600 group-hover:text-white flex items-center justify-center transition-colors">
+                  <div className="w-12 h-12 rounded-xl bg-slate-50 text-slate-800 border border-slate-100 group-hover:bg-red-50 group-hover:text-[#E51919] group-hover:border-red-100 flex items-center justify-center transition-colors">
                     <Icon className="w-6 h-6" />
                   </div>
                   <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full">
@@ -76,7 +76,7 @@ export function IndustriesServedSection(): React.JSX.Element {
                   </span>
                 </div>
 
-                <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-orange-600 transition-colors">
+                <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-[#E51919] transition-colors">
                   {ind.title}
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
@@ -88,15 +88,15 @@ export function IndustriesServedSection(): React.JSX.Element {
         </div>
 
         {/* Real Case Study Banner */}
-        <div className="mt-14 bg-gradient-to-r from-slate-900 to-blue-950 text-white rounded-3xl p-6 sm:p-10 shadow-xl border border-slate-800 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="mt-14 bg-gradient-to-r from-[#071324] to-[#0D1F38] text-white rounded-3xl p-6 sm:p-10 shadow-xl border border-slate-800 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-8 space-y-4">
-            <span className="text-xs font-bold uppercase tracking-wider text-orange-400 bg-orange-500/20 px-3 py-1 rounded-full border border-orange-500/30">
+            <span className="text-xs font-bold uppercase tracking-wider text-red-400 bg-red-500/15 px-3 py-1 rounded-full border border-red-500/30">
               Verified Case Study
             </span>
             <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
               Bangladesh &rarr; USA Garments Commercial Shipment
             </h3>
-            <p className="text-sm text-slate-300 leading-relaxed max-w-2xl">
+            <p className="text-sm text-slate-300 leading-relaxed max-w-2xl font-normal">
               Assisted an apparel exporter in Gazipur with shipping 2,800 kg of knitwear to Newark (EWR),
               achieving complete customs clearance and final warehouse delivery in just 4 business days.
             </p>
@@ -119,9 +119,9 @@ export function IndustriesServedSection(): React.JSX.Element {
           <div className="lg:col-span-4 flex justify-start lg:justify-end">
             <a
               href="#contact"
-              className="inline-flex items-center gap-2 px-6 py-3.5 bg-orange-600 hover:bg-orange-500 text-white text-sm font-bold rounded-xl shadow-lg shadow-orange-600/30 transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#E51919] hover:bg-[#C81212] active:bg-[#9B0E0E] text-white text-sm font-bold rounded-xl shadow-lg shadow-red-600/30 transition-all"
             >
-              <span>Explore Business Tariff</span>
+              <span>Explore Corporate Tariff</span>
               <ArrowRight className="w-4 h-4" />
             </a>
           </div>

@@ -8,7 +8,7 @@ const CATEGORIES = [
   {
     title: 'International Courier',
     icon: Plane,
-    color: 'text-orange-600 bg-orange-50 border-orange-100',
+    color: 'text-red-600 bg-red-50 border-red-100',
     href: '#services',
   },
   {
@@ -20,17 +20,17 @@ const CATEGORIES = [
   {
     title: 'Air & Sea Freight',
     icon: Send,
-    color: 'text-purple-600 bg-purple-50 border-purple-100',
+    color: 'text-slate-700 bg-slate-100 border-slate-200',
     href: '#services',
   },
   {
-    title: 'Business Shipping',
+    title: 'Corporate Accounts',
     icon: Building,
     color: 'text-emerald-600 bg-emerald-50 border-emerald-100',
     href: '#industries',
   },
   {
-    title: 'Customs Support',
+    title: 'Customs Clearance',
     icon: ShieldCheck,
     color: 'text-amber-600 bg-amber-50 border-amber-100',
     href: '#faq',
@@ -38,29 +38,29 @@ const CATEGORIES = [
   {
     title: 'Global Delivery',
     icon: Globe,
-    color: 'text-sky-600 bg-sky-50 border-sky-100',
+    color: 'text-indigo-600 bg-indigo-50 border-indigo-100',
     href: '#destinations',
   },
 ] as const;
 
 export function QuickCategoryBar(): React.JSX.Element {
   return (
-    <div className="bg-white border-b border-slate-200 py-6 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+    <div className="bg-white border-b border-slate-200/80 py-5 px-4 sm:px-6 lg:px-8 shadow-xs">
+      <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
         {CATEGORIES.map((cat) => {
           const Icon = cat.icon;
           return (
             <a
               key={cat.title}
               href={cat.href}
-              className="flex flex-col items-center text-center p-3.5 rounded-xl border border-slate-100 hover:border-orange-200 hover:shadow-md transition-all group bg-slate-50/50 hover:bg-white"
+              className="flex flex-col items-center text-center p-3 rounded-xl border border-slate-100 hover:border-red-200 hover:shadow-sm transition-all group bg-slate-50/40 hover:bg-white"
             >
               <div
-                className={`w-12 h-12 rounded-xl flex items-center justify-center mb-2.5 transition-transform group-hover:scale-110 border ${cat.color}`}
+                className={`w-11 h-11 rounded-xl flex items-center justify-center mb-2 transition-transform group-hover:scale-105 border ${cat.color}`}
               >
                 <Icon className="w-5 h-5" />
               </div>
-              <span className="text-xs font-bold text-slate-800 group-hover:text-orange-600 transition-colors">
+              <span className="text-xs font-bold text-slate-800 group-hover:text-[#E51919] transition-colors">
                 {cat.title}
               </span>
             </a>

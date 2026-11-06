@@ -48,7 +48,7 @@ export function ShippingFaqAccordion(): React.JSX.Element {
     <section id="faq" className="py-20 bg-white">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-14">
-          <span className="text-xs font-bold uppercase tracking-wider text-orange-600 block mb-2">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#E51919] block mb-2">
             Frequently Asked Questions
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
@@ -65,20 +65,20 @@ export function ShippingFaqAccordion(): React.JSX.Element {
             return (
               <div
                 key={faq.question}
-                className="border border-slate-200 rounded-2xl overflow-hidden transition-all duration-200"
+                className="border border-slate-200/90 rounded-2xl overflow-hidden transition-all duration-200"
               >
                 <button
                   type="button"
                   onClick={() => toggle(idx)}
-                  className="w-full px-6 py-4.5 flex items-center justify-between text-left font-bold text-slate-900 hover:text-orange-600 bg-slate-50/60 hover:bg-orange-50/30 transition-colors"
+                  className="w-full px-6 py-4.5 flex items-center justify-between text-left font-bold text-slate-900 hover:text-[#E51919] bg-slate-50/60 hover:bg-red-50/20 transition-colors"
                 >
                   <span className="text-sm sm:text-base pr-4 flex items-center gap-2.5">
-                    <HelpCircle className="w-4 h-4 text-orange-500 shrink-0" />
+                    <HelpCircle className="w-4 h-4 text-[#E51919] shrink-0" />
                     {faq.question}
                   </span>
                   <div className="w-7 h-7 rounded-full bg-white border border-slate-200 flex items-center justify-center shrink-0">
                     {isOpen ? (
-                      <Minus className="w-4 h-4 text-orange-600" />
+                      <Minus className="w-4 h-4 text-[#E51919]" />
                     ) : (
                       <Plus className="w-4 h-4 text-slate-500" />
                     )}
@@ -86,7 +86,7 @@ export function ShippingFaqAccordion(): React.JSX.Element {
                 </button>
 
                 {isOpen && (
-                  <div className="px-6 py-4 text-xs sm:text-sm text-slate-600 leading-relaxed bg-white border-t border-slate-100 animate-in fade-in duration-150">
+                  <div className="px-6 py-4 text-xs sm:text-sm text-slate-600 leading-relaxed bg-white border-t border-slate-100 animate-in fade-in duration-150 font-normal">
                     {faq.answer}
                   </div>
                 )}
