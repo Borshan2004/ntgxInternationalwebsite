@@ -1,0 +1,278 @@
+// src/components/features/landing/QuickCalculatorAndTracker.tsx
+'use client';
+
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Calculator, Search, ArrowRight, CheckCircle2, AlertCircle } from 'lucide-react';
+
+interface EstimateDisplay {
+  service: string;
+  usd: number;
+  bdt: number;
+  transitDays: string;
+}
+
+const POPULAR_DESTINATIONS = [
+  { code: 'US', name: 'United States (USA)', baseRate: 48, ratePerKg: 14, days: '3-5 Business Days' },
+  { code: 'GB', name: 'United Kingdom (UK)', baseRate: 42, ratePerKg: 12, days: '2-4 Business Days' },
+  { code: 'CA', name: 'Canada', baseRate: 52, ratePerKg: 15, days: '3-5 Business Days' },
+  { code: 'AE', name: 'United Arab Emirates (UAE)', baseRate: 35, ratePerKg: 9, days: '2-3 Business Days' },
+  { code: 'AU', name: 'Australia', baseRate: 55, ratePerKg: 16, days: '4-6 Business Days' },
+  { code: 'DE', name: 'Germany', baseRate: 44, ratePerKg: 13, days: '3-4 Business Days' },
+  { code: 'SA', name: 'Saudi Arabia', baseRate: 38, ratePerKg: 10, days: '3-4 Business Days' },
+  { code: 'SG', name: 'Singapore', baseRate: 32, ratePerKg: 8, days: '2-3 Business Days' },
+];
+
+export function QuickCalculatorAndTracker(): React.JSX.Element {
+  const router = useRouter();
+
+  // Tracking state
+  const [trackingNumber, setTrackingNumber] = useState('');
+  const [trackingError, setTrackingError] = useState<string | null>(null);
+
+  // Rate calculator state
+  const [destinationCode, setDestinationCode] = useState('US');
+  const [shipmentType, setShipmentType] = useState<'DOCUMENT' | 'COMMODITY'>('COMMODITY');
+  const [weightKg, setWeightKg] = useState<number>(1.5);
+  const [estimateResult, setEstimateResult] = useState<EstimateDisplay | null>(null);
+  const [isCalculating, setIsCalculating] = useState(false);
+
+  const handleTrackSubmit = (e: React.FormEvent): void => {
+    e.preventDefault();
+    const cleaned = trackingNumber.trim().replace(/\s+/g, '');
+    if (!cleaned) {
+      setTrackingError('Please enter a valid tracking number.');
+      return;
+    }
+    setTrackingError(null);
+    router.push(`/tracking/${cleaned}`);
+  };
+
+  const handleCalculateEstimate = (e: React.FormEvent): void => {
+    e.preventDefault();
+    setIsCalculating(true);
+
+    const dest = POPULAR_DESTINATIONS.find((d) => d.code === destinationCode) || POPULAR_DESTINATIONS[0];
+    const weight = Math.max(0.5, weightKg || 1);
+
+    // Calculate approximate international express rate
+    const multiplier = shipmentType === 'DOCUMENT' ? 0.8 : 1.0;
+    const additionalKg = Math.max(0, weight - 0.5);
+    const calculatedUsd = Math.round((dest.baseRate + additionalKg * dest.ratePerKg) * multiplier);
+    const calculatedBdt = Math.round(calculatedUsd * 122); // Approximate current USD to BDT
+
+    setTimeout(() => {
+      setEstimateResult({
+        service: shipmentType === 'DOCUMENT' ? 'International Priority Document' : 'International Express Freight',
+        usd: calculatedUsd,
+        bdt: calculatedBdt,
+        transitDays: dest.days,
+      });
+      setIsCalculating(false);
+    }, 300);
+  };
+
+  return (
+    <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto -mt-8 relative z-20">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Left Card: Get a Shipping Estimate */}
+        <div
+          id="rate-estimator"
+          className="lg:col-span-6 bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-200/80 transition-all"
+        >
+          <div className="flex items-center gap-3.5 mb-2">
+            <div className="w-10 h-10 rounded-xl bg-orange-500/10 text-orange-600 flex items-center justify-center shrink-0">
+              <Calculator className="w-5 h-5" />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-slate-900">Get a Shipping Estimate</h2>
+              <p className="text-xs text-slate-500">
+                Tell us about your shipment to find the appropriate shipping option.
+              </p>
+            </div>
+          </div>
+
+          <form onSubmit={handleCalculateEstimate} className="mt-6 space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* From Country */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">From</label>
+                <div className="w-full flex items-center gap-2 px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-800">
+                  <span className="text-base">🇧🇩</span>
+                  <span>Bangladesh</span>
+                </div>
+              </div>
+
+              {/* To Country */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">To</label>
+                <select
+                  value={destinationCode}
+                  onChange={(e) => setDestinationCode(e.target.value)}
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                >
+                  {POPULAR_DESTINATIONS.map((dest) => (
+                    <option key={dest.code} value={dest.code}>
+                      {dest.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Shipment Type */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Shipment Type</label>
+                <select
+                  value={shipmentType}
+                  onChange={(e) => setShipmentType(e.target.value as 'DOCUMENT' | 'COMMODITY')}
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                >
+                  <option value="COMMODITY">Package / Commercial Parcel</option>
+                  <option value="DOCUMENT">Document / Business Paper</option>
+                </select>
+              </div>
+
+              {/* Weight in KG */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Weight (KG)</label>
+                <div className="relative">
+                  <input
+                    type="number"
+                    step="0.1"
+                    min="0.1"
+                    max="1000"
+                    value={weightKg}
+                    onChange={(e) => setWeightKg(parseFloat(e.target.value) || 0)}
+                    className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    placeholder="1.0"
+                  />
+                  <span className="absolute right-3.5 top-2.5 text-xs font-bold text-slate-400">KG</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Calculate Button */}
+            <button
+              type="submit"
+              disabled={isCalculating}
+              className="w-full mt-2 py-3.5 px-4 bg-orange-600 hover:bg-orange-500 text-white font-bold rounded-xl shadow-md shadow-orange-600/20 flex items-center justify-center gap-2 transition-all"
+            >
+              <span>{isCalculating ? 'Calculating Rates…' : 'Get Shipping Estimate'}</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+
+            {/* Instant Result Box */}
+            {estimateResult && (
+              <div className="p-4 bg-orange-50/80 border border-orange-200 rounded-2xl animate-in fade-in space-y-2 mt-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-orange-900 uppercase">Estimated Shipping Cost</span>
+                  <span className="text-xs font-semibold text-orange-700 bg-orange-100 px-2 py-0.5 rounded-full">
+                    {estimateResult.transitDays}
+                  </span>
+                </div>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-2xl font-extrabold text-orange-600">
+                    ${estimateResult.usd} USD
+                  </span>
+                  <span className="text-xs text-slate-600 font-medium">
+                    (Approx. ৳{estimateResult.bdt.toLocaleString()} BDT)
+                  </span>
+                </div>
+                <div className="flex items-center gap-1.5 text-xs text-slate-600 pt-1 border-t border-orange-100">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span>Includes standard fuel surcharge &amp; customs documentation assistance.</span>
+                </div>
+              </div>
+            )}
+
+            <div className="pt-2 text-center">
+              <a
+                href="#contact"
+                className="text-xs font-semibold text-orange-600 hover:text-orange-700 hover:underline"
+              >
+                + Request a Bulk or Containerized Cargo Quote
+              </a>
+            </div>
+          </form>
+        </div>
+
+        {/* Right Card: Track Your Shipment */}
+        <div
+          id="tracking-section"
+          className="lg:col-span-6 bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-700 text-white relative overflow-hidden"
+        >
+          {/* Subtle container ship silhouette / glow */}
+          <div className="absolute -right-8 -bottom-8 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="flex items-center gap-3.5 mb-2 relative z-10">
+            <div className="w-10 h-10 rounded-xl bg-orange-600 text-white flex items-center justify-center shrink-0">
+              <Search className="w-5 h-5" />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-white">Track Your Shipment</h2>
+              <p className="text-xs text-slate-300">
+                Enter your tracking number to get real-time milestone updates.
+              </p>
+            </div>
+          </div>
+
+          <form onSubmit={handleTrackSubmit} className="mt-8 space-y-4 relative z-10">
+            <div>
+              <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                Tracking Number / Air Waybill
+              </label>
+              <div className="flex flex-col sm:flex-row gap-2.5">
+                <input
+                  type="text"
+                  value={trackingNumber}
+                  onChange={(e) => {
+                    setTrackingNumber(e.target.value);
+                    if (trackingError) setTrackingError(null);
+                  }}
+                  placeholder="e.g. 879098800901 or NTGX-BD-..."
+                  className="flex-1 px-4 py-3.5 bg-slate-800/90 border border-slate-600 rounded-xl text-white placeholder-slate-400 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+                />
+                <button
+                  type="submit"
+                  className="px-6 py-3.5 bg-orange-600 hover:bg-orange-500 text-white font-bold rounded-xl shadow-lg shadow-orange-600/30 flex items-center justify-center gap-2 transition-all shrink-0"
+                >
+                  <span>Track Shipment</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+
+              {trackingError && (
+                <div className="flex items-center gap-1.5 mt-2 text-xs text-red-400">
+                  <AlertCircle className="w-4 h-4" />
+                  <span>{trackingError}</span>
+                </div>
+              )}
+            </div>
+
+            {/* Demo tracking helper */}
+            <div className="p-4 bg-slate-800/50 rounded-2xl border border-slate-700/60 text-xs text-slate-300 space-y-1.5">
+              <span className="font-bold text-orange-400 block">Try a demo tracking number:</span>
+              <button
+                type="button"
+                onClick={() => setTrackingNumber('879098800901')}
+                className="font-mono text-white bg-slate-700 hover:bg-slate-600 px-2.5 py-1 rounded border border-slate-600 hover:border-orange-500 transition-colors"
+              >
+                879098800901
+              </button>
+              <span className="text-slate-400 ml-2">(Live Delivered BD to USA Shipment)</span>
+            </div>
+
+            <div className="pt-2 text-xs text-slate-400">
+              <span>Need to track 10+ shipments simultaneously? </span>
+              <a href="/login" className="text-orange-400 hover:underline font-semibold">
+                Sign in to Corporate Dashboard &rarr;
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  );
+}
