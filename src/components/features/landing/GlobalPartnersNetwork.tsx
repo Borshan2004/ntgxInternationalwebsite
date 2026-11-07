@@ -19,14 +19,15 @@ export function GlobalPartnersNetwork(): React.JSX.Element {
   return (
     <section className="py-16 bg-slate-100/70 dark:bg-[#0B0F19] border-t border-slate-200/80 dark:border-slate-800 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <span className="text-xs font-bold uppercase tracking-wider text-[#E51919] block mb-2">
-            Global Strategic Alliance
-          </span>
+        <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
+          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#E51B23]">
+            <span className="w-1.5 h-3.5 rounded-full bg-[#E51B23]" />
+            <span>Global Strategic Alliance</span>
+          </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             Our Global Logistics Network
           </h2>
-          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2">
+          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
             Seamlessly integrated with top airline freight carriers and premier international courier networks.
           </p>
         </div>

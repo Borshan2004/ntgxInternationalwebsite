@@ -33,17 +33,18 @@ const REVIEWS = [
 
 export function CustomerTestimonials(): React.JSX.Element {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 lg:py-24 bg-[#F3F6FA] dark:bg-[#0B0F19] transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <span className="text-xs font-bold uppercase tracking-wider text-[#E51919] block mb-2">
-            Customer Reviews
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-            Trusted by Exporters &amp; Individuals
+        <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
+          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#E51B23]">
+            <span className="w-1.5 h-3.5 rounded-full bg-[#E51B23]" />
+            <span>Customer Reviews</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            Trusted by Exporters Worldwide
           </h2>
-          <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
-            Real feedback from commercial clients and individuals shipping worldwide from Bangladesh.
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 font-normal">
+            Real feedback from commercial businesses and individuals shipping overseas from Bangladesh.
           </p>
         </div>
 
@@ -51,13 +52,13 @@ export function CustomerTestimonials(): React.JSX.Element {
           {REVIEWS.map((rev) => (
             <div
               key={rev.name}
-              className="bg-slate-50/70 dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800 rounded-2xl p-6 shadow-xs flex flex-col justify-between hover:shadow-md hover:border-red-200 dark:hover:border-red-900/50 transition-all"
+              className="bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800 rounded-2xl p-7 shadow-xl flex flex-col justify-between hover:shadow-2xl hover:border-red-200 dark:hover:border-red-900/50 hover:-translate-y-1 transition-all"
             >
               <div>
                 {/* 5 Stars */}
-                <div className="flex items-center gap-1 text-amber-500 mb-3">
+                <div className="flex items-center gap-1 text-amber-500 mb-4">
                   {[...Array(rev.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-current" />
+                    <Star key={i} className="w-4 h-4 fill-current text-amber-500" />
                   ))}
                 </div>
 
@@ -68,8 +69,8 @@ export function CustomerTestimonials(): React.JSX.Element {
               </div>
 
               {/* Reviewer Info */}
-              <div className="flex items-center gap-3 pt-4 border-t border-slate-200/80 dark:border-slate-800">
-                <div className="w-10 h-10 rounded-full bg-slate-900 dark:bg-slate-800 text-white font-bold flex items-center justify-center text-xs">
+              <div className="flex items-center gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
+                <div className="w-10 h-10 rounded-full bg-[#08172B] dark:bg-slate-800 text-white font-bold flex items-center justify-center text-xs shadow-xs">
                   {rev.avatar}
                 </div>
                 <div>

@@ -3,98 +3,127 @@
 
 import React from 'react';
 import {
-  Calculator,
-  ClipboardCheck,
-  Truck,
-  FileCheck2,
+  FileText,
+  CalendarCheck,
+  Package,
   Plane,
-  Home,
-  ArrowRight,
+  ShieldCheck,
+  CheckCircle,
 } from 'lucide-react';
 
 const STEPS = [
   {
     step: 1,
-    title: 'Get a Quote',
-    description: 'Provide destination, item type, and weight to view instant transparent pricing.',
-    icon: Calculator,
+    title: 'Request a Quote',
+    description: 'Select destination, cargo type, and weight for instant tariff pricing.',
+    icon: FileText,
   },
   {
     step: 2,
-    title: 'Book Shipment',
-    description: 'Confirm receiver address, commercial details, and download your barcode AWB.',
-    icon: ClipboardCheck,
+    title: 'Book Your Shipment',
+    description: 'Confirm shipper & consignee details and generate your 3-page AWB.',
+    icon: CalendarCheck,
   },
   {
     step: 3,
-    title: 'Free Pickup',
-    description: 'Our courier collects the parcel from your factory, office, or residence in Dhaka.',
-    icon: Truck,
+    title: 'Cargo Collection',
+    description: 'Our dispatch fleet collects your consignment from your factory or office.',
+    icon: Package,
   },
   {
     step: 4,
-    title: 'Customs & Sort',
-    description: 'Export clearance, airport security screening, and international pallet tagging.',
-    icon: FileCheck2,
-  },
-  {
-    step: 5,
-    title: 'Global Transit',
-    description: 'Daily direct flight departures with 24/7 GPS & milestone scan telemetry.',
+    title: 'International Transit',
+    description: 'Daily express flight departures with continuous milestone GPS telemetry.',
     icon: Plane,
   },
   {
+    step: 5,
+    title: 'Customs Clearance',
+    description: 'Expedited export and import customs clearance at destination ports.',
+    icon: ShieldCheck,
+  },
+  {
     step: 6,
-    title: 'Doorstep Delivery',
-    description: 'Final delivery to consignee with signature verification & proof of delivery (POD).',
-    icon: Home,
+    title: 'Final Delivery',
+    description: 'Doorstep delivery to the consignee with signed Proof of Delivery (POD).',
+    icon: CheckCircle,
   },
 ] as const;
 
 export function HowItWorksProcess(): React.JSX.Element {
   return (
-    <section id="process" className="py-20 bg-white dark:bg-[#0B0F19] transition-colors">
+    <section id="process" className="py-20 lg:py-24 bg-[#F3F6FA] dark:bg-[#0B0F19] transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-xs font-bold uppercase tracking-wider text-[#E51919] block mb-2">
-            How It Works
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-            A Simple, Streamlined Shipping Process
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
+          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#E51B23]">
+            <span className="w-1.5 h-3.5 rounded-full bg-[#E51B23]" />
+            <span>How It Works</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            Simple Steps, Global Delivery
           </h2>
-          <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
-            From Dhaka pickup to global delivery, experience end-to-end transparency at every step.
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 font-normal">
+            From factory pickup in Bangladesh to destination doorstep, experience seamless end-to-end logistics.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 relative">
-          {STEPS.map((item, idx) => {
+        {/* Desktop: Horizontal Timeline with Connecting Line */}
+        <div className="hidden lg:block relative">
+          {/* Subtle Connecting Line */}
+          <div className="absolute top-6 left-12 right-12 h-0.5 border-t-2 border-dashed border-slate-300 dark:border-slate-700 -z-0" />
+
+          <div className="grid grid-cols-6 gap-4 relative z-10">
+            {STEPS.map((item) => {
+              const Icon = item.icon;
+              return (
+                <div key={item.step} className="flex flex-col items-center text-center group">
+                  {/* Step Number Circle */}
+                  <div className="relative mb-5">
+                    <div className="w-12 h-12 rounded-full bg-[#E51B23] text-white flex items-center justify-center font-extrabold text-base shadow-lg shadow-red-600/30 group-hover:scale-110 transition-transform">
+                      {item.step}
+                    </div>
+                  </div>
+
+                  {/* Icon & Title */}
+                  <div className="w-10 h-10 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center mb-3 group-hover:text-[#E51B23] group-hover:border-red-300 transition-colors shadow-xs">
+                    <Icon className="w-5 h-5" />
+                  </div>
+
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-1.5 group-hover:text-[#E51B23] transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-normal">
+                    {item.description}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Mobile & Tablet: Vertical Timeline */}
+        <div className="lg:hidden space-y-6 relative pl-6 border-l-2 border-dashed border-[#E51B23]/40 ml-4">
+          {STEPS.map((item) => {
             const Icon = item.icon;
             return (
-              <div key={item.step} className="flex flex-col items-center text-center relative group">
-                {/* Connecting arrow for desktop */}
-                {idx < STEPS.length - 1 && (
-                  <div className="hidden lg:block absolute top-6 -right-3 text-slate-300 dark:text-slate-700 pointer-events-none">
-                    <ArrowRight className="w-5 h-5 text-slate-300 dark:text-slate-700 group-hover:text-red-300 transition-colors" />
-                  </div>
-                )}
-
-                {/* Step Circle with Number */}
-                <div className="relative mb-4">
-                  <div className="w-14 h-14 rounded-full bg-[#E51919] text-white flex items-center justify-center font-bold text-lg shadow-md shadow-red-600/25 group-hover:scale-105 transition-transform">
-                    {item.step}
-                  </div>
-                  <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-slate-900 dark:bg-slate-800 text-white flex items-center justify-center text-xs">
-                    <Icon className="w-3.5 h-3.5" />
-                  </div>
+              <div key={item.step} className="relative group">
+                {/* Step Pill on Left Border */}
+                <div className="absolute -left-[35px] top-0 w-8 h-8 rounded-full bg-[#E51B23] text-white flex items-center justify-center text-xs font-bold shadow-md">
+                  {item.step}
                 </div>
 
-                <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1.5 group-hover:text-[#E51919] transition-colors">
-                  {item.title}
-                </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-normal">
-                  {item.description}
-                </p>
+                <div className="bg-white dark:bg-[#111827] rounded-xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm ml-2">
+                  <div className="flex items-center gap-2.5 mb-1">
+                    <Icon className="w-4 h-4 text-[#E51B23]" />
+                    <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                      {item.title}
+                    </h3>
+                  </div>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+                    {item.description}
+                  </p>
+                </div>
               </div>
             );
           })}

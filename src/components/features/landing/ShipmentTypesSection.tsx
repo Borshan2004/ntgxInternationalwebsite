@@ -52,15 +52,16 @@ const SHIPMENT_TYPES = [
 
 export function ShipmentTypesSection(): React.JSX.Element {
   return (
-    <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="text-center max-w-2xl mx-auto mb-14">
-        <span className="text-xs font-bold uppercase tracking-wider text-[#E51919] block mb-2">
-          What Are You Shipping?
-        </span>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+    <section className="py-20 lg:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
+        <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#E51B23]">
+          <span className="w-1.5 h-3.5 rounded-full bg-[#E51B23]" />
+          <span>What Are You Shipping?</span>
+        </div>
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
           Tailored Shipping Solutions for Every Item
         </h2>
-        <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
+        <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 font-normal">
           Select what you are shipping to find custom routing, special packaging, and negotiated rates.
         </p>
       </div>
@@ -71,14 +72,14 @@ export function ShipmentTypesSection(): React.JSX.Element {
           return (
             <div
               key={type.title}
-              className="bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800 rounded-2xl p-5 text-center flex flex-col items-center justify-between shadow-xs hover:shadow-lg hover:border-red-300 dark:hover:border-red-900/50 hover:-translate-y-1 transition-all group"
+              className="bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800 rounded-2xl p-5 text-center flex flex-col items-center justify-between shadow-md hover:shadow-xl hover:border-red-300 dark:hover:border-red-900/50 hover:-translate-y-1 transition-all group"
             >
-              <div className="w-14 h-14 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 group-hover:bg-red-50 dark:group-hover:bg-red-950/50 group-hover:border-red-200 dark:group-hover:border-red-900/50 flex items-center justify-center text-slate-800 dark:text-slate-200 group-hover:text-[#E51919] transition-colors mb-3">
-                <Icon className="w-6 h-6" />
+              <div className="w-14 h-14 rounded-2xl bg-red-50/60 dark:bg-slate-800 border border-red-100/80 dark:border-slate-700 group-hover:bg-red-50 dark:group-hover:bg-red-950/50 group-hover:border-red-200 dark:group-hover:border-red-900/50 flex items-center justify-center text-[#E51B23] transition-colors mb-3 shadow-xs">
+                <Icon className="w-6 h-6 stroke-[1.75]" />
               </div>
 
               <div>
-                <h3 className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#E51919] transition-colors mb-1.5">
+                <h3 className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#E51B23] transition-colors mb-1.5">
                   {type.title}
                 </h3>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed font-normal">

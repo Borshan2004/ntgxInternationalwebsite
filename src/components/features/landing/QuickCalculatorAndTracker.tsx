@@ -3,7 +3,15 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Calculator, Search, ArrowRight, CheckCircle2, AlertCircle } from 'lucide-react';
+import {
+  Calculator,
+  Search,
+  ArrowRight,
+  CheckCircle2,
+  AlertCircle,
+  Plane,
+  MapPin,
+} from 'lucide-react';
 
 interface EstimateDisplay {
   service: string;
@@ -73,30 +81,39 @@ export function QuickCalculatorAndTracker(): React.JSX.Element {
   };
 
   return (
-    <section className="py-8 sm:py-12 px-3.5 sm:px-6 lg:px-8 max-w-7xl mx-auto -mt-6 sm:-mt-8 relative z-20">
+    <section className="py-6 sm:py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto -mt-16 sm:-mt-24 relative z-20">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
-        {/* Left Card: Get a Shipping Estimate */}
+        {/* Left Card: Premium Floating White Rate Calculator */}
         <div
           id="rate-estimator"
-          className="lg:col-span-6 bg-white dark:bg-[#111827] rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200/80 dark:border-slate-800 transition-all"
+          className="lg:col-span-6 bg-white dark:bg-[#111827] rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-100 dark:border-slate-800 transition-all relative overflow-hidden group"
         >
-          <div className="flex items-center gap-3.5 mb-2">
-            <div className="w-10 h-10 rounded-xl bg-red-50 dark:bg-red-950/50 text-[#E51919] flex items-center justify-center shrink-0 border border-red-100 dark:border-red-900/50">
+          {/* Subtle Faded Airplane Watermark in Background */}
+          <div className="absolute -right-4 -top-4 text-slate-100 dark:text-slate-800/40 pointer-events-none select-none">
+            <Plane className="w-36 h-36 transform -rotate-12" />
+          </div>
+
+          <div className="flex items-center gap-3.5 mb-2 relative z-10">
+            <div className="w-11 h-11 rounded-xl bg-red-50 dark:bg-red-950/50 text-[#E51B23] flex items-center justify-center shrink-0 border border-red-100 dark:border-red-900/50 shadow-xs">
               <Calculator className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Get a Shipping Estimate</h2>
+              <h2 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">
+                Shipping Rate Calculator
+              </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                Transparent international rates based on destination and weight.
+                Get an instant quote for your shipment worldwide.
               </p>
             </div>
           </div>
 
-          <form onSubmit={handleCalculateEstimate} className="mt-6 space-y-4">
+          <form onSubmit={handleCalculateEstimate} className="mt-6 space-y-4 relative z-10">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* From Country */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Origin</label>
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                  From Country
+                </label>
                 <div className="w-full flex items-center gap-2 px-3.5 py-2.5 bg-slate-50 dark:bg-[#161F30] border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200">
                   <span className="text-base">🇧🇩</span>
                   <span>Bangladesh (DAC)</span>
@@ -105,11 +122,13 @@ export function QuickCalculatorAndTracker(): React.JSX.Element {
 
               {/* To Country */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Destination</label>
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                  To Country
+                </label>
                 <select
                   value={destinationCode}
                   onChange={(e) => setDestinationCode(e.target.value)}
-                  className="w-full px-3.5 py-2.5 bg-white dark:bg-[#161F30] border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-[#E51919]"
+                  className="w-full px-3.5 py-2.5 bg-white dark:bg-[#161F30] border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-[#E51B23]"
                 >
                   {POPULAR_DESTINATIONS.map((dest) => (
                     <option key={dest.code} value={dest.code}>
@@ -123,11 +142,13 @@ export function QuickCalculatorAndTracker(): React.JSX.Element {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Shipment Type */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Shipment Type</label>
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                  Shipment Type
+                </label>
                 <select
                   value={shipmentType}
                   onChange={(e) => setShipmentType(e.target.value as 'DOCUMENT' | 'COMMODITY')}
-                  className="w-full px-3.5 py-2.5 bg-white dark:bg-[#161F30] border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-[#E51919]"
+                  className="w-full px-3.5 py-2.5 bg-white dark:bg-[#161F30] border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-[#E51B23]"
                 >
                   <option value="COMMODITY">Package / Commercial Cargo</option>
                   <option value="DOCUMENT">Document / Business Letter</option>
@@ -136,7 +157,9 @@ export function QuickCalculatorAndTracker(): React.JSX.Element {
 
               {/* Weight in KG */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Chargeable Weight</label>
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                  Weight (kg)
+                </label>
                 <div className="relative">
                   <input
                     type="number"
@@ -145,7 +168,7 @@ export function QuickCalculatorAndTracker(): React.JSX.Element {
                     max="1000"
                     value={weightKg}
                     onChange={(e) => setWeightKg(parseFloat(e.target.value) || 0)}
-                    className="w-full px-3.5 py-2.5 bg-white dark:bg-[#161F30] border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-[#E51919]"
+                    className="w-full px-3.5 py-2.5 bg-white dark:bg-[#161F30] border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-[#E51B23]"
                     placeholder="1.0"
                   />
                   <span className="absolute right-3.5 top-2.5 text-xs font-bold text-slate-400">KG</span>
@@ -157,30 +180,32 @@ export function QuickCalculatorAndTracker(): React.JSX.Element {
             <button
               type="submit"
               disabled={isCalculating}
-              className="w-full mt-2 py-3.5 px-4 bg-[#E51919] hover:bg-[#C81212] active:bg-[#9B0E0E] text-white font-bold rounded-xl shadow-md shadow-red-600/20 flex items-center justify-center gap-2 transition-all disabled:opacity-60"
+              className="w-full mt-2 py-3.5 px-4 bg-[#E51B23] hover:bg-[#C81212] active:bg-[#9B0E0E] text-white font-bold rounded-xl shadow-lg shadow-red-600/30 flex items-center justify-center gap-2 transition-all disabled:opacity-60 hover:scale-[1.01]"
             >
-              <span>{isCalculating ? 'Calculating Rates…' : 'Calculate Shipping Estimate'}</span>
+              <span>{isCalculating ? 'Calculating Tariffs…' : 'Calculate Rate'}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
 
             {/* Instant Result Box */}
             {estimateResult && (
-              <div className="p-4 bg-red-50/60 border border-red-200/90 rounded-2xl animate-in fade-in space-y-2 mt-3">
+              <div className="p-4 bg-red-50/80 dark:bg-red-950/40 border border-red-200 dark:border-red-900/60 rounded-2xl animate-in fade-in space-y-2 mt-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-red-950 uppercase tracking-wider">Estimated Cost</span>
-                  <span className="text-xs font-semibold text-red-700 bg-red-100 px-2.5 py-0.5 rounded-full">
+                  <span className="text-xs font-bold text-red-950 dark:text-red-200 uppercase tracking-wider">
+                    Estimated Cost
+                  </span>
+                  <span className="text-xs font-semibold text-red-700 dark:text-red-300 bg-red-100 dark:bg-red-900/50 px-2.5 py-0.5 rounded-full">
                     {estimateResult.transitDays}
                   </span>
                 </div>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-extrabold text-[#E51919]">
+                  <span className="text-2xl font-extrabold text-[#E51B23]">
                     ${estimateResult.usd} USD
                   </span>
-                  <span className="text-xs text-slate-600 font-medium">
+                  <span className="text-xs text-slate-600 dark:text-slate-300 font-medium">
                     (Approx. ৳{estimateResult.bdt.toLocaleString()} BDT)
                   </span>
                 </div>
-                <div className="flex items-center gap-1.5 text-xs text-slate-600 pt-1 border-t border-red-100">
+                <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 pt-1 border-t border-red-100 dark:border-red-900/40">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                   <span>Includes door pickup, standard fuel surcharge &amp; tracking.</span>
                 </div>
@@ -190,7 +215,7 @@ export function QuickCalculatorAndTracker(): React.JSX.Element {
             <div className="pt-1 text-center">
               <a
                 href="#contact"
-                className="text-xs font-semibold text-[#E51919] hover:underline"
+                className="text-xs font-semibold text-[#E51B23] hover:underline"
               >
                 + Request a Volume Tariff for Commercial RMG Exports
               </a>
@@ -198,27 +223,34 @@ export function QuickCalculatorAndTracker(): React.JSX.Element {
           </form>
         </div>
 
-        {/* Right Card: Track Your Shipment */}
+        {/* Right Card: Premium Floating White Track Consignment Card */}
         <div
           id="tracking-section"
-          className="lg:col-span-6 bg-gradient-to-br from-[#091527] via-[#0E203B] to-[#091527] rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-xl border border-slate-700/80 text-white relative overflow-hidden"
+          className="lg:col-span-6 bg-white dark:bg-[#111827] rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-100 dark:border-slate-800 transition-all relative overflow-hidden group"
         >
+          {/* Subtle Location Pin Watermark in Background */}
+          <div className="absolute -right-4 -top-4 text-slate-100 dark:text-slate-800/40 pointer-events-none select-none">
+            <MapPin className="w-36 h-36 transform rotate-12" />
+          </div>
+
           <div className="flex items-center gap-3.5 mb-2 relative z-10">
-            <div className="w-10 h-10 rounded-xl bg-[#E51919] text-white flex items-center justify-center shrink-0 shadow-sm">
+            <div className="w-11 h-11 rounded-xl bg-red-50 dark:bg-red-950/50 text-[#E51B23] flex items-center justify-center shrink-0 border border-red-100 dark:border-red-900/50 shadow-xs">
               <Search className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-white tracking-tight">Track Your Shipment</h2>
-              <p className="text-xs text-slate-300">
-                Enter your Air Waybill (AWB) to view live checkpoint milestones.
+              <h2 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">
+                Track Your Shipment
+              </h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400">
+                Enter your tracking number to get real-time updates.
               </p>
             </div>
           </div>
 
-          <form onSubmit={handleTrackSubmit} className="mt-8 space-y-4 relative z-10">
+          <form onSubmit={handleTrackSubmit} className="mt-6 space-y-4 relative z-10">
             <div>
-              <label className="block text-xs font-bold text-slate-300 mb-1.5">
-                Tracking Number
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
+                Consignment / AWB Number
               </label>
               <div className="flex flex-col sm:flex-row gap-2.5">
                 <input
@@ -228,20 +260,21 @@ export function QuickCalculatorAndTracker(): React.JSX.Element {
                     setTrackingNumber(e.target.value);
                     if (trackingError) setTrackingError(null);
                   }}
-                  placeholder="e.g. 879098800901"
-                  className="flex-1 px-4 py-3.5 bg-slate-800/90 border border-slate-600/90 rounded-xl text-white placeholder-slate-400 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-[#E51919]"
-                />
+                  placeholder="Enter Tracking Number (e.g. 879098800901)"
+                  className="flex-1 px-4 py-3 bg-slate-50 dark:bg-[#161F30] border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-[#E51B23]"
+                >
+                </input>
                 <button
                   type="submit"
-                  className="px-6 py-3.5 bg-[#E51919] hover:bg-[#C81212] active:bg-[#9B0E0E] text-white font-bold rounded-xl shadow-lg shadow-red-600/30 flex items-center justify-center gap-2 transition-all shrink-0"
+                  className="px-6 py-3 bg-[#E51B23] hover:bg-[#C81212] active:bg-[#9B0E0E] text-white font-bold rounded-xl shadow-lg shadow-red-600/30 flex items-center justify-center gap-2 transition-all shrink-0 hover:scale-[1.01]"
                 >
-                  <span>Track Consignment</span>
+                  <span>Track</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
 
               {trackingError && (
-                <div className="flex items-center gap-1.5 mt-2 text-xs text-red-400">
+                <div className="flex items-center gap-1.5 mt-2 text-xs text-red-600 dark:text-red-400">
                   <AlertCircle className="w-4 h-4" />
                   <span>{trackingError}</span>
                 </div>
@@ -249,21 +282,25 @@ export function QuickCalculatorAndTracker(): React.JSX.Element {
             </div>
 
             {/* Demo tracking helper */}
-            <div className="p-4 bg-slate-800/60 rounded-2xl border border-slate-700/60 text-xs text-slate-300 space-y-1.5">
-              <span className="font-bold text-red-400 block">Try a demo tracking number:</span>
-              <button
-                type="button"
-                onClick={() => setTrackingNumber('879098800901')}
-                className="font-mono text-white bg-slate-700 hover:bg-slate-600 px-2.5 py-1 rounded border border-slate-600 hover:border-red-500 transition-colors"
-              >
-                879098800901
-              </button>
-              <span className="text-slate-400 ml-2">(Live Delivered BD to USA Shipment)</span>
+            <div className="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-200/80 dark:border-slate-700/60 text-xs text-slate-700 dark:text-slate-300 space-y-1.5">
+              <span className="font-bold text-[#E51B23] block">Try a demo tracking number:</span>
+              <div className="flex items-center gap-2 flex-wrap">
+                <button
+                  type="button"
+                  onClick={() => setTrackingNumber('879098800901')}
+                  className="font-mono text-slate-900 dark:text-white bg-white dark:bg-slate-700 hover:bg-slate-100 dark:hover:bg-slate-600 px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-600 hover:border-[#E51B23] transition-colors shadow-xs"
+                >
+                  879098800901
+                </button>
+                <span className="text-slate-500 dark:text-slate-400 text-xs">
+                  (Delivered Dhaka &rarr; New York Shipment)
+                </span>
+              </div>
             </div>
 
-            <div className="pt-2 text-xs text-slate-400">
+            <div className="pt-2 text-xs text-slate-500 dark:text-slate-400">
               <span>Have a corporate account? </span>
-              <a href="/login" className="text-red-400 hover:underline font-semibold">
+              <a href="/login" className="text-[#E51B23] hover:underline font-semibold">
                 Sign in to view full manifest &rarr;
               </a>
             </div>

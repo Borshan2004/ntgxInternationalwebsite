@@ -31,7 +31,7 @@ export function FloatingActions(): React.JSX.Element {
           type="button"
           onClick={scrollToTop}
           aria-label="Scroll to top of page"
-          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 shadow-xl border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-[#E51919] transition-all"
+          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 shadow-xl border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-[#E51B23] transition-all"
         >
           <ArrowUp className="w-4 h-4 sm:w-5 sm:h-5" />
         </button>
@@ -46,7 +46,7 @@ export function FloatingActions(): React.JSX.Element {
       <a
         href="#rate-estimator"
         aria-label="Jump to rate estimate calculator"
-        className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#E51919] text-white shadow-xl flex items-center justify-center hover:bg-[#C81212] transition-all hover:scale-105"
+        className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#E51B23] text-white shadow-xl flex items-center justify-center hover:bg-[#C81212] transition-all hover:scale-105"
       >
         <Calculator className="w-4 h-4 sm:w-5 sm:h-5" />
       </a>

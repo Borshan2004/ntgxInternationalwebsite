@@ -45,17 +45,18 @@ export function ShippingFaqAccordion(): React.JSX.Element {
   };
 
   return (
-    <section id="faq" className="py-20 bg-white">
+    <section id="faq" className="py-20 lg:py-24 bg-white dark:bg-[#0B0F19] transition-colors">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <span className="text-xs font-bold uppercase tracking-wider text-[#E51919] block mb-2">
-            Frequently Asked Questions
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+        <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
+          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#E51B23]">
+            <span className="w-1.5 h-3.5 rounded-full bg-[#E51B23]" />
+            <span>Frequently Asked Questions</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             Common Questions About International Shipping
           </h2>
-          <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
-            Everything you need to know about rates, customs clearance, transit times, and documentation.
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 font-normal">
+            Everything you need to know about rates, customs clearance, transit times, and export paperwork.
           </p>
         </div>
 
@@ -70,15 +71,15 @@ export function ShippingFaqAccordion(): React.JSX.Element {
                 <button
                   type="button"
                   onClick={() => toggle(idx)}
-                  className="w-full px-6 py-4.5 flex items-center justify-between text-left font-bold text-slate-900 dark:text-slate-100 hover:text-[#E51919] bg-slate-50/60 dark:bg-[#111827] hover:bg-red-50/20 dark:hover:bg-red-950/20 transition-colors"
+                  className="w-full px-6 py-4.5 flex items-center justify-between text-left font-bold text-slate-900 dark:text-slate-100 hover:text-[#E51B23] bg-slate-50/60 dark:bg-[#111827] hover:bg-red-50/20 dark:hover:bg-red-950/20 transition-colors"
                 >
                   <span className="text-sm sm:text-base pr-4 flex items-center gap-2.5">
-                    <HelpCircle className="w-4 h-4 text-[#E51919] shrink-0" />
+                    <HelpCircle className="w-4 h-4 text-[#E51B23] shrink-0" />
                     {faq.question}
                   </span>
                   <div className="w-7 h-7 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center shrink-0">
                     {isOpen ? (
-                      <Minus className="w-4 h-4 text-[#E51919]" />
+                      <Minus className="w-4 h-4 text-[#E51B23]" />
                     ) : (
                       <Plus className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                     )}

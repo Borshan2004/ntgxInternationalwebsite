@@ -10,11 +10,15 @@ const config: Config = {
     extend: {
       colors: {
         ntgx: {
-          red: '#E51919',
+          red: '#E51B23',
           redHover: '#C81212',
           redDark: '#9B0E0E',
           redLight: '#FEE2E2',
           redSubtle: '#FEF2F2',
+          navy: '#08172B',
+          navySecondary: '#10243D',
+          navyDark: '#040C17',
+          lightBg: '#F3F6FA',
           dark: '#18181B',
           darkHover: '#27272A',
           darker: '#09090B',
