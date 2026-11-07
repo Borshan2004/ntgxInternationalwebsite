@@ -76,12 +76,12 @@ function TrackingContent(): React.JSX.Element {
       {/* ─────────────────────────────────────────────────────────────
           1. CLEAN TOP HEADER WITH ROLE-BASED NAVIGATION TABS
           ───────────────────────────────────────────────────────────── */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-neutral-200 pb-4 gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-neutral-200 dark:border-slate-800 pb-4 gap-4">
         <div>
-          <h1 className="text-2xl font-black text-neutral-900 tracking-tight flex items-center gap-2">
+          <h1 className="text-xl sm:text-2xl font-black text-neutral-900 dark:text-white tracking-tight flex items-center gap-2">
             <span>Parcel Tracking &amp; Milestones</span>
           </h1>
-          <p className="text-xs sm:text-sm text-neutral-500 mt-0.5">
+          <p className="text-xs sm:text-sm text-neutral-500 dark:text-slate-400 mt-0.5">
             {isStaff
               ? 'Operations dispatch console to manage customer shipments, update delivery milestones, and track live telemetry.'
               : 'Enter your tracking number to monitor real-time shipment milestones, flights, and delivery proof.'}
@@ -90,15 +90,15 @@ function TrackingContent(): React.JSX.Element {
 
         {/* Tab Controls for Staff (Hidden for Customers to prevent clutter) */}
         {isStaff && (
-          <div className="flex items-center gap-1.5 bg-neutral-100 p-1 rounded-xl border border-neutral-200 self-start sm:self-auto">
+          <div className="flex flex-wrap items-center gap-1.5 bg-neutral-100 dark:bg-slate-800 p-1 rounded-xl border border-neutral-200 dark:border-slate-700 self-stretch sm:self-auto">
             <button
               type="button"
               onClick={() => setActiveTab('OPERATIONS')}
               className={cn(
-                'px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer',
+                'flex-1 sm:flex-none px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer',
                 activeTab === 'OPERATIONS'
-                  ? 'bg-neutral-900 text-white shadow-xs'
-                  : 'text-neutral-600 hover:text-neutral-900'
+                  ? 'bg-neutral-900 dark:bg-slate-900 text-white shadow-xs'
+                  : 'text-neutral-600 dark:text-slate-300 hover:text-neutral-900 dark:hover:text-white'
               )}
             >
               <LayoutDashboard className="h-3.5 w-3.5" />
@@ -109,10 +109,10 @@ function TrackingContent(): React.JSX.Element {
               type="button"
               onClick={() => setActiveTab('TRACK')}
               className={cn(
-                'px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer',
+                'flex-1 sm:flex-none px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer',
                 activeTab === 'TRACK'
                   ? 'bg-ntgx-red text-white shadow-xs'
-                  : 'text-neutral-600 hover:text-neutral-900'
+                  : 'text-neutral-600 dark:text-slate-300 hover:text-neutral-900 dark:hover:text-white'
               )}
             >
               <PackageSearch className="h-3.5 w-3.5" />

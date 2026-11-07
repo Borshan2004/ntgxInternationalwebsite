@@ -34,23 +34,23 @@ export function LandingHeroSection(): React.JSX.Element {
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.12]">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.12]">
               International Courier &amp; <br />
               Export Shipping from <br />
               <span className="text-[#E51919]">Bangladesh</span>
             </h1>
 
             {/* Subtitle */}
-            <p className="text-base sm:text-lg text-slate-300 max-w-2xl leading-relaxed font-normal">
+            <p className="text-sm sm:text-lg text-slate-300 max-w-2xl leading-relaxed font-normal">
               Direct express flights and scheduled ocean freight from Dhaka and Chittagong.
               Professional customs clearance, tracking telemetry, and door-to-door delivery across 215+ countries.
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-wrap items-center gap-4 pt-2">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-2">
               <a
                 href="#rate-estimator"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-bold bg-[#E51919] hover:bg-[#C81212] active:bg-[#9B0E0E] text-white shadow-lg shadow-red-600/30 hover:shadow-red-600/50 hover:-translate-y-0.5 transition-all"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-bold bg-[#E51919] hover:bg-[#C81212] active:bg-[#9B0E0E] text-white shadow-lg shadow-red-600/30 hover:shadow-red-600/50 hover:-translate-y-0.5 transition-all text-center"
               >
                 <span>Get a Shipping Quote</span>
                 <ArrowRight className="w-4 h-4" />
@@ -58,7 +58,7 @@ export function LandingHeroSection(): React.JSX.Element {
 
               <a
                 href="#tracking-section"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-bold bg-slate-800/90 hover:bg-slate-700/90 text-white border border-slate-600 hover:border-slate-500 transition-all"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-bold bg-slate-800/90 hover:bg-slate-700/90 text-white border border-slate-600 hover:border-slate-500 transition-all text-center"
               >
                 <span>Track Consignment</span>
                 <ArrowRight className="w-4 h-4 text-[#E51919]" />
@@ -66,7 +66,7 @@ export function LandingHeroSection(): React.JSX.Element {
             </div>
 
             {/* Quick Contact Links */}
-            <div className="flex flex-wrap items-center gap-6 pt-4 text-xs font-semibold text-slate-300 border-t border-slate-700/60 max-w-xl">
+            <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-4 text-xs font-semibold text-slate-300 border-t border-slate-700/60 max-w-xl">
               <Link
                 href="/shipments/new"
                 className="flex items-center gap-2 hover:text-white transition-colors"
@@ -94,7 +94,7 @@ export function LandingHeroSection(): React.JSX.Element {
           </div>
 
           {/* Right Column: Floating Stat Cards */}
-          <div className="lg:col-span-4 flex flex-col gap-3.5">
+          <div className="lg:col-span-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3.5">
             <div className="bg-slate-900/80 backdrop-blur-md border border-slate-700/70 p-4 rounded-2xl flex items-center gap-4 hover:border-red-500/50 transition-all shadow-xl">
               <div className="w-12 h-12 rounded-xl bg-red-600/20 text-[#E51919] flex items-center justify-center shrink-0">
                 <Globe className="w-6 h-6" />

@@ -344,12 +344,12 @@ export function NTGXShipManager({
 
         {/* Tab Selection */}
         <div>
-          <div className="flex items-center justify-between border-b border-neutral-300 pb-2">
-            <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-neutral-300 gap-2 pb-2">
+            <div className="flex gap-2 overflow-x-auto pb-1">
               <button
                 type="button"
                 onClick={() => setActiveDocTab('awb')}
-                className={`px-4 py-2 text-xs font-bold rounded-t-lg transition-colors border-b-2 flex items-center gap-2 ${
+                className={`px-4 py-2 text-xs font-bold rounded-t-lg transition-colors border-b-2 flex items-center gap-2 shrink-0 ${
                   activeDocTab === 'awb'
                     ? 'border-ntgx-red text-ntgx-red bg-white'
                     : 'border-transparent text-neutral-600 hover:text-neutral-900'
@@ -360,7 +360,7 @@ export function NTGXShipManager({
               <button
                 type="button"
                 onClick={() => setActiveDocTab('invoice')}
-                className={`px-4 py-2 text-xs font-bold rounded-t-lg transition-colors border-b-2 flex items-center gap-2 ${
+                className={`px-4 py-2 text-xs font-bold rounded-t-lg transition-colors border-b-2 flex items-center gap-2 shrink-0 ${
                   activeDocTab === 'invoice'
                     ? 'border-ntgx-red text-ntgx-red bg-white'
                     : 'border-transparent text-neutral-600 hover:text-neutral-900'
@@ -372,13 +372,13 @@ export function NTGXShipManager({
 
             <Link
               href={`/tracking?query=${finalizedRecord.trackingNumber}`}
-              className="text-xs font-bold text-ntgx-red hover:underline flex items-center gap-1"
+              className="text-xs font-bold text-ntgx-red hover:underline flex items-center gap-1 self-start sm:self-auto"
             >
               Track Live Milestones &rarr;
             </Link>
           </div>
 
-          <div className="mt-4">
+          <div className="mt-4 overflow-x-auto pb-4">
             {activeDocTab === 'awb' ? (
               <AirWaybillDocument data={awbData} />
             ) : (

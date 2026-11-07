@@ -23,7 +23,7 @@ export function FloatingActions(): React.JSX.Element {
   return (
     <aside
       aria-label="Quick contact and navigation shortcuts"
-      className="fixed bottom-6 right-5 z-40 flex flex-col gap-2.5"
+      className="fixed bottom-4 right-3.5 sm:bottom-6 sm:right-5 z-40 flex flex-col gap-2 sm:gap-2.5"
     >
       {/* Scroll to Top */}
       {showScrollTop && (
@@ -31,24 +31,24 @@ export function FloatingActions(): React.JSX.Element {
           type="button"
           onClick={scrollToTop}
           aria-label="Scroll to top of page"
-          className="w-11 h-11 rounded-full bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 shadow-xl border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-[#E51919] transition-all"
+          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 shadow-xl border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-[#E51919] transition-all"
         >
-          <ArrowUp className="w-5 h-5" />
+          <ArrowUp className="w-4 h-4 sm:w-5 sm:h-5" />
         </button>
       )}
 
       {/* Floating Theme Toggle Shortcut */}
-      <div className="w-11 h-11 rounded-full bg-white dark:bg-slate-800 text-slate-800 dark:text-amber-400 shadow-xl border border-slate-200 dark:border-slate-700 flex items-center justify-center overflow-hidden hover:scale-105 transition-all">
-        <ThemeToggle size="md" className="border-0 shadow-none bg-transparent dark:bg-transparent hover:bg-transparent dark:hover:bg-transparent" />
+      <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white dark:bg-slate-800 text-slate-800 dark:text-amber-400 shadow-xl border border-slate-200 dark:border-slate-700 flex items-center justify-center overflow-hidden hover:scale-105 transition-all">
+        <ThemeToggle size="sm" className="sm:w-8 sm:h-8 border-0 shadow-none bg-transparent dark:bg-transparent hover:bg-transparent dark:hover:bg-transparent" />
       </div>
 
       {/* Quick Rate Estimator scroll */}
       <a
         href="#rate-estimator"
         aria-label="Jump to rate estimate calculator"
-        className="w-11 h-11 rounded-full bg-[#E51919] text-white shadow-xl flex items-center justify-center hover:bg-[#C81212] transition-all hover:scale-105"
+        className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#E51919] text-white shadow-xl flex items-center justify-center hover:bg-[#C81212] transition-all hover:scale-105"
       >
-        <Calculator className="w-5 h-5" />
+        <Calculator className="w-4 h-4 sm:w-5 sm:h-5" />
       </a>
 
       {/* WhatsApp Dispatch */}
@@ -57,18 +57,18 @@ export function FloatingActions(): React.JSX.Element {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with support on WhatsApp"
-        className="w-11 h-11 rounded-full bg-emerald-600 text-white shadow-xl flex items-center justify-center hover:bg-emerald-500 transition-all hover:scale-105"
+        className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-emerald-600 text-white shadow-xl flex items-center justify-center hover:bg-emerald-500 transition-all hover:scale-105"
       >
-        <MessageCircle className="w-5 h-5" />
+        <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5" />
       </a>
 
       {/* Direct Phone Call */}
       <a
         href="tel:+8801681637836"
         aria-label="Call support hotline"
-        className="w-11 h-11 rounded-full bg-slate-900 text-white shadow-xl flex items-center justify-center hover:bg-slate-800 transition-all hover:scale-105"
+        className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-slate-900 dark:bg-slate-700 text-white shadow-xl flex items-center justify-center hover:bg-slate-800 transition-all hover:scale-105"
       >
-        <Phone className="w-5 h-5" />
+        <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
       </a>
     </aside>
   );

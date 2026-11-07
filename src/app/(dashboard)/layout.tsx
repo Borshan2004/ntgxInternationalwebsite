@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { Sidebar } from '@/components/ui/Sidebar';
 import { TopBar } from '@/components/ui/TopBar';
+import { cn } from '@/lib/utils';
 import type { UserRole } from '@/types/shipment';
 import type { AuthUser } from '@/types/auth';
 
@@ -46,7 +47,13 @@ export default function DashboardLayout({
   const router = useRouter();
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
+  const [isMobileOpen, setIsMobileOpen] = useState<boolean>(false);
   const [session, setSession] = useState<UserSessionState>(DEFAULT_SESSION);
+
+  // Auto-close mobile drawer on route transition
+  useEffect(() => {
+    setIsMobileOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     try {
@@ -82,8 +89,12 @@ export default function DashboardLayout({
       });
   }, []);
 
-  const handleToggleCollapse = (): void => {
-    setIsCollapsed((prev) => !prev);
+  const handleMenuToggle = (): void => {
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      setIsMobileOpen((prev) => !prev);
+    } else {
+      setIsCollapsed((prev) => !prev);
+    }
   };
 
   const handleSignOut = async (): Promise<void> => {
@@ -107,23 +118,47 @@ export default function DashboardLayout({
           title={pageTitle}
           userRole={session.role}
           userName={session.userName}
-          onMenuToggle={handleToggleCollapse}
+          onMenuToggle={handleMenuToggle}
           onSignOut={handleSignOut}
         />
       </div>
-      <div className="flex flex-1 pt-14 overflow-hidden print:pt-0 print:overflow-visible print:block">
-        <div className="print:hidden">
+      <div className="flex flex-1 pt-14 overflow-hidden relative print:pt-0 print:overflow-visible print:block">
+        {/* Mobile Slide-over Backdrop */}
+        {isMobileOpen && (
+          <div
+            className="fixed inset-0 bg-black/60 z-40 md:hidden backdrop-blur-xs transition-opacity animate-in fade-in"
+            onClick={() => setIsMobileOpen(false)}
+            aria-hidden="true"
+          />
+        )}
+
+        {/* Sidebar: Slide-over Drawer on Mobile, Collapsible Strip on Desktop */}
+        <div
+          className={cn(
+            'print:hidden z-50 transition-all duration-300 ease-in-out',
+            // Mobile styling: fixed off-screen until opened
+            'fixed inset-y-0 left-0 shadow-2xl md:shadow-none md:relative md:inset-auto md:z-auto',
+            isMobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+          )}
+        >
           <Sidebar
             currentPath={pathname}
             userRole={session.role}
             userName={session.userName}
             organizationName={session.organizationName}
             isCollapsed={isCollapsed}
-            onToggleCollapse={handleToggleCollapse}
+            onToggleCollapse={() => {
+              if (typeof window !== 'undefined' && window.innerWidth < 768) {
+                setIsMobileOpen(false);
+              } else {
+                setIsCollapsed((prev) => !prev);
+              }
+            }}
           />
         </div>
+
         <main className="flex-1 overflow-y-auto bg-slate-50/70 dark:bg-[#0B0F19]/90 print:overflow-visible print:h-auto print:p-0 print:bg-white print:block">
-          <div className={pathname === '/shipments/new' ? 'p-0 sm:p-2 lg:p-4 print:p-0' : 'p-6 print:p-0'}>
+          <div className={pathname === '/shipments/new' ? 'p-2 sm:p-4 print:p-0' : 'p-3.5 sm:p-6 print:p-0'}>
             {children}
           </div>
         </main>

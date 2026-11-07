@@ -14,6 +14,7 @@ import {
   ChevronRight,
   Building2,
   HelpCircle,
+  X,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { UserRole } from '@/types/shipment';
@@ -111,34 +112,44 @@ export function Sidebar({
     <aside
       aria-label="Sidebar navigation"
       className={cn(
-        'relative flex flex-col border-r border-neutral-200 dark:border-slate-800 bg-white dark:bg-[#111827] transition-all duration-300 ease-in-out select-none shadow-sm',
-        isCollapsed ? 'w-16' : 'w-64'
+        'relative flex flex-col border-r border-neutral-200 dark:border-slate-800 bg-white dark:bg-[#111827] transition-all duration-300 ease-in-out select-none shadow-sm h-full',
+        'w-72 md:w-64',
+        isCollapsed && 'md:w-16'
       )}
     >
-      {/* Section Header & Collapse Toggle */}
+      {/* Section Header & Collapse / Close Toggle */}
       <div
         className={cn(
-          'flex h-11 items-center border-b border-neutral-100 dark:border-slate-800 bg-white dark:bg-[#111827] px-3',
-          isCollapsed ? 'justify-center' : 'justify-between'
+          'flex h-12 items-center border-b border-neutral-100 dark:border-slate-800 bg-white dark:bg-[#111827] px-3.5',
+          isCollapsed ? 'justify-between md:justify-center' : 'justify-between'
         )}
       >
-        {!isCollapsed && (
-          <span className="text-2xs font-bold uppercase tracking-wider text-neutral-400">
-            Logistics Console
-          </span>
-        )}
+        <span className={cn('text-2xs font-bold uppercase tracking-wider text-neutral-400', isCollapsed && 'md:hidden')}>
+          Logistics Console
+        </span>
 
+        {/* Desktop Collapse / Expand Button */}
         <button
           type="button"
           onClick={onToggleCollapse}
           aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-          className="flex h-7 w-7 items-center justify-center rounded-md text-neutral-400 hover:bg-neutral-100 hover:text-neutral-700 transition-colors"
+          className="hidden md:flex h-7 w-7 items-center justify-center rounded-md text-neutral-400 hover:bg-neutral-100 dark:hover:bg-slate-800 hover:text-neutral-700 dark:hover:text-neutral-200 transition-colors"
         >
           {isCollapsed ? (
             <ChevronRight className="h-4 w-4" />
           ) : (
             <ChevronLeft className="h-4 w-4" />
           )}
+        </button>
+
+        {/* Mobile Close Button */}
+        <button
+          type="button"
+          onClick={onToggleCollapse}
+          aria-label="Close navigation drawer"
+          className="flex md:hidden h-8 w-8 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 transition-colors"
+        >
+          <X className="h-4 w-4" />
         </button>
       </div>
 

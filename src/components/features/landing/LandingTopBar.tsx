@@ -8,10 +8,10 @@ import { ThemeToggle } from '@/components/ui/ThemeToggle';
 
 export function LandingTopBar(): React.JSX.Element {
   return (
-    <div className="bg-[#091527] dark:bg-[#060c18] text-slate-300 text-xs py-2 px-4 sm:px-6 lg:px-8 border-b border-slate-800/80">
-      <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-y-2">
+    <div className="bg-[#091527] dark:bg-[#060c18] text-slate-300 text-[11px] sm:text-xs py-1.5 sm:py-2 px-3 sm:px-6 lg:px-8 border-b border-slate-800/80">
+      <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-y-1.5 gap-x-3">
         {/* Contact links */}
-        <div className="flex items-center flex-wrap gap-4 sm:gap-6">
+        <div className="flex items-center flex-wrap gap-3 sm:gap-6">
           <a
             href="tel:+8801681637836"
             className="flex items-center gap-1.5 hover:text-white transition-colors"
@@ -26,7 +26,8 @@ export function LandingTopBar(): React.JSX.Element {
             className="flex items-center gap-1.5 hover:text-emerald-400 transition-colors"
           >
             <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
-            <span className="font-medium">WhatsApp Dispatch</span>
+            <span className="font-medium hidden xs:inline">WhatsApp Dispatch</span>
+            <span className="font-medium xs:hidden">WhatsApp</span>
           </a>
           <a
             href="mailto:operations@ntgx.com.bd"
@@ -38,17 +39,17 @@ export function LandingTopBar(): React.JSX.Element {
         </div>
 
         {/* Theme toggle, Language switcher & Login link */}
-        <div className="flex items-center gap-3 ml-auto">
+        <div className="flex items-center gap-2 sm:gap-3 ml-auto">
           <ThemeToggle size="sm" className="bg-slate-800/80 border-slate-700/80 text-amber-300 hover:text-amber-200" />
-          <div className="flex items-center gap-1.5 text-slate-300 bg-slate-800/60 px-2.5 py-1 rounded-md border border-slate-700/60 text-[11px]">
-            <Globe className="w-3.5 h-3.5 text-slate-400" />
+          <div className="flex items-center gap-1 text-slate-300 bg-slate-800/60 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md border border-slate-700/60 text-[10px] sm:text-[11px]">
+            <Globe className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-slate-400" />
             <span className="font-medium">EN</span>
           </div>
           <Link
             href="/login"
-            className="inline-flex items-center gap-1.5 text-white bg-[#E51919] hover:bg-[#C81212] px-3.5 py-1 rounded-md font-semibold text-xs transition-colors shadow-xs"
+            className="inline-flex items-center gap-1 text-white bg-[#E51919] hover:bg-[#C81212] px-2.5 sm:px-3.5 py-0.5 sm:py-1 rounded-md font-semibold text-[11px] sm:text-xs transition-colors shadow-xs"
           >
-            <LogIn className="w-3.5 h-3.5" />
+            <LogIn className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
             <span>Portal Login</span>
           </Link>
         </div>

@@ -20,10 +20,10 @@ export function FinalCtaBanner(): React.JSX.Element {
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-4 shrink-0">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto shrink-0">
           <a
             href="#rate-estimator"
-            className="inline-flex items-center gap-2 px-6 py-3.5 bg-white text-[#E51919] hover:bg-slate-50 font-bold rounded-xl shadow-lg transition-all text-sm"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white text-[#E51919] hover:bg-slate-50 font-bold rounded-xl shadow-lg transition-all text-sm text-center"
           >
             <span>Get a Free Quote</span>
             <ArrowRight className="w-4 h-4" />
@@ -31,7 +31,7 @@ export function FinalCtaBanner(): React.JSX.Element {
 
           <Link
             href="/shipments/new"
-            className="inline-flex items-center gap-2 px-6 py-3.5 bg-slate-900/90 hover:bg-slate-900 text-white font-bold rounded-xl shadow-lg border border-white/20 transition-all text-sm"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-slate-900/90 hover:bg-slate-900 text-white font-bold rounded-xl shadow-lg border border-white/20 transition-all text-sm text-center"
           >
             <PackagePlus className="w-4 h-4 text-red-400" />
             <span>Book a Pickup</span>

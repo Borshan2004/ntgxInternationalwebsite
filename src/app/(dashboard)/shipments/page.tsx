@@ -183,7 +183,7 @@ export default function ShipmentsPage(): React.JSX.Element {
       </div>
 
       {/* Filter Bar */}
-      <div className="flex flex-col sm:flex-row gap-3 items-end bg-neutral-surface border border-neutral-border rounded-lg p-4">
+      <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-end bg-neutral-surface border border-neutral-border rounded-lg p-4">
         <div className="flex-1 min-w-0">
           <Input
             label="Search"

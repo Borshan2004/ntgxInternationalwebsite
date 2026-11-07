@@ -399,23 +399,23 @@ export function TopBar({
         {/* ─────────────────────────────────────────────────────────────
             RIGHT SECTION: User Profile + Search Modal + 99+ Bell
             ───────────────────────────────────────────────────────────── */}
-        <div className="flex items-center gap-3 sm:gap-4 text-xs font-medium">
+        <div className="flex items-center gap-1.5 sm:gap-3 text-xs font-medium">
           {/* User Profile Pill */}
           <div className="relative">
             <button
               type="button"
               onClick={() => toggleMenu('user')}
-              className="flex items-center gap-2 cursor-pointer text-slate-700 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 border border-slate-200/90 rounded-full pl-3 pr-1.5 py-1 transition-all"
+              className="flex items-center gap-1.5 sm:gap-2 cursor-pointer text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200/90 dark:border-slate-700 rounded-full pl-2 sm:pl-3 pr-1.5 py-1 transition-all"
             >
-              <span className="font-bold tracking-wide text-xs">{displayName}</span>
-              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-200 text-slate-700 font-bold text-xs">
+              <span className="font-bold tracking-wide text-xs hidden sm:inline max-w-[110px] truncate">{displayName}</span>
+              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs shrink-0">
                 {displayName.slice(0, 2).toUpperCase()}
               </div>
             </button>
 
             {/* User Profile Dropdown Card */}
             {activeMenu === 'user' && (
-              <div className="absolute right-0 top-full mt-2 w-64 rounded-xl bg-white border border-slate-200 shadow-2xl p-4 z-50 text-xs ring-1 ring-black/5 animate-in fade-in slide-in-from-top-1">
+              <div className="absolute right-0 top-full mt-2 w-64 rounded-xl bg-white dark:bg-[#161F30] border border-slate-200 dark:border-slate-800 shadow-2xl p-4 z-50 text-xs ring-1 ring-black/5 animate-in fade-in slide-in-from-top-1">
                 <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
                   <div className="h-10 w-10 rounded-full bg-ntgx-red text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-xs">
                     {displayName.slice(0, 2).toUpperCase()}
@@ -491,7 +491,7 @@ export function TopBar({
 
             {/* Quick Search Popover */}
             {activeMenu === 'search' && (
-              <div className="absolute right-0 top-full mt-2 w-80 sm:w-96 rounded-xl bg-white border border-slate-200 shadow-2xl p-4 z-50 text-xs ring-1 ring-black/5 animate-in fade-in slide-in-from-top-1">
+              <div className="absolute right-0 top-full mt-2 w-[calc(100vw-2rem)] max-w-sm sm:w-96 -mr-12 sm:mr-0 rounded-xl bg-white dark:bg-[#161F30] border border-slate-200 dark:border-slate-800 shadow-2xl p-4 z-50 text-xs ring-1 ring-black/5 animate-in fade-in slide-in-from-top-1">
                 <form onSubmit={handleSearchSubmit} className="space-y-3">
                   <div className="text-2xs font-bold uppercase tracking-wider text-slate-500">
                     Track Shipment Telemetry
@@ -564,7 +564,7 @@ export function TopBar({
 
             {/* Notifications Popover */}
             {activeMenu === 'notifications' && (
-              <div className="absolute right-0 top-full mt-2 w-80 sm:w-96 rounded-xl bg-white border border-slate-200 shadow-2xl p-4 z-50 text-xs ring-1 ring-black/5 animate-in fade-in slide-in-from-top-1">
+              <div className="absolute right-0 top-full mt-2 w-[calc(100vw-2rem)] max-w-sm sm:w-96 -mr-4 sm:mr-0 rounded-xl bg-white dark:bg-[#161F30] border border-slate-200 dark:border-slate-800 shadow-2xl p-4 z-50 text-xs ring-1 ring-black/5 animate-in fade-in slide-in-from-top-1">
                 <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                   <div className="font-extrabold text-slate-900 text-sm flex items-center gap-2">
                     <Bell className="h-4 w-4 text-ntgx-red" /> Operations Alerts (99+)

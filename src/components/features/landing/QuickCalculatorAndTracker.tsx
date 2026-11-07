@@ -73,12 +73,12 @@ export function QuickCalculatorAndTracker(): React.JSX.Element {
   };
 
   return (
-    <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto -mt-8 relative z-20">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+    <section className="py-8 sm:py-12 px-3.5 sm:px-6 lg:px-8 max-w-7xl mx-auto -mt-6 sm:-mt-8 relative z-20">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
         {/* Left Card: Get a Shipping Estimate */}
         <div
           id="rate-estimator"
-          className="lg:col-span-6 bg-white dark:bg-[#111827] rounded-3xl p-6 sm:p-8 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200/80 dark:border-slate-800 transition-all"
+          className="lg:col-span-6 bg-white dark:bg-[#111827] rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200/80 dark:border-slate-800 transition-all"
         >
           <div className="flex items-center gap-3.5 mb-2">
             <div className="w-10 h-10 rounded-xl bg-red-50 dark:bg-red-950/50 text-[#E51919] flex items-center justify-center shrink-0 border border-red-100 dark:border-red-900/50">
@@ -201,7 +201,7 @@ export function QuickCalculatorAndTracker(): React.JSX.Element {
         {/* Right Card: Track Your Shipment */}
         <div
           id="tracking-section"
-          className="lg:col-span-6 bg-gradient-to-br from-[#091527] via-[#0E203B] to-[#091527] rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-700/80 text-white relative overflow-hidden"
+          className="lg:col-span-6 bg-gradient-to-br from-[#091527] via-[#0E203B] to-[#091527] rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-xl border border-slate-700/80 text-white relative overflow-hidden"
         >
           <div className="flex items-center gap-3.5 mb-2 relative z-10">
             <div className="w-10 h-10 rounded-xl bg-[#E51919] text-white flex items-center justify-center shrink-0 shadow-sm">

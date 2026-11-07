@@ -300,7 +300,7 @@ export default function ShipmentDetailPage({
   return (
     <div className="space-y-6">
       {/* Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-neutral-border pb-4 print:hidden">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-neutral-border dark:border-slate-800 pb-4 print:hidden">
         <div className="flex items-center gap-3">
           <Link href="/shipments">
             <Button variant="outline" size="sm">
@@ -309,24 +309,24 @@ export default function ShipmentDetailPage({
           </Link>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-xl font-mono font-black text-ntgx-red">
+              <h1 className="text-lg sm:text-xl font-mono font-black text-ntgx-red">
                 TRK # {shipment.trackingNumber}
               </h1>
               <Badge status={telemetry.latestStatusDetail.statusBy as ShipmentStatus} />
             </div>
-            <p className="text-xs text-neutral-textSecondary mt-0.5">
-              Route: <span className="font-bold text-neutral-textPrimary">{shipment.originAirportCode || 'DACA'}</span> ({shipment.senderCity}, {shipment.senderCountry}) &rarr;{' '}
-              <span className="font-bold text-neutral-textPrimary">{shipment.destAirportCode || 'EWR'}</span> ({shipment.recipientCity}, {shipment.recipientCountry}) • CAD: {shipment.cadNumber || '260504077/INET4535'}
+            <p className="text-xs text-neutral-textSecondary dark:text-slate-400 mt-0.5">
+              Route: <span className="font-bold text-neutral-textPrimary dark:text-neutral-100">{shipment.originAirportCode || 'DACA'}</span> ({shipment.senderCity}, {shipment.senderCountry}) &rarr;{' '}
+              <span className="font-bold text-neutral-textPrimary dark:text-neutral-100">{shipment.destAirportCode || 'EWR'}</span> ({shipment.recipientCity}, {shipment.recipientCountry}) • CAD: {shipment.cadNumber || '260504077/INET4535'}
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <a
             href={activeTab === 'INVOICE' ? `/api/documents/invoice/${shipment.id}` : `/api/documents/awb/${shipment.id}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-700 bg-white border border-slate-300 rounded-md hover:bg-slate-50 transition-colors shadow-xs"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-md hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-xs"
           >
             <ExternalLink className="h-3.5 w-3.5 text-slate-500" />
             <span>Open Clean Print View</span>
@@ -344,14 +344,14 @@ export default function ShipmentDetailPage({
       </div>
 
       {/* Tabs */}
-      <div className="flex border-b border-neutral-border space-x-6 text-sm font-semibold print:hidden">
+      <div className="flex border-b border-neutral-border dark:border-slate-800 space-x-4 sm:space-x-6 text-xs sm:text-sm font-semibold overflow-x-auto pb-0.5 print:hidden">
         <button
           type="button"
           onClick={() => setActiveTab('AWB')}
-          className={`pb-3 flex items-center gap-2 border-b-2 transition-colors ${
+          className={`pb-3 flex items-center gap-2 border-b-2 transition-colors shrink-0 whitespace-nowrap ${
             activeTab === 'AWB'
               ? 'border-ntgx-red text-ntgx-red'
-              : 'border-transparent text-neutral-textSecondary hover:text-neutral-textPrimary'
+              : 'border-transparent text-neutral-textSecondary hover:text-neutral-textPrimary dark:text-slate-400 dark:hover:text-slate-200'
           }`}
         >
           <FileText className="h-4 w-4" /> 3-Page Air Waybill (Form 0430)
@@ -360,10 +360,10 @@ export default function ShipmentDetailPage({
         <button
           type="button"
           onClick={() => setActiveTab('INVOICE')}
-          className={`pb-3 flex items-center gap-2 border-b-2 transition-colors ${
+          className={`pb-3 flex items-center gap-2 border-b-2 transition-colors shrink-0 whitespace-nowrap ${
             activeTab === 'INVOICE'
               ? 'border-ntgx-red text-ntgx-red'
-              : 'border-transparent text-neutral-textSecondary hover:text-neutral-textPrimary'
+              : 'border-transparent text-neutral-textSecondary hover:text-neutral-textPrimary dark:text-slate-400 dark:hover:text-slate-200'
           }`}
         >
           <Package className="h-4 w-4" /> Customs Commercial Invoice
@@ -372,10 +372,10 @@ export default function ShipmentDetailPage({
         <button
           type="button"
           onClick={() => setActiveTab('TRACKING')}
-          className={`pb-3 flex items-center gap-2 border-b-2 transition-colors ${
+          className={`pb-3 flex items-center gap-2 border-b-2 transition-colors shrink-0 whitespace-nowrap ${
             activeTab === 'TRACKING'
               ? 'border-ntgx-red text-ntgx-red'
-              : 'border-transparent text-neutral-textSecondary hover:text-neutral-textPrimary'
+              : 'border-transparent text-neutral-textSecondary hover:text-neutral-textPrimary dark:text-slate-400 dark:hover:text-slate-200'
           }`}
         >
           <Truck className="h-4 w-4" /> Transit Milestones & Telemetry
@@ -383,13 +383,15 @@ export default function ShipmentDetailPage({
       </div>
 
       {/* Document & Telemetry Content */}
-      {activeTab === 'AWB' && (
-        <AirWaybillDocument data={awbData} onPrint={() => window.print()} />
-      )}
+      <div className="overflow-x-auto pb-4">
+        {activeTab === 'AWB' && (
+          <AirWaybillDocument data={awbData} onPrint={() => window.print()} />
+        )}
 
-      {activeTab === 'INVOICE' && (
-        <CommercialInvoiceDocument data={invoiceData} onPrint={() => window.print()} />
-      )}
+        {activeTab === 'INVOICE' && (
+          <CommercialInvoiceDocument data={invoiceData} onPrint={() => window.print()} />
+        )}
+      </div>
 
       {activeTab === 'TRACKING' && (
         <div className="space-y-6">
