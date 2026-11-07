@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 
 export default function HomePage(): React.JSX.Element {
   return (
-    <div className="min-h-screen flex flex-col bg-white dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 font-sans antialiased selection:bg-[#E51B23] selection:text-white transition-colors duration-200">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 font-sans antialiased selection:bg-[#E51B23] selection:text-white transition-colors duration-200 overflow-x-hidden">
       {/* 1. Top bar with phone, WhatsApp, email, language & portal login */}
       <LandingTopBar />
 

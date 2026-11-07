@@ -3,11 +3,49 @@ import ExcelJS from 'exceljs';
 import { prisma } from '@/lib/prisma';
 import type { ExcelReportFilterQuery } from '@/types/shipment';
 
+export interface ExcelShipmentItem {
+  readonly shipDate: Date | string | null;
+  readonly trackingNumber: string;
+  readonly organization?: { readonly code?: string | null; readonly name?: string | null } | null;
+  readonly senderName: string;
+  readonly senderCompany?: string | null;
+  readonly recipientName: string;
+  readonly recipientCompany?: string | null;
+  readonly recipientCountry: string;
+  readonly serviceTier: string;
+  readonly status: string;
+  readonly packageCount: number;
+  readonly totalActualWeightKg: unknown;
+  readonly totalChargeableWeightKg?: unknown;
+  readonly totalChargeableWgtKg?: unknown;
+  readonly totalCustomsValue?: unknown;
+  readonly totalShippingCostUsd?: unknown;
+  readonly invoiceNumber?: string | null;
+  readonly commodities?: ReadonlyArray<{
+    readonly description: string;
+    readonly hsTariffCode: string;
+    readonly quantity: unknown;
+    readonly unitOfMeasure: string;
+    readonly netWeightKg: unknown;
+    readonly unitValue: unknown;
+    readonly totalValue: unknown;
+    readonly countryOfMfr: string;
+  }>;
+  readonly trackingEvents?: ReadonlyArray<{
+    readonly eventCode: string;
+    readonly statusTitle: string;
+    readonly city: string;
+    readonly countryCode: string;
+    readonly signedBy?: string | null;
+    readonly timestamp: Date | string;
+  }>;
+}
+
 export class ExcelExportService {
   public static async buildGranularReportBuffer(
     filters: ExcelReportFilterQuery
   ): Promise<Buffer> {
-    let shipments: any[] = [];
+    let shipments: readonly ExcelShipmentItem[] = [];
 
     try {
       shipments = await prisma.shipment.findMany({
@@ -208,38 +246,38 @@ export class ExcelExportService {
 
     for (const s of shipments) {
       overviewSheet.addRow({
-        shipDate: s.shipDate.toISOString().split('T')[0],
+        shipDate: s.shipDate ? new Date(s.shipDate).toISOString().split('T')[0] : 'N/A',
         trackingNumber: s.trackingNumber,
-        orgCode: s.organization.code,
+        orgCode: s.organization?.code ?? 'NTGX',
         senderCompany: s.senderCompany ?? s.senderName,
         recipientCompany: s.recipientCompany ?? s.recipientName,
         destCountry: s.recipientCountry,
         serviceTier: s.serviceTier,
         status: s.status,
         pkgCount: s.packageCount,
-        actualWgt: Number(s.totalActualWeightKg),
-        chargeableWgt: Number(s.totalChargeableWgtKg),
-        customsVal: Number(s.totalCustomsValue),
-        totalBilled: Number(s.totalShippingCostUsd),
+        actualWgt: Number(s.totalActualWeightKg ?? 0),
+        chargeableWgt: Number(s.totalChargeableWgtKg ?? s.totalChargeableWeightKg ?? 0),
+        customsVal: Number(s.totalCustomsValue ?? 0),
+        totalBilled: Number(s.totalShippingCostUsd ?? 0),
       });
 
-      for (const item of s.commodities) {
+      for (const item of s.commodities ?? []) {
         commoditySheet.addRow({
           trackingNumber: s.trackingNumber,
-          companyName: s.organization.name,
+          companyName: s.organization?.name ?? 'NTGX Client',
           invoiceNumber: s.invoiceNumber ?? 'N/A',
           description: item.description,
           hsCode: item.hsTariffCode,
-          quantity: Number(item.quantity),
+          quantity: Number(item.quantity ?? 1),
           uom: item.unitOfMeasure,
-          netWgt: Number(item.netWeightKg),
-          unitValue: Number(item.unitValue),
-          totalValue: Number(item.totalValue),
+          netWgt: Number(item.netWeightKg ?? 0),
+          unitValue: Number(item.unitValue ?? 0),
+          totalValue: Number(item.totalValue ?? 0),
           origin: item.countryOfMfr,
         });
       }
 
-      for (const ev of s.trackingEvents) {
+      for (const ev of s.trackingEvents ?? []) {
         milestoneSheet.addRow({
           trackingNumber: s.trackingNumber,
           eventCode: ev.eventCode,
@@ -247,7 +285,7 @@ export class ExcelExportService {
           city: ev.city,
           countryCode: ev.countryCode,
           signedBy: ev.signedBy ?? '-',
-          timestamp: ev.timestamp.toISOString(),
+          timestamp: ev.timestamp ? new Date(ev.timestamp).toISOString() : '',
         });
       }
     }
