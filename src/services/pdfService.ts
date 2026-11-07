@@ -23,80 +23,119 @@ export class PdfDocumentService {
    * Can be piped directly into @react-pdf/renderer, Puppeteer, or browser print dialog.
    */
   public static renderThreePageAwbHtml(data: AirWaybillDocumentData): string {
+    const rawTrk = data.trackingNumberRaw.replace(/\s+/g, '');
+    const destPostalClean = (data.recipient.postalCode || '50672').replace(/\s+/g, '').toUpperCase();
+    const destCountryCode = (data.recipient.countryCode || 'MY').toUpperCase();
+    const destAirport = (data.destAirportCode || 'KUL').toUpperCase();
+    const originAirport = (data.originAirportCode || 'DAC').toUpperCase();
+
+    const barcode1Svg = generateCode128BarcodeSvg(rawTrk);
+    const barcode2Svg = generateCode128BarcodeSvg(rawTrk.slice(0, 10));
+    const barcode3Svg = generateCode128BarcodeSvg(rawTrk.slice(2, 12));
+
+    const routingBarcode2Text = `(2L)${destCountryCode}${destPostalClean}+48000001`;
+    const pieceIdText = `(J) JD01 4600 ${rawTrk.slice(-4)} 3022 1074`;
+
+    const contentDescription = data.commoditySummaryLines[0]
+      ? data.commoditySummaryLines[0].replace(/^DESC\d+:\s*/i, '').split('(')[0].trim()
+      : 'Export Merchandise Samples';
+
     const pagesHtml = data.copies
       .map(
         (copyTitle, idx) => `
-      <section class="awb-page" style="page-break-after: ${idx < 2 ? 'always' : 'auto'}; border: 2px solid #000; padding: 16px; font-family: 'Inter', Arial, sans-serif; color: #000; max-width: 760px; margin: 0 auto 24px auto; background: #fff;">
-        <!-- Header Bar -->
-        <div style="display: flex; justify-content: space-between; border-bottom: 2px solid #000; padding-bottom: 8px;">
-          <div style="font-size: 12px; line-height: 1.4;">
-            <div><strong>SHIP DATE:</strong> ${data.shipDateFormatted}</div>
-            <div><strong>ACTWGT:</strong> ${data.actualWeightKg} &nbsp;|&nbsp; <strong>CHGWGT:</strong> ${data.chargeableWeightKg}</div>
-            <div><strong>CAD:</strong> ${data.cadNumber}</div>
-            <div><strong>DIMS:</strong> ${data.dimensionsFormatted}</div>
+      <section class="awb-page" style="page-break-after: ${idx < 2 ? 'always' : 'auto'}; border: 2.5px solid #000; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; color: #000; max-width: 600px; margin: 0 auto 30px auto; background: #fff; box-sizing: border-box;">
+        <!-- 1. Header Row -->
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #000; padding-bottom: 8px;">
+          <div>
+            <div style="font-size: 20px; font-weight: 900; letter-spacing: -0.5px; color: #000;">EXPRESS WORLDWIDE</div>
+            <div style="font-size: 10px; font-family: monospace; color: #555;">${data.shipDateFormatted} ${data.cadNumber}</div>
           </div>
+          <div style="background: #000; color: #fff; font-size: 20px; font-weight: 900; padding: 3px 12px; letter-spacing: 2px;">WPX</div>
           <div style="text-align: right;">
-            <div style="font-size: 24px; font-weight: 900; color: #E51919; letter-spacing: -0.5px;">NTGX <span style="color: #18181B; font-weight: 700; font-size: 16px;">EXPRESS</span></div>
-            <div style="border: 2px solid #000; display: inline-block; padding: 2px 10px; font-weight: 800; font-size: 18px; margin-top: 4px;">E</div>
-            <div style="font-size: 11px; font-weight: 700; margin-top: 4px;">${data.billToLabel}</div>
-            <div style="font-size: 11px;"><strong>REF:</strong> ${data.referenceCode}</div>
+            <div style="font-size: 18px; font-weight: 900; color: #E51919;">NTGX <span style="color: #000; font-size: 14px;">EXPRESS</span></div>
+            <div style="font-size: 11px; font-weight: 700; color: #333;">Origin: <strong style="font-size: 13px; color: #000;">${originAirport}</strong></div>
           </div>
         </div>
 
-        <!-- Shipper / Origin Block -->
-        <div style="border-bottom: 1.5px solid #000; padding: 8px 0; font-size: 12px;">
-          <div style="display: flex; justify-content: space-between; font-weight: 700;">
-            <span>ORIGIN ID: ${data.originAirportCode}</span>
-            <span>Tel: ${data.sender.phone}</span>
+        <!-- 2. Shipper Details -->
+        <div style="display: flex; justify-content: space-between; border-bottom: 2px solid #000; padding: 8px 0; font-size: 11px; line-height: 1.3;">
+          <div style="max-width: 70%;">
+            <div><strong>From:</strong> <strong style="text-transform: uppercase;">${data.sender.contactName}</strong></div>
+            ${data.sender.company ? `<div style="font-weight: 700; text-transform: uppercase;">${data.sender.company}</div>` : ''}
+            <div style="text-transform: uppercase; color: #333;">${data.sender.addressLine1} ${data.sender.addressLine2 ? ', ' + data.sender.addressLine2 : ''}</div>
+            <div style="text-transform: uppercase; color: #333;">${data.sender.postalCode} ${data.sender.city}</div>
+            <div style="font-weight: 800; text-transform: uppercase;">${data.sender.countryCode === 'BD' ? 'BANGLADESH' : data.sender.countryCode}</div>
           </div>
-          <div style="font-weight: 700; margin-top: 2px;">${data.sender.contactName.toUpperCase()}</div>
-          ${data.sender.company ? `<div style="font-weight: 700;">${data.sender.company.toUpperCase()}</div>` : ''}
-          <div>${data.sender.addressLine1.toUpperCase()} ${data.sender.addressLine2 ? ', ' + data.sender.addressLine2.toUpperCase() : ''}</div>
-          <div>${data.sender.city.toUpperCase()}, ${data.sender.postalCode} ${data.sender.countryCode}</div>
-        </div>
-
-        <!-- Recipient / Destination Block -->
-        <div style="border-bottom: 2px solid #000; padding: 10px 0; font-size: 14px;">
-          <div style="display: flex; justify-content: space-between; font-weight: 700;">
-            <span>TO: ${data.recipient.contactName.toUpperCase()}</span>
-            <span>Tel: ${data.recipient.phone}</span>
-          </div>
-          ${data.recipient.company ? `<div style="font-weight: 800; font-size: 15px;">${data.recipient.company.toUpperCase()}</div>` : ''}
-          <div style="margin-top: 2px;">${data.recipient.addressLine1.toUpperCase()} ${data.recipient.addressLine2 ? ', ' + data.recipient.addressLine2.toUpperCase() : ''}</div>
-          <div style="font-size: 16px; font-weight: 800; margin-top: 4px;">
-            ${data.recipient.city.toUpperCase()} ${data.recipient.stateProvince ?? ''} ${data.recipient.postalCode}, ${data.recipient.countryCode}
+          <div style="text-align: right; font-family: monospace; font-size: 11px;">
+            <div>Contact:</div>
+            <div style="font-weight: 700;">${data.sender.phone}</div>
           </div>
         </div>
 
-        <!-- Routing & Hub Code Strip -->
-        <div style="border-bottom: 2px solid #000; padding: 8px 0; display: flex; justify-content: space-between; align-items: center;">
-          <div style="font-family: monospace; font-size: 13px; font-weight: 700;">${data.routingHeader}</div>
-          <div style="font-size: 20px; font-weight: 900; letter-spacing: 1px;">
-            ${data.recipient.countryCode}-${data.destAirportCode} ${data.recipient.postalCode}
+        <!-- 3. Receiver Details (Corner Brackets) -->
+        <div style="position: relative; border-bottom: 2px solid #000; padding: 10px 8px; margin: 4px 0; font-size: 12px; line-height: 1.3;">
+          <div style="display: flex; justify-content: space-between;">
+            <div style="max-width: 70%;">
+              <div style="font-size: 13px; font-weight: 900; text-transform: uppercase;">To: ${data.recipient.contactName}</div>
+              ${data.recipient.company ? `<div style="font-weight: 700; text-transform: uppercase; font-size: 12px;">${data.recipient.company}</div>` : ''}
+              <div style="text-transform: uppercase; color: #333; font-size: 11px;">${data.recipient.addressLine1} ${data.recipient.addressLine2 ? ', ' + data.recipient.addressLine2 : ''}</div>
+              <div style="text-transform: uppercase; font-weight: 700; font-size: 11px;">${data.recipient.city} ${data.recipient.stateProvince || ''} ${data.recipient.postalCode}</div>
+              <div style="font-size: 15px; font-weight: 900; text-transform: uppercase; padding-top: 3px;">${data.recipient.countryCode}</div>
+            </div>
+            <div style="text-align: right; font-family: monospace; font-size: 11px;">
+              <div>Contact:</div>
+              <div style="font-weight: 700;">${data.recipient.contactName}</div>
+              <div style="font-weight: 700;">${data.recipient.phone}</div>
+            </div>
           </div>
         </div>
 
-        <!-- Code 128 Barcode & Tracking Number -->
-        <div style="border-bottom: 2px solid #000; padding: 14px 0; text-align: center;">
-          <div style="max-width: 520px; margin: 0 auto;">${data.linearBarcodeSvg}</div>
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px; padding: 0 24px;">
-            <span style="font-size: 18px; font-weight: 800; letter-spacing: 1.5px;">TRK# ${data.trackingNumberFormatted}</span>
-            <span style="font-size: 13px; font-weight: 700; border: 1px solid #000; padding: 2px 6px;">FORM ${data.formCode}</span>
+        <!-- 4. Routing Code -->
+        <div style="border-bottom: 2px solid #000; padding: 8px 0;">
+          <div style="font-family: monospace; font-size: 24px; font-weight: 900; letter-spacing: 1px;">${destCountryCode}-${destAirport}-EKL &nbsp;KLB1</div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px;">
+            <div style="background: #000; color: #fff; font-size: 20px; font-weight: 900; padding: 2px 14px; letter-spacing: 1.5px;">C-${destAirport}</div>
+            <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: #666;">Day &nbsp;&nbsp; Time</div>
           </div>
         </div>
 
-        <!-- Commodity & Customs Summary -->
-        <div style="border-bottom: 2px solid #000; padding: 8px 0; font-size: 11px;">
-          <div style="font-weight: 700; margin-bottom: 4px;">COMMODITY DESCRIPTION:</div>
-          ${data.commoditySummaryLines.map((line, i) => `<div>DESC${i + 1}: ${line}</div>`).join('')}
-          <div style="display: flex; justify-content: space-between; font-weight: 700; margin-top: 6px;">
-            <span>CUSTOMS VALUE: ${data.customsValueFormatted}</span>
-            <span>CTRY/TERR MFR: ${data.countryOfManufacture}</span>
+        <!-- 5. Shipment Details -->
+        <div style="border-bottom: 2px solid #000; padding: 8px 0; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
+          <div><strong>Ref:</strong> <span style="font-family: monospace; font-weight: 700;">${data.referenceCode}</span></div>
+          <div style="display: flex; gap: 24px;">
+            <div>
+              <div style="font-size: 9px; color: #666; text-transform: uppercase;">Piece/Shpt Weight</div>
+              <div style="font-size: 16px; font-weight: 900;">${data.actualWeightKg}</div>
+            </div>
+            <div>
+              <div style="font-size: 9px; color: #666; text-transform: uppercase;">Piece</div>
+              <div style="font-size: 16px; font-weight: 900;">1/1</div>
+            </div>
           </div>
         </div>
 
-        <!-- Copy Footer Banner -->
-        <div style="padding-top: 10px; text-align: center; font-size: 13px; font-weight: 900; letter-spacing: 0.5px; background: #F3F4F6; padding-bottom: 8px;">
+        <!-- 6. Barcodes -->
+        <div style="padding: 8px 0;">
+          <div style="text-align: right; font-size: 11px; margin-bottom: 8px;">Contents: <strong>${contentDescription}</strong></div>
+          
+          <div style="text-align: center; margin-bottom: 12px;">
+            <div style="max-width: 440px; margin: 0 auto;">${barcode1Svg}</div>
+            <div style="font-family: monospace; font-size: 13px; font-weight: 900; letter-spacing: 1.5px; margin-top: 4px;">WAYBILL ${data.trackingNumberFormatted}</div>
+          </div>
+
+          <div style="text-align: center; margin-bottom: 12px;">
+            <div style="max-width: 440px; margin: 0 auto;">${barcode2Svg}</div>
+            <div style="font-family: monospace; font-size: 11px; font-weight: 700; margin-top: 2px;">${routingBarcode2Text}</div>
+          </div>
+
+          <div style="text-align: center; margin-bottom: 8px;">
+            <div style="max-width: 440px; margin: 0 auto;">${barcode3Svg}</div>
+            <div style="font-family: monospace; font-size: 11px; font-weight: 700; margin-top: 2px;">${pieceIdText}</div>
+          </div>
+        </div>
+
+        <!-- 7. Page Copy Banner -->
+        <div style="background: #000; color: #fff; text-align: center; padding: 6px; font-size: 11px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 10px;">
           PAGE ${idx + 1} OF 3 — ${copyTitle}
         </div>
       </section>
@@ -104,7 +143,7 @@ export class PdfDocumentService {
       )
       .join('\n');
 
-    return `<!DOCTYPE html><html><head><meta charset="utf-8" /><title>AWB ${data.trackingNumberFormatted}</title><style>@media print { body { margin: 0; padding: 0; } .awb-page { border: none !important; margin: 0 !important; width: 100% !important; } }</style></head><body>${pagesHtml}</body></html>`;
+    return `<!DOCTYPE html><html><head><meta charset="utf-8" /><title>AWB ${data.trackingNumberFormatted}</title><style>@page { size: A4 portrait; margin: 8mm 10mm; } @media print { body { margin: 0; padding: 0; background: #fff; } .awb-page { border: 2px solid #000 !important; margin: 0 0 10mm 0 !important; page-break-after: always !important; break-after: page !important; page-break-inside: avoid !important; break-inside: avoid !important; } .awb-page:last-child { page-break-after: auto !important; break-after: auto !important; margin-bottom: 0 !important; } } body { background: #f1f5f9; padding: 20px 0; font-family: sans-serif; }</style></head><body>${pagesHtml}</body></html>`;
   }
 
   /**
