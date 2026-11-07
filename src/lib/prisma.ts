@@ -9,8 +9,24 @@ const globalForPrisma = globalThis as unknown as {
 export const prisma =
   globalForPrisma.prisma ??
   new PrismaClient({
-    log: process.env.NODE_ENV === 'development' ? ['error', 'warn'] : ['error'],
+    log: [
+      { emit: 'event', level: 'error' },
+      { emit: 'stdout', level: 'warn' },
+    ],
   });
+
+// Filter out benign Neon serverless idle socket closure
+// When Neon puts idle computes to sleep, PgBouncer closes the idle connection.
+// Prisma reconnects automatically upon the next query.
+(prisma as unknown as { $on: (event: string, cb: (e: { message: string }) => void) => void }).$on(
+  'error',
+  (e: { message: string }) => {
+    if (e.message && (e.message.includes('kind: Closed') || e.message.includes('Closed, cause: None'))) {
+      return;
+    }
+    console.error('Prisma database error:', e.message);
+  }
+);
 
 if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma;
