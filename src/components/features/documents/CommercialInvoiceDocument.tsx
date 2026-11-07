@@ -32,13 +32,18 @@ export const CommercialInvoiceDocument: React.FC<CommercialInvoiceDocumentProps>
     <div className="space-y-4">
       {/* Control Toolbar */}
       <div className="flex items-center justify-between bg-neutral-surfaceMuted p-3 rounded-md border border-neutral-border print:hidden">
-        <span className="text-xs font-bold text-neutral-textPrimary">
-          Official Customs Commercial Invoice
-        </span>
+        <div>
+          <span className="text-xs font-bold text-neutral-textPrimary block">
+            Official Customs Commercial Invoice
+          </span>
+          <span className="text-2xs text-neutral-500">
+            Form approved for International Customs clearance &amp; HS declaration.
+          </span>
+        </div>
         <button
           type="button"
           onClick={handlePrint}
-          className="inline-flex items-center gap-1.5 px-4 py-2 bg-brand-purple text-white text-xs font-bold rounded-md hover:bg-brand-purpleHover shadow-xs"
+          className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#E51919] text-white text-xs font-bold rounded-md hover:bg-[#C81212] shadow-xs transition-colors"
         >
           <Printer className="h-4 w-4" /> Print Commercial Invoice
         </button>

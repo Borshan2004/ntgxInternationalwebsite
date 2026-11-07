@@ -101,25 +101,29 @@ export default function DashboardLayout({
   const pageTitle = resolveTitle(pathname);
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden bg-slate-50">
-      <TopBar
-        title={pageTitle}
-        userRole={session.role}
-        userName={session.userName}
-        onMenuToggle={handleToggleCollapse}
-        onSignOut={handleSignOut}
-      />
-      <div className="flex flex-1 pt-14 overflow-hidden">
-        <Sidebar
-          currentPath={pathname}
+    <div className="flex flex-col h-screen overflow-hidden bg-slate-50 print:h-auto print:overflow-visible print:bg-white print:block">
+      <div className="print:hidden">
+        <TopBar
+          title={pageTitle}
           userRole={session.role}
           userName={session.userName}
-          organizationName={session.organizationName}
-          isCollapsed={isCollapsed}
-          onToggleCollapse={handleToggleCollapse}
+          onMenuToggle={handleToggleCollapse}
+          onSignOut={handleSignOut}
         />
-        <main className="flex-1 overflow-y-auto bg-slate-50/70">
-          <div className={pathname === '/shipments/new' ? 'p-0 sm:p-2 lg:p-4' : 'p-6'}>
+      </div>
+      <div className="flex flex-1 pt-14 overflow-hidden print:pt-0 print:overflow-visible print:block">
+        <div className="print:hidden">
+          <Sidebar
+            currentPath={pathname}
+            userRole={session.role}
+            userName={session.userName}
+            organizationName={session.organizationName}
+            isCollapsed={isCollapsed}
+            onToggleCollapse={handleToggleCollapse}
+          />
+        </div>
+        <main className="flex-1 overflow-y-auto bg-slate-50/70 print:overflow-visible print:h-auto print:p-0 print:bg-white print:block">
+          <div className={pathname === '/shipments/new' ? 'p-0 sm:p-2 lg:p-4 print:p-0' : 'p-6 print:p-0'}>
             {children}
           </div>
         </main>

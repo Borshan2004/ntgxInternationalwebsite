@@ -9,6 +9,7 @@ import {
   FileText,
   Truck,
   Package,
+  ExternalLink,
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
@@ -299,7 +300,7 @@ export default function ShipmentDetailPage({
   return (
     <div className="space-y-6">
       {/* Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-neutral-border pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-neutral-border pb-4 print:hidden">
         <div className="flex items-center gap-3">
           <Link href="/shipments">
             <Button variant="outline" size="sm">
@@ -321,18 +322,29 @@ export default function ShipmentDetailPage({
         </div>
 
         <div className="flex items-center gap-2">
+          <a
+            href={activeTab === 'INVOICE' ? `/api/documents/invoice/${shipment.id}` : `/api/documents/awb/${shipment.id}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-700 bg-white border border-slate-300 rounded-md hover:bg-slate-50 transition-colors shadow-xs"
+          >
+            <ExternalLink className="h-3.5 w-3.5 text-slate-500" />
+            <span>Open Clean Print View</span>
+          </a>
+
           <Button
-            variant="outline"
+            variant="primary"
             size="sm"
             onClick={() => window.print()}
+            className="bg-[#E51919] hover:bg-[#C81212] text-white"
           >
-            <Printer className="h-3.5 w-3.5 mr-1.5" /> Print Documents
+            <Printer className="h-3.5 w-3.5 mr-1.5" /> Print {activeTab === 'AWB' ? '3-Page AWB' : activeTab === 'INVOICE' ? 'Invoice' : 'Document'}
           </Button>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex border-b border-neutral-border space-x-6 text-sm font-semibold">
+      <div className="flex border-b border-neutral-border space-x-6 text-sm font-semibold print:hidden">
         <button
           type="button"
           onClick={() => setActiveTab('AWB')}

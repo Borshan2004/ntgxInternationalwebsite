@@ -169,13 +169,18 @@ export const AirWaybillDocument: React.FC<AirWaybillDocumentProps> = ({
     <div className="space-y-4">
       {/* Control Toolbar */}
       <div className="flex items-center justify-between bg-neutral-surfaceMuted p-3 rounded-md border border-neutral-border print:hidden">
-        <span className="text-xs font-bold text-neutral-textPrimary">
-          3-Page Standard Air Waybill (Form 0430)
-        </span>
+        <div>
+          <span className="text-xs font-bold text-neutral-textPrimary block">
+            3-Page Standard Air Waybill (Form 0430)
+          </span>
+          <span className="text-2xs text-neutral-500">
+            Contains 3 official copies: Consignee Copy, Carrier Pouch Copy, and Shipper Record Copy.
+          </span>
+        </div>
         <button
           type="button"
           onClick={handlePrint}
-          className="inline-flex items-center gap-1.5 px-4 py-2 bg-brand-purple text-white text-xs font-bold rounded-md hover:bg-brand-purpleHover shadow-xs"
+          className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#E51919] text-white text-xs font-bold rounded-md hover:bg-[#C81212] shadow-xs transition-colors"
         >
           <Printer className="h-4 w-4" /> Print 3-Page Air Waybill
         </button>
@@ -183,7 +188,14 @@ export const AirWaybillDocument: React.FC<AirWaybillDocumentProps> = ({
 
       {/* The 3 Physical AWB Pages */}
       <div className="print:p-0">
-        {data.copies.map((copyLabel, idx) => renderPage(copyLabel, idx))}
+        {data.copies.map((copyLabel, idx) => (
+          <div key={copyLabel} className="space-y-1">
+            <div className="text-center font-bold text-2xs text-neutral-400 uppercase tracking-widest my-2 print:hidden">
+              &bull; &bull; &bull; PAGE {idx + 1} OF 3: {copyLabel} &bull; &bull; &bull;
+            </div>
+            {renderPage(copyLabel, idx)}
+          </div>
+        ))}
       </div>
     </div>
   );

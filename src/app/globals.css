@@ -23,20 +23,92 @@
 
 /* Print specifications for 3-Page Air Waybill & Commercial Invoice */
 @media print {
-  body {
+  @page {
+    size: A4 portrait;
+    margin: 8mm 10mm;
+  }
+
+  html, body {
+    width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
     background: #ffffff !important;
     color: #000000 !important;
+    font-size: 11pt !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
-  header, nav, footer, .print\:hidden {
+  /* Completely hide all UI shell components */
+  header,
+  nav,
+  footer,
+  aside,
+  .print\:hidden,
+  [data-print-hide],
+  button,
+  .no-print {
     display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
 
-  .awb-page, .ci-page {
+  /* Release all containers from height/overflow traps */
+  #__next,
+  main,
+  div {
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    position: static !important;
     box-shadow: none !important;
+  }
+
+  /* 3-Page Air Waybill: Each page on its own fresh A4 sheet */
+  .awb-page {
+    display: block !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 270mm !important;
+    max-height: 275mm !important;
     border: 2pt solid #000000 !important;
-    margin: 0 !important;
+    margin: 0 0 10mm 0 !important;
+    padding: 16px !important;
     page-break-after: always !important;
     break-after: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+  }
+
+  .awb-page:last-child {
+    page-break-after: auto !important;
+    break-after: auto !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Customs Commercial Invoice: Clean single/multi-page A4 print */
+  .ci-page {
+    display: block !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 270mm !important;
+    border: 2pt solid #000000 !important;
+    margin: 0 !important;
+    padding: 20px !important;
+    page-break-after: auto !important;
+    break-after: auto !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    box-shadow: none !important;
   }
 }
