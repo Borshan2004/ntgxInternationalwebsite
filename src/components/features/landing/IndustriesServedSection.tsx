@@ -51,10 +51,10 @@ export function IndustriesServedSection(): React.JSX.Element {
           <span className="text-xs font-bold uppercase tracking-wider text-[#E51919] block mb-2">
             Industries We Serve
           </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             Industry-Specific Export Solutions
           </h2>
-          <p className="text-sm text-slate-600 mt-2">
+          <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
             Engineered logistics workflows optimized for Bangladesh&apos;s leading export sectors.
           </p>
         </div>
@@ -65,21 +65,21 @@ export function IndustriesServedSection(): React.JSX.Element {
             return (
               <div
                 key={ind.title}
-                className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-xs hover:shadow-md hover:border-red-300 transition-all group"
+                className="bg-white dark:bg-[#111827] border border-slate-200/80 dark:border-slate-800 rounded-2xl p-6 shadow-xs hover:shadow-md hover:border-red-300 dark:hover:border-red-900/50 transition-all group"
               >
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-slate-50 text-slate-800 border border-slate-100 group-hover:bg-red-50 group-hover:text-[#E51919] group-hover:border-red-100 flex items-center justify-center transition-colors">
+                  <div className="w-12 h-12 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-100 dark:border-slate-700 group-hover:bg-red-50 dark:group-hover:bg-red-950/50 group-hover:text-[#E51919] group-hover:border-red-100 dark:group-hover:border-red-900/50 flex items-center justify-center transition-colors">
                     <Icon className="w-6 h-6" />
                   </div>
-                  <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full">
+                  <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-full">
                     {ind.badge}
                   </span>
                 </div>
 
-                <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-[#E51919] transition-colors">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 group-hover:text-[#E51919] transition-colors">
                   {ind.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
                   {ind.description}
                 </p>
               </div>

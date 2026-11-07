@@ -101,7 +101,7 @@ export default function DashboardLayout({
   const pageTitle = resolveTitle(pathname);
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden bg-slate-50 print:h-auto print:overflow-visible print:bg-white print:block">
+    <div className="flex flex-col h-screen overflow-hidden bg-slate-50 dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 print:h-auto print:overflow-visible print:bg-white print:block">
       <div className="print:hidden">
         <TopBar
           title={pageTitle}
@@ -122,7 +122,7 @@ export default function DashboardLayout({
             onToggleCollapse={handleToggleCollapse}
           />
         </div>
-        <main className="flex-1 overflow-y-auto bg-slate-50/70 print:overflow-visible print:h-auto print:p-0 print:bg-white print:block">
+        <main className="flex-1 overflow-y-auto bg-slate-50/70 dark:bg-[#0B0F19]/90 print:overflow-visible print:h-auto print:p-0 print:bg-white print:block">
           <div className={pathname === '/shipments/new' ? 'p-0 sm:p-2 lg:p-4 print:p-0' : 'p-6 print:p-0'}>
             {children}
           </div>

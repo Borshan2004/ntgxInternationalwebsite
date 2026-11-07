@@ -28,11 +28,11 @@ export const Button: React.FC<ButtonProps> = ({
     secondary:
       'bg-brand-orange text-white hover:bg-brand-orangeHover focus:ring-brand-orange',
     outline:
-      'border border-neutral-border text-neutral-textPrimary bg-white hover:bg-neutral-surfaceMuted focus:ring-brand-purple',
+      'border border-neutral-border dark:border-slate-700 text-neutral-textPrimary dark:text-neutral-100 bg-white dark:bg-slate-800 hover:bg-neutral-surfaceMuted dark:hover:bg-slate-700 focus:ring-brand-purple',
     danger:
-      'bg-status-exception-bg text-status-exception-text border border-status-exception-border hover:bg-red-100 focus:ring-red-500',
+      'bg-status-exception-bg text-status-exception-text border border-status-exception-border hover:bg-red-100 dark:hover:bg-red-950 focus:ring-red-500',
     ghost:
-      'text-neutral-textSecondary hover:bg-neutral-surfaceMuted hover:text-neutral-textPrimary focus:ring-brand-purple',
+      'text-neutral-textSecondary dark:text-slate-400 hover:bg-neutral-surfaceMuted dark:hover:bg-slate-800 hover:text-neutral-textPrimary dark:hover:text-white focus:ring-brand-purple',
   };
 
   const sizeStyles: Record<NonNullable<ButtonProps['size']>, string> = {

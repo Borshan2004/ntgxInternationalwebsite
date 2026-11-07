@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { UserRole } from '@/types/shipment';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
 
 interface SidebarProps {
   readonly currentPath: string;
@@ -110,14 +111,14 @@ export function Sidebar({
     <aside
       aria-label="Sidebar navigation"
       className={cn(
-        'relative flex flex-col border-r border-neutral-200 bg-white transition-all duration-300 ease-in-out select-none shadow-sm',
+        'relative flex flex-col border-r border-neutral-200 dark:border-slate-800 bg-white dark:bg-[#111827] transition-all duration-300 ease-in-out select-none shadow-sm',
         isCollapsed ? 'w-16' : 'w-64'
       )}
     >
       {/* Section Header & Collapse Toggle */}
       <div
         className={cn(
-          'flex h-11 items-center border-b border-neutral-100 bg-white px-3',
+          'flex h-11 items-center border-b border-neutral-100 dark:border-slate-800 bg-white dark:bg-[#111827] px-3',
           isCollapsed ? 'justify-center' : 'justify-between'
         )}
       >
@@ -186,11 +187,23 @@ export function Sidebar({
         })}
       </nav>
 
+      {/* Appearance & Dark Mode Switch */}
+      <div className="border-t border-neutral-200 dark:border-slate-800 p-2.5">
+        <div className={cn('flex items-center', isCollapsed ? 'justify-center' : 'justify-between px-1.5')}>
+          {!isCollapsed && (
+            <span className="text-2xs font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
+              Mode
+            </span>
+          )}
+          <ThemeToggle variant={isCollapsed ? 'icon' : 'pill'} size="sm" />
+        </div>
+      </div>
+
       {/* Organization & User Footer */}
-      <div className="border-t border-neutral-200 p-3">
+      <div className="border-t border-neutral-200 dark:border-slate-800 p-3">
         <div
           className={cn(
-            'flex items-center gap-2.5 rounded-lg bg-neutral-50 p-2',
+            'flex items-center gap-2.5 rounded-lg bg-neutral-50 dark:bg-slate-800/80 p-2',
             isCollapsed && 'justify-center p-1.5'
           )}
         >
@@ -200,8 +213,8 @@ export function Sidebar({
 
           {!isCollapsed && (
             <div className="min-w-0 flex-1">
-              <p className="truncate text-xs font-bold text-neutral-900">{userName}</p>
-              <div className="flex items-center gap-1 text-2xs text-neutral-500">
+              <p className="truncate text-xs font-bold text-neutral-900 dark:text-neutral-100">{userName}</p>
+              <div className="flex items-center gap-1 text-2xs text-neutral-500 dark:text-neutral-400">
                 <Building2 className="h-3 w-3 shrink-0" />
                 <span className="truncate">{organizationName}</span>
               </div>

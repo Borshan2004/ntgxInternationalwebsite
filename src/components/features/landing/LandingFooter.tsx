@@ -5,6 +5,7 @@ import React from 'react';
 import Link from 'next/link';
 import { BrandLogo } from '@/components/ui/BrandLogo';
 import { MapPin, Phone, Mail, MessageCircle, ShieldCheck } from 'lucide-react';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
 
 export function LandingFooter(): React.JSX.Element {
   return (
@@ -125,10 +126,11 @@ export function LandingFooter(): React.JSX.Element {
           </div>
         </div>
 
-        {/* Bottom copyright line */}
+        {/* Bottom copyright line & theme switcher */}
         <div className="mt-12 pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500">
           <p>&copy; {new Date().getFullYear()} NTGX Express &amp; Freight International. All rights reserved.</p>
-          <div className="flex gap-6">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+            <ThemeToggle variant="pill" size="sm" className="bg-slate-800 text-slate-300 border-slate-700" />
             <a href="#faq" className="hover:text-slate-400 transition-colors">
               Privacy Policy
             </a>

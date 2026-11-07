@@ -21,21 +21,21 @@ export const Card: React.FC<CardProps> = ({
   return (
     <div
       className={cn(
-        'rounded-lg border border-neutral-border bg-white shadow-card overflow-hidden',
+        'rounded-lg border border-neutral-border dark:border-slate-800 bg-white dark:bg-[#111827] shadow-card overflow-hidden transition-colors',
         className
       )}
       {...props}
     >
       {(title || subtitle || action) && (
-        <div className="flex items-center justify-between border-b border-neutral-border px-5 py-3.5 bg-neutral-surfaceMuted">
+        <div className="flex items-center justify-between border-b border-neutral-border dark:border-slate-800 px-5 py-3.5 bg-neutral-surfaceMuted dark:bg-[#161F30]">
           <div>
             {title && (
-              <h3 className="text-sm font-bold text-neutral-textPrimary tracking-tight">
+              <h3 className="text-sm font-bold text-neutral-textPrimary dark:text-white tracking-tight">
                 {title}
               </h3>
             )}
             {subtitle && (
-              <p className="text-xs text-neutral-textSecondary mt-0.5">{subtitle}</p>
+              <p className="text-xs text-neutral-textSecondary dark:text-slate-400 mt-0.5">{subtitle}</p>
             )}
           </div>
           {action && <div>{action}</div>}

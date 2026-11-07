@@ -37,14 +37,14 @@ const SERVICES = [
 
 export function ServicesGridSection(): React.JSX.Element {
   return (
-    <section id="services" className="py-20 bg-slate-50 border-t border-slate-200/80">
+    <section id="services" className="py-20 bg-slate-50 dark:bg-[#0B0F19] border-t border-slate-200/80 dark:border-slate-800 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div>
             <span className="text-xs font-bold uppercase tracking-wider text-[#E51919] block mb-2">
               Our Core Services
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
               International Shipping Services
             </h2>
           </div>
@@ -64,7 +64,7 @@ export function ServicesGridSection(): React.JSX.Element {
             return (
               <div
                 key={srv.title}
-                className="bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col group"
+                className="bg-white dark:bg-[#111827] rounded-2xl border border-slate-200/90 dark:border-slate-800 overflow-hidden shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col group"
               >
                 {/* Visual Header Banner */}
                 <div className={`h-36 bg-gradient-to-br ${srv.color} p-5 flex flex-col justify-between text-white relative`}>
@@ -81,7 +81,7 @@ export function ServicesGridSection(): React.JSX.Element {
 
                 {/* Content */}
                 <div className="p-5 flex-1 flex flex-col justify-between">
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 font-normal">
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4 font-normal">
                     {srv.description}
                   </p>
 

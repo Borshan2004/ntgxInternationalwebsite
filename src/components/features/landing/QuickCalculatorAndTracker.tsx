@@ -78,15 +78,15 @@ export function QuickCalculatorAndTracker(): React.JSX.Element {
         {/* Left Card: Get a Shipping Estimate */}
         <div
           id="rate-estimator"
-          className="lg:col-span-6 bg-white rounded-3xl p-6 sm:p-8 shadow-xl shadow-slate-200/50 border border-slate-200/80 transition-all"
+          className="lg:col-span-6 bg-white dark:bg-[#111827] rounded-3xl p-6 sm:p-8 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200/80 dark:border-slate-800 transition-all"
         >
           <div className="flex items-center gap-3.5 mb-2">
-            <div className="w-10 h-10 rounded-xl bg-red-50 text-[#E51919] flex items-center justify-center shrink-0 border border-red-100">
+            <div className="w-10 h-10 rounded-xl bg-red-50 dark:bg-red-950/50 text-[#E51919] flex items-center justify-center shrink-0 border border-red-100 dark:border-red-900/50">
               <Calculator className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-slate-900 tracking-tight">Get a Shipping Estimate</h2>
-              <p className="text-xs text-slate-500">
+              <h2 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Get a Shipping Estimate</h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400">
                 Transparent international rates based on destination and weight.
               </p>
             </div>
@@ -96,8 +96,8 @@ export function QuickCalculatorAndTracker(): React.JSX.Element {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* From Country */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Origin</label>
-                <div className="w-full flex items-center gap-2 px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-800">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Origin</label>
+                <div className="w-full flex items-center gap-2 px-3.5 py-2.5 bg-slate-50 dark:bg-[#161F30] border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200">
                   <span className="text-base">🇧🇩</span>
                   <span>Bangladesh (DAC)</span>
                 </div>
@@ -105,11 +105,11 @@ export function QuickCalculatorAndTracker(): React.JSX.Element {
 
               {/* To Country */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Destination</label>
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Destination</label>
                 <select
                   value={destinationCode}
                   onChange={(e) => setDestinationCode(e.target.value)}
-                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#E51919]"
+                  className="w-full px-3.5 py-2.5 bg-white dark:bg-[#161F30] border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-[#E51919]"
                 >
                   {POPULAR_DESTINATIONS.map((dest) => (
                     <option key={dest.code} value={dest.code}>
@@ -123,11 +123,11 @@ export function QuickCalculatorAndTracker(): React.JSX.Element {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Shipment Type */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Shipment Type</label>
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Shipment Type</label>
                 <select
                   value={shipmentType}
                   onChange={(e) => setShipmentType(e.target.value as 'DOCUMENT' | 'COMMODITY')}
-                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#E51919]"
+                  className="w-full px-3.5 py-2.5 bg-white dark:bg-[#161F30] border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-[#E51919]"
                 >
                   <option value="COMMODITY">Package / Commercial Cargo</option>
                   <option value="DOCUMENT">Document / Business Letter</option>
@@ -136,7 +136,7 @@ export function QuickCalculatorAndTracker(): React.JSX.Element {
 
               {/* Weight in KG */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Chargeable Weight</label>
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Chargeable Weight</label>
                 <div className="relative">
                   <input
                     type="number"
@@ -145,7 +145,7 @@ export function QuickCalculatorAndTracker(): React.JSX.Element {
                     max="1000"
                     value={weightKg}
                     onChange={(e) => setWeightKg(parseFloat(e.target.value) || 0)}
-                    className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#E51919]"
+                    className="w-full px-3.5 py-2.5 bg-white dark:bg-[#161F30] border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-[#E51919]"
                     placeholder="1.0"
                   />
                   <span className="absolute right-3.5 top-2.5 text-xs font-bold text-slate-400">KG</span>

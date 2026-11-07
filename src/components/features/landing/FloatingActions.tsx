@@ -3,6 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { ArrowUp, Calculator, MessageCircle, Phone } from 'lucide-react';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
 
 export function FloatingActions(): React.JSX.Element {
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -30,11 +31,16 @@ export function FloatingActions(): React.JSX.Element {
           type="button"
           onClick={scrollToTop}
           aria-label="Scroll to top of page"
-          className="w-11 h-11 rounded-full bg-white text-slate-800 shadow-xl border border-slate-200 flex items-center justify-center hover:bg-slate-50 hover:text-[#E51919] transition-all"
+          className="w-11 h-11 rounded-full bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 shadow-xl border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-[#E51919] transition-all"
         >
           <ArrowUp className="w-5 h-5" />
         </button>
       )}
+
+      {/* Floating Theme Toggle Shortcut */}
+      <div className="w-11 h-11 rounded-full bg-white dark:bg-slate-800 text-slate-800 dark:text-amber-400 shadow-xl border border-slate-200 dark:border-slate-700 flex items-center justify-center overflow-hidden hover:scale-105 transition-all">
+        <ThemeToggle size="md" className="border-0 shadow-none bg-transparent dark:bg-transparent hover:bg-transparent dark:hover:bg-transparent" />
+      </div>
 
       {/* Quick Rate Estimator scroll */}
       <a

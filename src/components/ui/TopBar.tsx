@@ -24,6 +24,7 @@ import {
 } from 'lucide-react';
 import { BrandLogo } from '@/components/ui/BrandLogo';
 import type { UserRole } from '@/types/shipment';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
 
 interface TopBarProps {
   readonly title: string;
@@ -80,7 +81,7 @@ export function TopBar({
   return (
     <header
       ref={menuContainerRef}
-      className="fixed inset-x-0 top-0 z-40 bg-white/95 backdrop-blur-md text-slate-800 select-none border-b border-slate-200/90 shadow-xs h-14"
+      className="fixed inset-x-0 top-0 z-40 bg-white/95 dark:bg-[#111827]/95 backdrop-blur-md text-slate-800 dark:text-slate-100 select-none border-b border-slate-200/90 dark:border-slate-800 shadow-xs h-14"
     >
       <div className="w-full px-4 sm:px-6 h-full flex items-center justify-between">
         {/* ─────────────────────────────────────────────────────────────
@@ -539,6 +540,9 @@ export function TopBar({
               </div>
             )}
           </div>
+
+          {/* Theme Mode Toggle Button */}
+          <ThemeToggle size="md" />
 
           {/* Notifications Trigger Button (With 99+ Badge) */}
           <div className="relative">

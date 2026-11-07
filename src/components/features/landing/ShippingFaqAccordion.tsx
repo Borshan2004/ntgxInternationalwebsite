@@ -51,10 +51,10 @@ export function ShippingFaqAccordion(): React.JSX.Element {
           <span className="text-xs font-bold uppercase tracking-wider text-[#E51919] block mb-2">
             Frequently Asked Questions
           </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             Common Questions About International Shipping
           </h2>
-          <p className="text-sm text-slate-600 mt-2">
+          <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
             Everything you need to know about rates, customs clearance, transit times, and documentation.
           </p>
         </div>
@@ -65,28 +65,28 @@ export function ShippingFaqAccordion(): React.JSX.Element {
             return (
               <div
                 key={faq.question}
-                className="border border-slate-200/90 rounded-2xl overflow-hidden transition-all duration-200"
+                className="border border-slate-200/90 dark:border-slate-800 rounded-2xl overflow-hidden transition-all duration-200 bg-white dark:bg-[#111827]"
               >
                 <button
                   type="button"
                   onClick={() => toggle(idx)}
-                  className="w-full px-6 py-4.5 flex items-center justify-between text-left font-bold text-slate-900 hover:text-[#E51919] bg-slate-50/60 hover:bg-red-50/20 transition-colors"
+                  className="w-full px-6 py-4.5 flex items-center justify-between text-left font-bold text-slate-900 dark:text-slate-100 hover:text-[#E51919] bg-slate-50/60 dark:bg-[#111827] hover:bg-red-50/20 dark:hover:bg-red-950/20 transition-colors"
                 >
                   <span className="text-sm sm:text-base pr-4 flex items-center gap-2.5">
                     <HelpCircle className="w-4 h-4 text-[#E51919] shrink-0" />
                     {faq.question}
                   </span>
-                  <div className="w-7 h-7 rounded-full bg-white border border-slate-200 flex items-center justify-center shrink-0">
+                  <div className="w-7 h-7 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center shrink-0">
                     {isOpen ? (
                       <Minus className="w-4 h-4 text-[#E51919]" />
                     ) : (
-                      <Plus className="w-4 h-4 text-slate-500" />
+                      <Plus className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                     )}
                   </div>
                 </button>
 
                 {isOpen && (
-                  <div className="px-6 py-4 text-xs sm:text-sm text-slate-600 leading-relaxed bg-white border-t border-slate-100 animate-in fade-in duration-150 font-normal">
+                  <div className="px-6 py-4 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed bg-white dark:bg-[#161F30] border-t border-slate-100 dark:border-slate-800 animate-in fade-in duration-150 font-normal">
                     {faq.answer}
                   </div>
                 )}

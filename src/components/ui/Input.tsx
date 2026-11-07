@@ -28,7 +28,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         )}
         <div className="relative flex rounded-md shadow-sm">
           {leftAddon && (
-            <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-neutral-border bg-neutral-surfaceMuted text-neutral-textSecondary text-xs">
+            <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-neutral-border dark:border-slate-700 bg-neutral-surfaceMuted dark:bg-slate-800 text-neutral-textSecondary dark:text-slate-400 text-xs">
               {leftAddon}
             </span>
           )}
@@ -36,7 +36,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             id={generatedId}
             ref={ref}
             className={cn(
-              'block w-full min-w-0 rounded-md border border-neutral-border bg-white px-3 py-2 text-sm text-neutral-textPrimary placeholder:text-neutral-textMuted transition-colors focus:border-brand-purple focus:outline-none focus:ring-1 focus:ring-brand-purple disabled:bg-neutral-surfaceMuted disabled:cursor-not-allowed',
+              'block w-full min-w-0 rounded-md border border-neutral-border dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm text-neutral-textPrimary dark:text-neutral-100 placeholder:text-neutral-textMuted dark:placeholder:text-slate-500 transition-colors focus:border-brand-purple focus:outline-none focus:ring-1 focus:ring-brand-purple disabled:bg-neutral-surfaceMuted dark:disabled:bg-slate-900 disabled:cursor-not-allowed',
               leftAddon && 'rounded-l-none',
               rightAddon && 'rounded-r-none',
               error && 'border-red-500 focus:border-red-500 focus:ring-red-500',
@@ -45,7 +45,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             {...props}
           />
           {rightAddon && (
-            <span className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-neutral-border bg-neutral-surfaceMuted text-neutral-textSecondary text-xs font-mono">
+            <span className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-neutral-border dark:border-slate-700 bg-neutral-surfaceMuted dark:bg-slate-800 text-neutral-textSecondary dark:text-slate-400 text-xs font-mono">
               {rightAddon}
             </span>
           )}

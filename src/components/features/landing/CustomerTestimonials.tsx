@@ -39,10 +39,10 @@ export function CustomerTestimonials(): React.JSX.Element {
           <span className="text-xs font-bold uppercase tracking-wider text-[#E51919] block mb-2">
             Customer Reviews
           </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             Trusted by Exporters &amp; Individuals
           </h2>
-          <p className="text-sm text-slate-600 mt-2">
+          <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
             Real feedback from commercial clients and individuals shipping worldwide from Bangladesh.
           </p>
         </div>
@@ -51,7 +51,7 @@ export function CustomerTestimonials(): React.JSX.Element {
           {REVIEWS.map((rev) => (
             <div
               key={rev.name}
-              className="bg-slate-50/70 border border-slate-200/90 rounded-2xl p-6 shadow-xs flex flex-col justify-between hover:shadow-md hover:border-red-200 transition-all"
+              className="bg-slate-50/70 dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800 rounded-2xl p-6 shadow-xs flex flex-col justify-between hover:shadow-md hover:border-red-200 dark:hover:border-red-900/50 transition-all"
             >
               <div>
                 {/* 5 Stars */}
@@ -61,20 +61,20 @@ export function CustomerTestimonials(): React.JSX.Element {
                   ))}
                 </div>
 
-                <p className="text-sm text-slate-700 leading-relaxed font-normal mb-6 relative">
-                  <Quote className="w-6 h-6 text-slate-300 absolute -top-2 -left-2 -z-10 opacity-40" />
+                <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-normal mb-6 relative">
+                  <Quote className="w-6 h-6 text-slate-300 dark:text-slate-700 absolute -top-2 -left-2 -z-10 opacity-40" />
                   &ldquo;{rev.review}&rdquo;
                 </p>
               </div>
 
               {/* Reviewer Info */}
-              <div className="flex items-center gap-3 pt-4 border-t border-slate-200/80">
-                <div className="w-10 h-10 rounded-full bg-slate-900 text-white font-bold flex items-center justify-center text-xs">
+              <div className="flex items-center gap-3 pt-4 border-t border-slate-200/80 dark:border-slate-800">
+                <div className="w-10 h-10 rounded-full bg-slate-900 dark:bg-slate-800 text-white font-bold flex items-center justify-center text-xs">
                   {rev.avatar}
                 </div>
                 <div>
-                  <div className="text-sm font-bold text-slate-900">{rev.name}</div>
-                  <div className="text-xs text-slate-500">{rev.role}</div>
+                  <div className="text-sm font-bold text-slate-900 dark:text-white">{rev.name}</div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400">{rev.role}</div>
                 </div>
               </div>
             </div>

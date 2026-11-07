@@ -109,23 +109,23 @@ export default function LoginPage(): React.JSX.Element {
     <div className="p-8 sm:p-10">
       {/* Title & Introduction */}
       <div className="mb-8 text-center">
-        <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
+        <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
           Sign In to NTGX Portal
         </h1>
-        <p className="mt-1.5 text-xs text-slate-500">
+        <p className="mt-1.5 text-xs text-slate-500 dark:text-slate-400">
           Enter your corporate credentials to manage shipments, track manifests, and print AWBs.
         </p>
       </div>
 
       {/* Error / Success Feedback */}
       {errorMessage && (
-        <div className="mb-5 rounded-xl bg-red-50 border border-red-200/90 p-3.5 text-xs font-semibold text-red-700 flex items-start gap-2.5 animate-in fade-in">
+        <div className="mb-5 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200/90 dark:border-red-800 p-3.5 text-xs font-semibold text-red-700 dark:text-red-300 flex items-start gap-2.5 animate-in fade-in">
           <AlertTriangle className="h-4 w-4 shrink-0 text-red-500 mt-0.5" />
           <span>{errorMessage}</span>
         </div>
       )}
       {successMessage && (
-        <div className="mb-5 rounded-xl bg-emerald-50 border border-emerald-200/90 p-3.5 text-xs font-semibold text-emerald-700 flex items-center gap-2.5 animate-in fade-in">
+        <div className="mb-5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/90 dark:border-emerald-800 p-3.5 text-xs font-semibold text-emerald-700 dark:text-emerald-300 flex items-center gap-2.5 animate-in fade-in">
           <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600" />
           <span>{successMessage}</span>
         </div>
@@ -134,7 +134,7 @@ export default function LoginPage(): React.JSX.Element {
       {/* Main Form */}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-xs font-bold text-slate-700 mb-1.5">
+          <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
             Email Address
           </label>
           <div className="relative">
@@ -148,19 +148,19 @@ export default function LoginPage(): React.JSX.Element {
               placeholder="user@company.com"
               required
               autoComplete="email"
-              className="w-full pl-10 pr-4 py-3 bg-slate-50/50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:bg-white transition-all"
+              className="w-full pl-10 pr-4 py-3 bg-slate-50/50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-medium text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:bg-white dark:focus:bg-slate-800 transition-all"
             />
           </div>
         </div>
 
         <div>
           <div className="flex items-center justify-between mb-1.5">
-            <label className="block text-xs font-bold text-slate-700">
+            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">
               Password
             </label>
             <a
               href="#contact"
-              className="text-xs font-semibold text-red-600 hover:text-red-700 hover:underline"
+              className="text-xs font-semibold text-red-600 dark:text-red-400 hover:underline"
             >
               Forgot password?
             </a>
@@ -176,7 +176,7 @@ export default function LoginPage(): React.JSX.Element {
               placeholder="••••••••"
               required
               autoComplete="current-password"
-              className="w-full pl-10 pr-4 py-3 bg-slate-50/50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:bg-white transition-all"
+              className="w-full pl-10 pr-4 py-3 bg-slate-50/50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-medium text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:bg-white dark:focus:bg-slate-800 transition-all"
             />
           </div>
         </div>
@@ -192,12 +192,12 @@ export default function LoginPage(): React.JSX.Element {
       </form>
 
       {/* Compact, Classy 1-Click Demo Accounts */}
-      <div className="mt-8 pt-6 border-t border-slate-200/80">
+      <div className="mt-8 pt-6 border-t border-slate-200/80 dark:border-slate-800">
         <div className="flex items-center justify-between mb-3">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
             Quick 1-Click Demo Roles
           </span>
-          <span className="text-[11px] text-slate-400 font-mono">Password auto-filled</span>
+          <span className="text-[11px] text-slate-400 dark:text-slate-500 font-mono">Password auto-filled</span>
         </div>
 
         <div className="grid grid-cols-2 gap-2">
@@ -212,13 +212,13 @@ export default function LoginPage(): React.JSX.Element {
                 disabled={isLoading}
                 className={`flex items-center gap-2 p-2.5 rounded-xl border text-left transition-all ${
                   isSelected
-                    ? 'border-red-600 bg-red-50/60 text-red-950 font-bold'
-                    : 'border-slate-200 hover:border-slate-300 bg-slate-50/60 hover:bg-slate-100/60 text-slate-700'
+                    ? 'border-red-600 bg-red-50/60 dark:bg-red-950/40 text-red-950 dark:text-red-200 font-bold'
+                    : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 bg-slate-50/60 dark:bg-slate-800/60 hover:bg-slate-100/60 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200'
                 }`}
               >
                 <div
                   className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${
-                    isSelected ? 'bg-red-600 text-white' : 'bg-white text-slate-600 shadow-xs'
+                    isSelected ? 'bg-red-600 text-white' : 'bg-white dark:bg-slate-700 text-slate-600 dark:text-slate-300 shadow-xs'
                   }`}
                 >
                   <Icon className="w-3.5 h-3.5" />
@@ -236,7 +236,7 @@ export default function LoginPage(): React.JSX.Element {
       </div>
 
       {/* Registration link */}
-      <div className="mt-8 pt-4 border-t border-slate-100 text-center text-xs text-slate-600">
+      <div className="mt-8 pt-4 border-t border-slate-100 dark:border-slate-800 text-center text-xs text-slate-600 dark:text-slate-400">
         <span>Need a corporate export account? </span>
         <Link href="/register" className="font-bold text-[#E51919] hover:underline">
           Register with NTGX &rarr;

@@ -39,19 +39,19 @@ const STATS = [
 
 export function TrustStatsCounter(): React.JSX.Element {
   return (
-    <div className="bg-slate-50 border-y border-slate-200/80 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="bg-slate-50 dark:bg-[#111827] border-y border-slate-200/80 dark:border-slate-800 py-12 px-4 sm:px-6 lg:px-8 transition-colors">
       <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 text-center">
         {STATS.map((stat) => {
           const Icon = stat.icon;
           return (
             <div key={stat.label} className="flex flex-col items-center group">
-              <div className="w-14 h-14 rounded-full bg-blue-900 text-white flex items-center justify-center mb-3 shadow-md group-hover:bg-orange-600 transition-colors">
+              <div className="w-14 h-14 rounded-full bg-blue-900 text-white flex items-center justify-center mb-3 shadow-md group-hover:bg-[#E51919] transition-colors">
                 <Icon className="w-6 h-6" />
               </div>
-              <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+              <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                 {stat.value}
               </div>
-              <div className="text-xs font-semibold text-slate-500 mt-1">
+              <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-1">
                 {stat.label}
               </div>
             </div>

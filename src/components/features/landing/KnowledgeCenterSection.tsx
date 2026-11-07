@@ -27,17 +27,17 @@ const GUIDES = [
 
 export function KnowledgeCenterSection(): React.JSX.Element {
   return (
-    <section className="py-20 bg-slate-50 border-t border-slate-200/80">
+    <section className="py-20 bg-slate-50 dark:bg-[#0B0F19] border-t border-slate-200/80 dark:border-slate-800 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div>
             <span className="text-xs font-bold uppercase tracking-wider text-[#E51919] block mb-2">
               Shipping Resources
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
               Export Knowledge Center &amp; Guides
             </h2>
-            <p className="text-sm text-slate-600 mt-2">
+            <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
               Helpful insights, regulations, and best practices for shipping from Bangladesh.
             </p>
           </div>
@@ -57,24 +57,24 @@ export function KnowledgeCenterSection(): React.JSX.Element {
             return (
               <div
                 key={guide.title}
-                className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs hover:shadow-lg hover:border-red-300 transition-all flex flex-col justify-between group"
+                className="bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800 rounded-2xl p-6 shadow-xs hover:shadow-lg hover:border-red-300 dark:hover:border-red-900/50 transition-all flex flex-col justify-between group"
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-[11px] font-bold text-[#E51919] bg-red-50 px-2.5 py-1 rounded-full">
+                    <span className="text-[11px] font-bold text-[#E51919] bg-red-50 dark:bg-red-950/50 px-2.5 py-1 rounded-full">
                       {guide.category}
                     </span>
-                    <Icon className="w-4 h-4 text-slate-400" />
+                    <Icon className="w-4 h-4 text-slate-400 dark:text-slate-500" />
                   </div>
-                  <h3 className="text-base font-bold text-slate-900 group-hover:text-[#E51919] transition-colors mb-2">
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-[#E51919] transition-colors mb-2">
                     {guide.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
                     {guide.snippet}
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-slate-100 mt-4">
+                <div className="pt-4 border-t border-slate-100 dark:border-slate-800 mt-4">
                   <a
                     href="#faq"
                     className="inline-flex items-center gap-1.5 text-xs font-bold text-[#E51919] hover:underline"
