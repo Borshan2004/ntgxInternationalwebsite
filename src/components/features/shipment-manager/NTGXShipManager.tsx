@@ -102,23 +102,21 @@ export function NTGXShipManager({
           body: JSON.stringify(payload),
         });
 
+        const resData = await response.json();
+
         if (response.ok) {
-          const resData = (await response.json()) as {
-            readonly trackingNumber?: string;
-            readonly emailDispatch?: {
-              readonly clientEmail: string;
-              readonly companyEmail: string;
-              readonly clientEmailSent: boolean;
-              readonly companyEmailSent: boolean;
-              readonly deliveryMode?: 'LIVE_SMTP' | 'LIVE_RESEND' | 'SIMULATED_DISPATCH';
-              readonly errorMessage?: string;
-            };
-          };
           serverTrackingNumber = resData.trackingNumber ?? null;
           serverEmailDispatch = resData.emailDispatch ?? null;
+        } else {
+          console.error('[NTGXShipManager] Shipment creation rejected by server:', response.status, resData);
+          const errorMsg = resData?.error || 'Validation failed';
+          const errorDetails = resData?.details ? JSON.stringify(resData.details) : '';
+          alert(`Shipment creation failed: ${errorMsg}\n${errorDetails}`);
+          setIsSubmitting(false);
+          return;
         }
-      } catch {
-        // Fallback if offline
+      } catch (networkErr) {
+        console.warn('[NTGXShipManager] Network request failed, proceeding in offline mode:', networkErr);
       }
 
       const trackingNumberObj = generateTrackingNumber();
@@ -126,10 +124,12 @@ export function NTGXShipManager({
 
       setEmailStatus(
         serverEmailDispatch || {
-          clientEmailSent: true,
-          companyEmailSent: true,
+          clientEmailSent: false,
+          companyEmailSent: false,
+          deliveryMode: 'SIMULATED_DISPATCH',
           clientEmail: payload.billing.notifications.clientEmail || payload.sender.email,
-          companyEmail: payload.billing.notifications.companyEmail || 'operations@company.com',
+          companyEmail: payload.billing.notifications.companyEmail || 'aisolver47@gmail.com',
+          errorMessage: 'Offline or local dispatch',
         }
       );
 
@@ -1521,7 +1521,7 @@ export function NTGXShipManager({
                               },
                             }))
                           }
-                          placeholder="operations@company.com"
+                          placeholder="aisolver47@gmail.com"
                           className="w-full rounded border border-neutral-300 p-1.5 text-xs bg-white focus:outline-none focus:border-ntgx-red"
                         />
                         <p className="text-[10px] text-neutral-500 mt-0.5">

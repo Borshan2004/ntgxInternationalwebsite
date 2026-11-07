@@ -104,7 +104,7 @@ const INITIAL_BILLING: BillingAndNotificationData = {
   poNumber: 'PO-99104',
   notifications: {
     clientEmail: 'borshanpurification42@gmail.com',
-    companyEmail: 'operations@company.com',
+    companyEmail: 'aisolver47@gmail.com',
     language: 'en',
     notifyCreated: true,
     notifyScheduled: true,

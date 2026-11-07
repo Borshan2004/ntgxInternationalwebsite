@@ -15,37 +15,37 @@ const partyAddressSchema = z.object({
   company: z.string().optional().nullable(),
   taxId: z.string().optional().nullable(),
   phone: z.string().min(1),
-  email: z.string().email(),
+  email: z.string().optional().nullable().default(''),
   addressLine1: z.string().min(1),
   addressLine2: z.string().optional().nullable(),
   addressLine3: z.string().optional().nullable(),
   city: z.string().min(1),
   stateProvince: z.string().optional().nullable(),
-  postalCode: z.string().min(1),
-  countryCode: z.string().length(2),
+  postalCode: z.string().optional().nullable().default(''),
+  countryCode: z.string().min(1).max(10).transform((c) => c.trim().toUpperCase().slice(0, 2)),
   airportHubCode: z.string().optional().nullable(),
   isResidential: z.boolean().default(false),
 });
 
 const packageSchema = z.object({
   packageIndex: z.number().int().positive().default(1),
-  actualWeight: z.number().positive(),
+  actualWeight: z.number().positive().default(1),
   weightUnit: z.enum(['KG', 'LB']).default('KG'),
-  length: z.number().positive(),
-  width: z.number().positive(),
-  height: z.number().positive(),
+  length: z.number().positive().default(10),
+  width: z.number().positive().default(10),
+  height: z.number().positive().default(10),
   dimensionUnit: z.enum(['CM', 'IN']).default('CM'),
   declaredValueUsd: z.number().nonnegative().default(0),
 });
 
 const commoditySchema = z.object({
   packageCount: z.number().int().positive().default(1),
-  description: z.string().min(1),
-  hsTariffCode: z.string().min(1),
-  quantity: z.number().positive(),
+  description: z.string().optional().default('Goods'),
+  hsTariffCode: z.string().optional().default('000000'),
+  quantity: z.number().nonnegative().default(1),
   unitOfMeasure: z.enum(['PKS', 'PCS', 'KGS', 'DOZ', 'MTR']).default('PKS'),
-  netWeightKg: z.number().positive(),
-  unitValueUsd: z.number().nonnegative(),
+  netWeightKg: z.number().nonnegative().default(1),
+  unitValueUsd: z.number().nonnegative().default(0),
   countryOfMfr: z.string().default('BD'),
 });
 
@@ -65,7 +65,7 @@ const shipmentCreateSchema = z.object({
   ]),
   packages: z.array(packageSchema).min(1),
   customsContentType: z.enum(['DOCUMENTS_ONLY', 'COMMODITIES']),
-  commodities: z.array(commoditySchema),
+  commodities: z.array(commoditySchema).default([]),
   currency: z.string().default('USD'),
   service: z.object({
     serviceTier: z.enum([
@@ -101,8 +101,8 @@ const shipmentCreateSchema = z.object({
     invoiceNumber: z.string().optional().nullable(),
     poNumber: z.string().optional().nullable(),
     notifications: z.object({
-      clientEmail: z.string().email(),
-      companyEmail: z.string().email(),
+      clientEmail: z.string().min(1),
+      companyEmail: z.string().optional().nullable().default('aisolver47@gmail.com'),
       language: z.string().default('en'),
       notifyCreated: z.boolean().default(true),
       notifyScheduled: z.boolean().default(true),

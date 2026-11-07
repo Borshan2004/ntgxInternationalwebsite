@@ -1,4 +1,6 @@
 // src/services/emailService.ts
+import fs from 'fs';
+import path from 'path';
 import nodemailer from 'nodemailer';
 import type { ShipmentEntityDTO } from '@/types/shipment';
 
@@ -190,10 +192,6 @@ export class EmailNotificationService {
     // If SMTP_HOST or SMTP_USER is missing, dynamically read .env from disk
     if (!host || !user || !pass) {
       try {
-        // eslint-disable-next-line @typescript-eslint/no-require-imports
-        const fs = require('fs');
-        // eslint-disable-next-line @typescript-eslint/no-require-imports
-        const path = require('path');
         const envPath = path.resolve(process.cwd(), '.env');
         if (fs.existsSync(envPath)) {
           const content = fs.readFileSync(envPath, 'utf8') as string;

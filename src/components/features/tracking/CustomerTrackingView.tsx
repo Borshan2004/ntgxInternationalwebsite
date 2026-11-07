@@ -61,6 +61,7 @@ export function CustomerTrackingView({
       setQuery(initialTrackingNumber);
       void performSearch(initialTrackingNumber);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialTrackingNumber]);
 
   const handleSubmit = (e: React.FormEvent): void => {
