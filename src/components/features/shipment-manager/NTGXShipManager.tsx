@@ -48,6 +48,8 @@ export function NTGXShipManager({
     readonly companyEmail: string;
     readonly clientEmailSent: boolean;
     readonly companyEmailSent: boolean;
+    readonly deliveryMode?: 'LIVE_SMTP' | 'LIVE_RESEND' | 'SIMULATED_DISPATCH';
+    readonly errorMessage?: string;
   } | null>(null);
 
   // UI state matching the screenshots
@@ -314,22 +316,71 @@ export function NTGXShipManager({
         </div>
 
         {/* Dual Email Confirmation Banner */}
-        <div className="bg-emerald-50 border border-emerald-300 rounded-xl p-4 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
+        <div
+          className={`rounded-xl p-4 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs border ${
+            emailStatus?.deliveryMode === 'LIVE_SMTP' || emailStatus?.deliveryMode === 'LIVE_RESEND'
+              ? 'bg-emerald-50 border-emerald-300'
+              : 'bg-amber-50/90 border-amber-300'
+          }`}
+        >
           <div className="flex items-start md:items-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+            <div
+              className={`h-10 w-10 rounded-full text-white flex items-center justify-center shrink-0 shadow-xs ${
+                emailStatus?.deliveryMode === 'LIVE_SMTP' || emailStatus?.deliveryMode === 'LIVE_RESEND'
+                  ? 'bg-emerald-600'
+                  : 'bg-amber-600'
+              }`}
+            >
               <CheckCircle2 className="h-6 w-6" />
             </div>
             <div>
-              <h3 className="font-extrabold text-emerald-950 text-sm">
-                Dual Confirmation Emails Successfully Dispatched!
-              </h3>
-              <div className="text-emerald-800 mt-1 flex flex-wrap items-center gap-y-1 gap-x-3 text-xs">
+              <div className="flex items-center gap-2">
+                <h3
+                  className={`font-extrabold text-sm ${
+                    emailStatus?.deliveryMode === 'LIVE_SMTP' || emailStatus?.deliveryMode === 'LIVE_RESEND'
+                      ? 'text-emerald-950'
+                      : 'text-amber-950'
+                  }`}
+                >
+                  {emailStatus?.deliveryMode === 'LIVE_SMTP' || emailStatus?.deliveryMode === 'LIVE_RESEND'
+                    ? 'Dual Confirmation Emails Dispatched Live!'
+                    : 'Dual Confirmation Generated (Simulation Mode)'}
+                </h3>
+                <span
+                  className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${
+                    emailStatus?.deliveryMode === 'LIVE_SMTP' || emailStatus?.deliveryMode === 'LIVE_RESEND'
+                      ? 'bg-emerald-200 text-emerald-900'
+                      : 'bg-amber-200 text-amber-900'
+                  }`}
+                >
+                  {emailStatus?.deliveryMode === 'LIVE_SMTP'
+                    ? 'SMTP Live Sent'
+                    : emailStatus?.deliveryMode === 'LIVE_RESEND'
+                    ? 'Resend Live Sent'
+                    : 'Dev Simulation'}
+                </span>
+              </div>
+              <div
+                className={`mt-1 flex flex-wrap items-center gap-y-1 gap-x-3 text-xs ${
+                  emailStatus?.deliveryMode === 'LIVE_SMTP' || emailStatus?.deliveryMode === 'LIVE_RESEND'
+                    ? 'text-emerald-800'
+                    : 'text-amber-900'
+                }`}
+              >
                 <span>✉️ <strong>Customer Email:</strong> {emailStatus?.clientEmail}</span>
                 <span>•</span>
                 <span>🏢 <strong>Office / Dispatch Email:</strong> {emailStatus?.companyEmail}</span>
               </div>
-              <div className="text-emerald-700 text-2xs mt-1">
-                Both the client and company operations team have received the Mod-11 tracking number, pickup window, and PDF documents.
+              <div
+                className={`text-2xs mt-1 ${
+                  emailStatus?.deliveryMode === 'LIVE_SMTP' || emailStatus?.deliveryMode === 'LIVE_RESEND'
+                    ? 'text-emerald-700'
+                    : 'text-amber-800'
+                }`}
+              >
+                {emailStatus?.deliveryMode === 'LIVE_SMTP' || emailStatus?.deliveryMode === 'LIVE_RESEND'
+                  ? 'Both the client and company operations team have received the Mod-11 tracking number, pickup window, and PDF documents.'
+                  : '⚠️ No live SMTP or Resend credentials in .env. Email dispatch was logged to server console. To deliver real emails to your Gmail inbox, add SMTP_USER/SMTP_PASS or RESEND_API_KEY in .env.'}
               </div>
             </div>
           </div>

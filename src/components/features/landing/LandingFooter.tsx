@@ -17,7 +17,7 @@ export function LandingFooter(): React.JSX.Element {
             <Link href="/" className="inline-block mb-1">
               <BrandLogo size="md" variant="light" />
             </Link>
-            <p className="text-slate-300 font-semibold text-xs tracking-wider uppercase text-[#E51B23]">
+            <p className="font-semibold text-xs tracking-wider uppercase text-[#E51B23]">
               Connecting Bangladesh to the World
             </p>
             <p className="text-slate-400 text-xs sm:text-sm leading-relaxed max-w-sm font-normal">
