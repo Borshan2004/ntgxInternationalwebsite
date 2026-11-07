@@ -196,7 +196,7 @@ export class EmailNotificationService {
           secure: smtpSecure,
           auth: {
             user: smtpUser,
-            pass: smtpPass,
+            pass: smtpPass.replace(/\s+/g, ''),
           },
         });
 

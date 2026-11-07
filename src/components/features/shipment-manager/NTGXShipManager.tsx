@@ -91,6 +91,8 @@ export function NTGXShipManager({
         readonly companyEmail: string;
         readonly clientEmailSent: boolean;
         readonly companyEmailSent: boolean;
+        readonly deliveryMode?: 'LIVE_SMTP' | 'LIVE_RESEND' | 'SIMULATED_DISPATCH';
+        readonly errorMessage?: string;
       } | null = null;
 
       try {
@@ -108,6 +110,8 @@ export function NTGXShipManager({
               readonly companyEmail: string;
               readonly clientEmailSent: boolean;
               readonly companyEmailSent: boolean;
+              readonly deliveryMode?: 'LIVE_SMTP' | 'LIVE_RESEND' | 'SIMULATED_DISPATCH';
+              readonly errorMessage?: string;
             };
           };
           serverTrackingNumber = resData.trackingNumber ?? null;
