@@ -168,6 +168,68 @@ export class EmailNotificationService {
   }
 
   /**
+   * Dynamically retrieves environment variables from process.env or directly parses .env on disk.
+   */
+  private static getEnvConfig(): {
+    smtpHost?: string;
+    smtpPort?: number;
+    smtpSecure?: boolean;
+    smtpUser?: string;
+    smtpPass?: string;
+    emailFrom?: string;
+    resendKey?: string;
+  } {
+    let host = process.env.SMTP_HOST;
+    let port = process.env.SMTP_PORT ? Number(process.env.SMTP_PORT) : undefined;
+    let secure = process.env.SMTP_SECURE ? process.env.SMTP_SECURE === 'true' : undefined;
+    let user = process.env.SMTP_USER;
+    let pass = process.env.SMTP_PASS;
+    let from = process.env.EMAIL_FROM;
+    let resend = process.env.RESEND_API_KEY;
+
+    // If SMTP_HOST or SMTP_USER is missing, dynamically read .env from disk
+    if (!host || !user || !pass) {
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        const fs = require('fs');
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        const path = require('path');
+        const envPath = path.resolve(process.cwd(), '.env');
+        if (fs.existsSync(envPath)) {
+          const content = fs.readFileSync(envPath, 'utf8') as string;
+          for (const line of content.split(/\r?\n/)) {
+            const trimmed = line.trim();
+            if (!trimmed || trimmed.startsWith('#')) continue;
+            const match = trimmed.match(/^([A-Za-z0-9_]+)\s*=\s*"?([^"]*)"?$/);
+            if (match) {
+              const [, k, v] = match;
+              if (k === 'SMTP_HOST' && !host) host = v;
+              if (k === 'SMTP_PORT' && !port) port = Number(v);
+              if (k === 'SMTP_SECURE' && secure === undefined) secure = v === 'true';
+              if (k === 'SMTP_USER' && !user) user = v;
+              if (k === 'SMTP_PASS' && !pass) pass = v;
+              if (k === 'EMAIL_FROM' && !from) from = v;
+              if (k === 'RESEND_API_KEY' && !resend) resend = v;
+            }
+          }
+        }
+      } catch {
+        // ignore disk read errors
+      }
+    }
+
+    return {
+      smtpHost: host,
+      smtpPort: port ?? 465,
+      smtpSecure: secure ?? true,
+      smtpUser: user,
+      smtpPass: pass ? pass.replace(/\s+/g, '') : undefined,
+      emailFrom: from,
+      resendKey: resend,
+    };
+  }
+
+  /**
    * Sends simultaneous transactional emails to the Client and Company Operations.
    */
   public static async sendShipmentFinalizedEmails(
@@ -179,51 +241,69 @@ export class EmailNotificationService {
     const clientHtml = this.generateClientHtml(payload);
     const companyHtml = this.generateCompanyHtml(payload);
 
-    // 1. Try Standard SMTP (Gmail, Brevo, SendGrid, Zoho, Hostinger, cPanel)
-    const smtpHost = process.env.SMTP_HOST;
-    const smtpUser = process.env.SMTP_USER;
-    const smtpPass = process.env.SMTP_PASS;
+    const env = this.getEnvConfig();
 
-    if (smtpHost && smtpUser && smtpPass) {
+    // 1. Try Standard SMTP (Gmail, Brevo, SendGrid, Zoho, Hostinger, cPanel)
+    if (env.smtpHost && env.smtpUser && env.smtpPass) {
       try {
-        const smtpPort = Number(process.env.SMTP_PORT ?? '465');
-        const smtpSecure = process.env.SMTP_SECURE === 'true' || smtpPort === 465;
-        const fromAddress = process.env.EMAIL_FROM ?? `"NTGX Express & Freight" <${smtpUser}>`;
+        const fromAddress = env.emailFrom ?? `"NTGX Express & Freight" <${env.smtpUser}>`;
+
+        // If company email is placeholder @company.com, route office alert safely to smtpUser
+        const targetCompanyEmail =
+          payload.companyOperationsEmail.includes('@company.com') ||
+          payload.companyOperationsEmail.includes('@example.com')
+            ? env.smtpUser
+            : payload.companyOperationsEmail;
 
         const transporter = nodemailer.createTransport({
-          host: smtpHost,
-          port: smtpPort,
-          secure: smtpSecure,
+          host: env.smtpHost,
+          port: env.smtpPort,
+          secure: env.smtpSecure,
           auth: {
-            user: smtpUser,
-            pass: smtpPass.replace(/\s+/g, ''),
+            user: env.smtpUser,
+            pass: env.smtpPass,
           },
         });
 
-        // Send both emails simultaneously
-        await Promise.all([
-          transporter.sendMail({
-            from: fromAddress,
-            to: payload.clientEmail,
-            subject: clientSubject,
-            html: clientHtml,
-          }),
-          transporter.sendMail({
-            from: fromAddress,
-            to: payload.companyOperationsEmail,
-            subject: companySubject,
-            html: companyHtml,
-          }),
-        ]);
+        // Send both emails individually to avoid one recipient failure impacting the other
+        const sendClient = transporter.sendMail({
+          from: fromAddress,
+          to: payload.clientEmail,
+          subject: clientSubject,
+          html: clientHtml,
+        });
+
+        const sendCompany = transporter.sendMail({
+          from: fromAddress,
+          to: targetCompanyEmail,
+          subject: companySubject,
+          html: companyHtml,
+        });
+
+        const [clientRes, companyRes] = await Promise.allSettled([sendClient, sendCompany]);
+
+        const clientSent = clientRes.status === 'fulfilled';
+        const companySent = companyRes.status === 'fulfilled';
 
         // eslint-disable-next-line no-console
-        console.log(`[EmailNotificationService] LIVE SMTP dispatched to ${payload.clientEmail} and ${payload.companyOperationsEmail}`);
+        console.log(
+          `[EmailNotificationService] LIVE SMTP result -> Client (${payload.clientEmail}): ${clientSent}, Company (${targetCompanyEmail}): ${companySent}`
+        );
+
+        if (!clientSent) {
+          // eslint-disable-next-line no-console
+          console.error('[EmailNotificationService] Client email failed:', (clientRes as PromiseRejectedResult).reason);
+        }
+        if (!companySent) {
+          // eslint-disable-next-line no-console
+          console.error('[EmailNotificationService] Company email failed:', (companyRes as PromiseRejectedResult).reason);
+        }
 
         return {
-          clientEmailSent: true,
-          companyEmailSent: true,
+          clientEmailSent: clientSent,
+          companyEmailSent: companySent,
           clientEmail: payload.clientEmail,
-          companyEmail: payload.companyOperationsEmail,
+          companyEmail: targetCompanyEmail,
           clientSubject,
           companySubject,
           dispatchedAt: new Date().toISOString(),
@@ -249,10 +329,10 @@ export class EmailNotificationService {
     }
 
     // 2. Try Resend HTTP API
-    const resendKey = process.env.RESEND_API_KEY;
+    const resendKey = env.resendKey;
     if (resendKey) {
       try {
-        const fromAddress = process.env.EMAIL_FROM ?? 'onboarding@resend.dev';
+        const fromAddress = env.emailFrom ?? 'onboarding@resend.dev';
 
         const [resClient, resCompany] = await Promise.all([
           fetch('https://api.resend.com/emails', {

@@ -30,7 +30,7 @@ const INITIAL_SENDER: PartyAddressData = {
   company: 'Apparel Sourcing International Inc.',
   taxId: 'BIN-908122-BD',
   phone: '8801989451709',
-  email: 'shipping@apparelsourcing.com',
+  email: 'borshanpurification42@gmail.com',
   addressLine1: 'House # 30 (3rd Floor), Apt-B3',
   addressLine2: 'Western Road, Banani DOHS',
   city: 'Dhaka',
@@ -103,7 +103,7 @@ const INITIAL_BILLING: BillingAndNotificationData = {
   invoiceNumber: 'ASI-25075',
   poNumber: 'PO-99104',
   notifications: {
-    clientEmail: 'shipping@apparelsourcing.com',
+    clientEmail: 'borshanpurification42@gmail.com',
     companyEmail: 'operations@company.com',
     language: 'en',
     notifyCreated: true,
